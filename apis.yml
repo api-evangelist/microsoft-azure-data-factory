@@ -1,16 +1,14 @@
 aid: microsoft-azure-data-factory
-url: 
-  https://raw.githubusercontent.com/api-evangelist/microsoft-azure-data-factory/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-data-factory/refs/heads/main/apis.yml
 apis:
   - aid: microsoft-azure-data-factory:rest-api
     name: Azure Data Factory REST API
     tags:
       - Data Integration
-      - ETL
       - Data Pipeline
+      - ETL
       - Orchestration
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://management.azure.com/
     humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
     properties:
