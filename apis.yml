@@ -30,10 +30,12 @@ common:
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Support
     url: https://support.microsoft.com/
-modified: '2026-03-16'
+modified: '2026-04-28'
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 description: >-
-  Learn how Azure Data Factory is a cloud-based data integration service that orchestrates
-  and automates the movement and transformation of data.
+  Azure Data Factory is a cloud-based data integration service that orchestrates
+  and automates the movement and transformation of data. This collection documents
+  the REST APIs for managing pipelines, datasets, linked services, triggers, and
+  data flows across ETL and ELT workloads spanning cloud and on-premises stores.

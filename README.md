@@ -1,16 +1,16 @@
 # Azure Data Factory (microsoft-azure-data-factory)
-Azure Data Factory REST API enables programmatic management of data integration pipelines for orchestrating data movement and transformation at scale. It supports creating pipelines, datasets, linked services, triggers, and data flows for ETL and ELT workloads across cloud and on-premises data stores.
+Azure Data Factory is a cloud-based data integration service that orchestrates and automates the movement and transformation of data. This collection documents the REST APIs for managing pipelines, datasets, linked services, triggers, and data flows across ETL and ELT workloads spanning cloud and on-premises stores.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/microsoft-azure-data-factory/refs/heads/main/apis.yml)
 
 ## Tags:
 
- - Data Integration, ETL, Data Pipeline, Orchestration
+ - Data Integration, Data Pipeline, ETL, Orchestration
 
 ## Timestamps
 
 - **Created:** 2026-03-13
-- **Modified:** 2026-03-13
+- **Modified:** 2026-04-28
 
 ## APIs
 
