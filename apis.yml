@@ -12,6 +12,8 @@ apis:
     baseURL: https://management.azure.com/
     humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
     properties:
+      - url: openapi/microsoft-azure-data-factory-openapi.yml
+        type: OpenAPI
       - url: https://learn.microsoft.com/en-us/rest/api/datafactory/
         type: Documentation
     description: >-
