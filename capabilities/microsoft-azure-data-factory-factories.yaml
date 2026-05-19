@@ -1,0 +1,229 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Data Factory REST API — Factories
+  description: 'Azure Data Factory REST API — Factories. 6 operations. Lead operation: Azure Data Factory REST API List by
+    subscription. Self-contained Naftiko capability covering one Microsoft Azure Data Factory business surface.'
+  tags:
+  - Microsoft Azure Data Factory
+  - Factories
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DATA_FACTORY_API_KEY: MICROSOFT_AZURE_DATA_FACTORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-azure-data-factory-factories
+    baseUri: https://management.azure.com
+    description: Azure Data Factory REST API — Factories business capability. Self-contained, no shared references.
+    resources:
+    - name: subscriptions-subscriptionId-providers-Microsoft.DataFactory-factories
+      path: /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories
+      operations:
+      - name: listfactoriesbysubscription
+        method: GET
+        description: Azure Data Factory REST API List by subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionId-resourceGroups-resourceGroupName-providers-Microsof
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories
+      operations:
+      - name: listfactoriesbyresourcegroup
+        method: GET
+        description: Azure Data Factory REST API List by resource group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionId-resourceGroups-resourceGroupName-providers-Microsof
+      path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{name}
+      operations:
+      - name: getfactories
+        method: GET
+        description: Azure Data Factory REST API Get resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorupdatefactories
+        method: PUT
+        description: Azure Data Factory REST API Create or update resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: updatefactories
+        method: PATCH
+        description: Azure Data Factory REST API Update resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletefactories
+        method: DELETE
+        description: Azure Data Factory REST API Delete resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DATA_FACTORY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: microsoft-azure-data-factory-factories-rest
+    port: 8080
+    description: REST adapter for Azure Data Factory REST API — Factories. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/subscriptions/{subscriptionid}/providers/microsoft-datafactory/factories
+      name: subscriptions-subscriptionid-providers-microsoft-datafactory-factories
+      description: REST surface for subscriptions-subscriptionId-providers-Microsoft.DataFactory-factories.
+      operations:
+      - method: GET
+        name: listfactoriesbysubscription
+        description: Azure Data Factory REST API List by subscription
+        call: microsoft-azure-data-factory-factories.listfactoriesbysubscription
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions/{subscriptionid}/resourcegroups/{resourcegroupname}/providers/microsoft-datafactory/factories
+      name: subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsof
+      description: REST surface for subscriptions-subscriptionId-resourceGroups-resourceGroupName-providers-Microsof.
+      operations:
+      - method: GET
+        name: listfactoriesbyresourcegroup
+        description: Azure Data Factory REST API List by resource group
+        call: microsoft-azure-data-factory-factories.listfactoriesbyresourcegroup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions/{subscriptionid}/resourcegroups/{resourcegroupname}/providers/microsoft-datafactory/factories/{name}
+      name: subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsof
+      description: REST surface for subscriptions-subscriptionId-resourceGroups-resourceGroupName-providers-Microsof.
+      operations:
+      - method: GET
+        name: getfactories
+        description: Azure Data Factory REST API Get resource
+        call: microsoft-azure-data-factory-factories.getfactories
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: createorupdatefactories
+        description: Azure Data Factory REST API Create or update resource
+        call: microsoft-azure-data-factory-factories.createorupdatefactories
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatefactories
+        description: Azure Data Factory REST API Update resource
+        call: microsoft-azure-data-factory-factories.updatefactories
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletefactories
+        description: Azure Data Factory REST API Delete resource
+        call: microsoft-azure-data-factory-factories.deletefactories
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: microsoft-azure-data-factory-factories-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure Data Factory REST API — Factories. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: azure-data-factory-rest-api
+      description: Azure Data Factory REST API List by subscription
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.listfactoriesbysubscription
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-data-factory-rest-api-2
+      description: Azure Data Factory REST API List by resource group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.listfactoriesbyresourcegroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-data-factory-rest-api-3
+      description: Azure Data Factory REST API Get resource
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.getfactories
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-data-factory-rest-api-4
+      description: Azure Data Factory REST API Create or update resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.createorupdatefactories
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-data-factory-rest-api-5
+      description: Azure Data Factory REST API Update resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.updatefactories
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-data-factory-rest-api-6
+      description: Azure Data Factory REST API Delete resource
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: microsoft-azure-data-factory-factories.deletefactories
+      outputParameters:
+      - type: object
+        mapping: $.

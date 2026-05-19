@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Data Factory REST API — Operations
+  description: 'Azure Data Factory REST API — Operations. 1 operations. Lead operation: Azure Data Factory REST API List operations.
+    Self-contained Naftiko capability covering one Microsoft Azure Data Factory business surface.'
+  tags:
+  - Microsoft Azure Data Factory
+  - Operations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DATA_FACTORY_API_KEY: MICROSOFT_AZURE_DATA_FACTORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-azure-data-factory-operations
+    baseUri: https://management.azure.com
+    description: Azure Data Factory REST API — Operations business capability. Self-contained, no shared references.
+    resources:
+    - name: providers-Microsoft.DataFactory-operations
+      path: /providers/Microsoft.DataFactory/operations
+      operations:
+      - name: listoperations
+        method: GET
+        description: Azure Data Factory REST API List operations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DATA_FACTORY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: microsoft-azure-data-factory-operations-rest
+    port: 8080
+    description: REST adapter for Azure Data Factory REST API — Operations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/providers/microsoft-datafactory/operations
+      name: providers-microsoft-datafactory-operations
+      description: REST surface for providers-Microsoft.DataFactory-operations.
+      operations:
+      - method: GET
+        name: listoperations
+        description: Azure Data Factory REST API List operations
+        call: microsoft-azure-data-factory-operations.listoperations
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: microsoft-azure-data-factory-operations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure Data Factory REST API — Operations. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-data-factory-rest-api
+      description: Azure Data Factory REST API List operations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-data-factory-operations.listoperations
+      outputParameters:
+      - type: object
+        mapping: $.
