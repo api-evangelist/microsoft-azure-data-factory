@@ -21,6 +21,10 @@ apis:
       movement and transformation at scale. It supports creating pipelines, datasets, linked services, triggers, and
       data flows for ETL and ELT workloads across cloud and on-premises data stores.
 common:
+  - type: DomainSecurity
+    url: security/microsoft-azure-data-factory-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-azure-data-factory-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-azure-data-factory-scopes.yml
   - type: GitHubOrganization
