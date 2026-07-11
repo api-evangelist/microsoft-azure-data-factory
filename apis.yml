@@ -21,6 +21,8 @@ apis:
       movement and transformation at scale. It supports creating pipelines, datasets, linked services, triggers, and
       data flows for ETL and ELT workloads across cloud and on-premises data stores.
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-azure-data-factory-scopes.yml
   - type: GitHubOrganization
     url: https://github.com/Azure
   - type: Portal
@@ -43,3 +45,5 @@ description: >-
   Azure Data Factory is a cloud-based data integration service that orchestrates and automates the movement and
   transformation of data. This collection documents the REST APIs for managing pipelines, datasets, linked services,
   triggers, and data flows across ETL and ELT workloads spanning cloud and on-premises stores.
+  - url: https://azure.microsoft.com/en-us/blog/azure-data-factory-announcing-new-capabilities-in-public-preview/
+    type: Blog
