@@ -21,6 +21,8 @@ apis:
       movement and transformation at scale. It supports creating pipelines, datasets, linked services, triggers, and
       data flows for ETL and ELT workloads across cloud and on-premises data stores.
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-azure-data-factory-agentic-access.yml
   - type: DomainSecurity
     url: security/microsoft-azure-data-factory-domain-security.yml
   - type: Authentication
