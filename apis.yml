@@ -1,25 +1,44 @@
 aid: microsoft-azure-data-factory
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-data-factory/refs/heads/main/apis.yml
 apis:
-  - aid: microsoft-azure-data-factory:rest-api
-    name: Azure Data Factory REST API
-    tags:
-      - Data Integration
-      - Data Pipeline
-      - ETL
-      - Orchestration
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://management.azure.com/
-    humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
-    properties:
-      - url: openapi/microsoft-azure-data-factory-openapi.yml
-        type: OpenAPI
-      - url: https://learn.microsoft.com/en-us/rest/api/datafactory/
-        type: Documentation
-    description: >-
-      Azure Data Factory REST API enables programmatic management of data integration pipelines for orchestrating data
-      movement and transformation at scale. It supports creating pipelines, datasets, linked services, triggers, and
-      data flows for ETL and ELT workloads across cloud and on-premises data stores.
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-factories-api
+  name: microsoft-azure-data-factory Factories API
+  description: Factories operations
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com/
+  tags:
+  - Factories
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-factories-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-operations-api
+  name: microsoft-azure-data-factory Operations API
+  description: Operations operations
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com/
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-operations-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
 common:
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-data-factory-agentic-access.yml
