@@ -1,0 +1,16 @@
+{
+  "provider": "microsoft-azure-data-factory",
+  "sources": [
+    "microsoft-azure-data-factory-factories-api-openapi.yml",
+    "microsoft-azure-data-factory-operations-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-azure-data-factory-factories-api-openapi.yml",
+    "microsoft-azure-data-factory-operations-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

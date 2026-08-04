@@ -2,13 +2,20 @@
   "repo": "microsoft-azure-data-factory",
   "feeds": [
     {
+      "source": "https://azure.microsoft.com/en-us/blog/feed/",
+      "feed_url": "https://azure.microsoft.com/en-us/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://azure.microsoft.com/en-us/blog/azure-data-factory-announcing-new-capabilities-in-public-preview/",
       "feed_url": "https://azure.microsoft.com/en-us/blog/feed/",
       "title": "",
-      "saved": 3,
+      "saved": 0,
       "method": "discovered"
     }
   ],
-  "fetched": "2026-07-11T11:50:51Z",
-  "post_count": 4
+  "fetched": "2026-08-01T15:49:00Z",
+  "post_count": 14
 }
