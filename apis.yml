@@ -1,4 +1,5 @@
 aid: microsoft-azure-data-factory
+name: "Azure Data Factory"
 specificationVersion: '0.23'
 accessModel:
   pricing: freemium
