@@ -55,6 +55,8 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/datafactory/
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-data-factory-agentic-access.yml
   - type: DomainSecurity
@@ -87,3 +89,5 @@ description: >-
   triggers, and data flows across ETL and ELT workloads spanning cloud and on-premises stores.
   - url: https://azure.microsoft.com/en-us/blog/azure-data-factory-announcing-new-capabilities-in-public-preview/
     type: Blog
+x-parent: microsoft-azure
+x-relationship: product
