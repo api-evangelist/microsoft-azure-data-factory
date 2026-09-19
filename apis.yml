@@ -1,5 +1,5 @@
 aid: microsoft-azure-data-factory
-name: "Azure Data Factory"
+name: Azure Data Factory
 deliveryModel:
   model: saas
   open_source: false
@@ -28,66 +28,684 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-data-factory/refs/heads/main/apis.yml
+description: 'Azure Data Factory is Microsoft''s cloud-based data integration service, orchestrating and automating
+  the movement and transformation of data across ETL and ELT workloads that span cloud and on-premises stores. Its
+  public interface is the Microsoft.DataFactory resource provider behind Azure Resource Manager: 104 operations over
+  75 paths at api-version 2018-06-01, covering factories, pipelines and pipeline runs, datasets, linked services,
+  mapping data flows, triggers, integration runtimes, credentials, global parameters, managed virtual networks and
+  private endpoints, and change data capture resources. Authentication is OAuth 2.0 against Microsoft Entra ID with
+  a single delegated scope, and authorization is Azure RBAC role assignment rather than API scopes. The contract is
+  notable for its type system: 1,199 schema definitions, of which 121 are linked-service connector subtypes and 105
+  are dataset subtypes, all resolved through OpenAPI discriminators.'
+tags:
+- Data Integration
+- ETL
+- ELT
+- Data Pipeline
+- Data Movement
+- Orchestration
+- Data Engineering
+- Change Data Capture
+- Integration Runtime
+- Cloud
+- Azure
+- Data Factory
+tags_raw:
+- Data Integration
+- ETL
+- ELT
+- Data Pipelines
+- Data Movement
+- Orchestration
+- Data Engineering
+- Change Data Capture
+- Integration Runtime
+- Cloud
+- Azure
+- Data Factory
+created: '2026-05-04'
+modified: '2026-09-17'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
 apis:
-- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-factories-api
-  name: microsoft-azure-data-factory Factories API
-  description: Factories operations
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-activityruns-api
+  name: Azure Data Factory Activityruns API
+  description: 'Activityruns operations on the Microsoft.DataFactory resource provider (1 operation): ActivityRuns_QueryByPipelineRun.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
-  baseURL: https://management.azure.com/
+  baseURL: https://management.azure.com
+  tags:
+  - ActivityRuns
+  tags_raw:
+  - Activityruns
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-activityruns-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-change-data-capture-api
+  name: Azure Data Factory Change Data Capture API
+  description: 'Change Data Capture operations on the Microsoft.DataFactory resource provider (7 operations): ChangeDataCapture_ListByFactory,
+    ChangeDataCapture_Get, ChangeDataCapture_CreateOrUpdate, ChangeDataCapture_Delete, ChangeDataCapture_Start, ChangeDataCapture_Status,
+    and more.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Change Data Capture
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-change-data-capture-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-credentials-api
+  name: Azure Data Factory Credentials API
+  description: 'Credentials operations on the Microsoft.DataFactory resource provider (4 operations): CredentialOperations_ListByFactory,
+    CredentialOperations_Get, CredentialOperations_CreateOrUpdate, CredentialOperations_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-credentials-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-credentials-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-data-flow-debug-session-api
+  name: Azure Data Factory Data Flow Debug Session API
+  description: 'Data Flow Debug Session operations on the Microsoft.DataFactory resource provider (5 operations):
+    DataFlowDebugSession_AddDataFlow, DataFlowDebugSession_Create, DataFlowDebugSession_Delete, DataFlowDebugSession_ExecuteCommand,
+    DataFlowDebugSession_QueryByFactory.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Data Flow Debug Session
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-data-flow-debug-session-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-data-flows-api
+  name: Azure Data Factory Data Flows API
+  description: 'Data Flows operations on the Microsoft.DataFactory resource provider (4 operations): DataFlows_ListByFactory,
+    DataFlows_Get, DataFlows_CreateOrUpdate, DataFlows_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Dataflows
+  tags_raw:
+  - Data Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-data-flows-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-datasets-api
+  name: Azure Data Factory Datasets API
+  description: 'Datasets operations on the Microsoft.DataFactory resource provider (4 operations): Datasets_ListByFactory,
+    Datasets_Get, Datasets_CreateOrUpdate, Datasets_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-datasets-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-datasets-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-exposure-control-api
+  name: Azure Data Factory Exposure Control API
+  description: 'Exposure Control operations on the Microsoft.DataFactory resource provider (3 operations): ExposureControl_GetFeatureValue,
+    ExposureControl_GetFeatureValueByFactory, ExposureControl_QueryFeatureValuesByFactory.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Exposure Control
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-exposure-control-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-factories-api
+  name: Azure Data Factory Factories API
+  description: 'Factories operations on the Microsoft.DataFactory resource provider (9 operations): Factories_List,
+    Factories_ConfigureFactoryRepo, Factories_ListByResourceGroup, Factories_Get, Factories_CreateOrUpdate, Factories_Update,
+    and more.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
   tags:
   - Factories
   properties:
   - type: OpenAPI
     url: openapi/microsoft-azure-data-factory-factories-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-factories-api-overlay.yaml
   - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-global-parameters-api
+  name: Azure Data Factory Global Parameters API
+  description: 'Global Parameters operations on the Microsoft.DataFactory resource provider (4 operations): GlobalParameters_ListByFactory,
+    GlobalParameters_Get, GlobalParameters_CreateOrUpdate, GlobalParameters_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Global Parameters
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-global-parameters-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api
+  name: Azure Data Factory Integration Runtime Disable Interactive Query API
+  description: 'Integration Runtime Disable Interactive Query operations on the Microsoft.DataFactory resource provider
+    (1 operation): IntegrationRuntime_DisableInteractiveQuery.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Integration Runtime Disable Interactive Query
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api
+  name: Azure Data Factory Integration Runtime Enable Interactive Query API
+  description: 'Integration Runtime Enable Interactive Query operations on the Microsoft.DataFactory resource provider
+    (1 operation): IntegrationRuntime_EnableInteractiveQuery.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Integration Runtime Enable Interactive Query
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-integration-runtime-nodes-api
+  name: Azure Data Factory Integration Runtime Nodes API
+  description: 'Integration Runtime Nodes operations on the Microsoft.DataFactory resource provider (4 operations):
+    IntegrationRuntimeNodes_Get, IntegrationRuntimeNodes_Update, IntegrationRuntimeNodes_Delete, IntegrationRuntimeNodes_GetIpAddress.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Integration Runtime Nodes
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-integration-runtime-nodes-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-integration-runtime-object-metadata-api
+  name: Azure Data Factory Integration Runtime Object Metadata API
+  description: 'Integration Runtime Object Metadata operations on the Microsoft.DataFactory resource provider (2 operations):
+    IntegrationRuntimeObjectMetadata_Get, IntegrationRuntimeObjectMetadata_Refresh.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Integration Runtime Object Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-integration-runtime-object-metadata-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-integration-runtime-object-metadata-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-integration-runtimes-api
+  name: Azure Data Factory Integration Runtimes API
+  description: 'Integration Runtimes operations on the Microsoft.DataFactory resource provider (17 operations): IntegrationRuntimes_ListByFactory,
+    IntegrationRuntimes_Get, IntegrationRuntimes_CreateOrUpdate, IntegrationRuntimes_Update, IntegrationRuntimes_Delete,
+    IntegrationRuntimes_GetConnectionInfo, and more.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - IntegrationRuntimes
+  tags_raw:
+  - Integration Runtimes
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-integration-runtimes-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-integration-runtimes-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-linked-services-api
+  name: Azure Data Factory Linked Services API
+  description: 'Linked Services operations on the Microsoft.DataFactory resource provider (4 operations): LinkedServices_ListByFactory,
+    LinkedServices_Get, LinkedServices_CreateOrUpdate, LinkedServices_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Linked Services
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-linked-services-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-linked-services-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-managed-private-endpoints-api
+  name: Azure Data Factory Managed Private Endpoints API
+  description: 'Managed Private Endpoints operations on the Microsoft.DataFactory resource provider (4 operations):
+    ManagedPrivateEndpoints_ListByFactory, ManagedPrivateEndpoints_Get, ManagedPrivateEndpoints_CreateOrUpdate, ManagedPrivateEndpoints_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - ManagedPrivateEndpoints
+  tags_raw:
+  - Managed Private Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-managed-private-endpoints-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-managed-private-endpoints-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-managed-virtual-networks-api
+  name: Azure Data Factory Managed Virtual Networks API
+  description: 'Managed Virtual Networks operations on the Microsoft.DataFactory resource provider (3 operations):
+    ManagedVirtualNetworks_ListByFactory, ManagedVirtualNetworks_Get, ManagedVirtualNetworks_CreateOrUpdate.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Managed Virtual Networks
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-managed-virtual-networks-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
     url: https://learn.microsoft.com/en-us/rest/api/datafactory/
 - aid: microsoft-azure-data-factory:microsoft-azure-data-factory-operations-api
-  name: microsoft-azure-data-factory Operations API
-  description: Operations operations
+  name: Azure Data Factory Operations API
+  description: 'Operations operations on the Microsoft.DataFactory resource provider (1 operation): Operations_List.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
-  baseURL: https://management.azure.com/
+  baseURL: https://management.azure.com
   tags: []
   tags_raw:
   - Operations
   properties:
   - type: OpenAPI
     url: openapi/microsoft-azure-data-factory-operations-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-operations-api-overlay.yaml
   - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-pipelineruns-api
+  name: Azure Data Factory Pipelineruns API
+  description: 'Pipelineruns operations on the Microsoft.DataFactory resource provider (3 operations): PipelineRuns_Get,
+    PipelineRuns_Cancel, PipelineRuns_QueryByFactory.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Pipeline Runs
+  tags_raw:
+  - Pipelineruns
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-pipelineruns-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-pipelineruns-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-pipelines-api
+  name: Azure Data Factory Pipelines API
+  description: 'Pipelines operations on the Microsoft.DataFactory resource provider (5 operations): Pipelines_ListByFactory,
+    Pipelines_Get, Pipelines_CreateOrUpdate, Pipelines_Delete, Pipelines_CreateRun.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-pipelines-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-pipelines-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-private-endpoint-connections-api
+  name: Azure Data Factory Private Endpoint Connections API
+  description: 'Private Endpoint Connections operations on the Microsoft.DataFactory resource provider (4 operations):
+    privateEndPointConnections_ListByFactory, PrivateEndpointConnection_Get, PrivateEndpointConnection_CreateOrUpdate,
+    PrivateEndpointConnection_Delete.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - PrivateEndpointConnections
+  tags_raw:
+  - Private Endpoint Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-private-endpoint-connections-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-private-endpoint-connections-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-private-link-resources-api
+  name: Azure Data Factory Private Link Resources API
+  description: 'Private Link Resources operations on the Microsoft.DataFactory resource provider (1 operation): privateLinkResources_Get.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - PrivateLinkResources
+  tags_raw:
+  - Private Link Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-private-link-resources-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-private-link-resources-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-trigger-api
+  name: Azure Data Factory Trigger API
+  description: 'Trigger operations on the Microsoft.DataFactory resource provider (1 operation): Triggers_Get.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Trigger
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-trigger-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-trigger-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-triggerruns-api
+  name: Azure Data Factory Triggerruns API
+  description: 'Triggerruns operations on the Microsoft.DataFactory resource provider (3 operations): TriggerRuns_QueryByFactory,
+    TriggerRuns_Cancel, TriggerRuns_Rerun.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Triggerruns
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-triggerruns-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-triggerruns-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- aid: microsoft-azure-data-factory:microsoft-azure-data-factory-triggers-api
+  name: Azure Data Factory Triggers API
+  description: 'Triggers operations on the Microsoft.DataFactory resource provider (9 operations): Triggers_QueryByFactory,
+    Triggers_ListByFactory, Triggers_CreateOrUpdate, Triggers_Delete, Triggers_GetEventSubscriptionStatus, Triggers_Start,
+    and more.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-data-factory.png
+  humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  baseURL: https://management.azure.com
+  tags:
+  - Triggers
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-data-factory-triggers-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted, Swagger 2.0)
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  - type: Overlay
+    url: overlays/microsoft-azure-data-factory-triggers-api-overlay.yaml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/data-factory/
+  - type: APIReference
     url: https://learn.microsoft.com/en-us/rest/api/datafactory/
 common:
-  - type: Website
-    url: https://www.microsoft.com/
-  - type: AgenticAccess
-    url: agentic-access/microsoft-azure-data-factory-agentic-access.yml
-  - type: DomainSecurity
-    url: security/microsoft-azure-data-factory-domain-security.yml
-  - type: Authentication
-    url: authentication/microsoft-azure-data-factory-authentication.yml
-  - type: OAuthScopes
-    url: scopes/microsoft-azure-data-factory-scopes.yml
-  - type: GitHubOrganization
-    url: https://github.com/Azure
-  - type: Portal
-    url: https://portal.azure.com/
-  - type: Pricing
-    url: https://azure.microsoft.com/en-us/pricing/
-  - type: TermsOfService
-    url: https://www.microsoft.com/en-us/legal/terms-of-use
-  - type: PrivacyPolicy
-    url: https://privacy.microsoft.com/en-us/privacystatement
-  - type: Support
-    url: https://support.microsoft.com/
-  - type: LlmsText
-    url: https://portal.azure.com/llms.txt
-modified: '2026-05-19'
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-description: >-
-  Azure Data Factory is a cloud-based data integration service that orchestrates and automates the movement and
-  transformation of data. This collection documents the REST APIs for managing pipelines, datasets, linked services,
-  triggers, and data flows across ETL and ELT workloads spanning cloud and on-premises stores.
-  - url: https://azure.microsoft.com/en-us/blog/azure-data-factory-announcing-new-capabilities-in-public-preview/
-    type: Blog
+- type: Website
+  url: https://www.microsoft.com/
+- type: Portal
+  url: https://portal.azure.com/
+- type: Documentation
+  url: https://learn.microsoft.com/en-us/azure/data-factory/
+- type: APIReference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- type: GettingStarted
+  url: https://learn.microsoft.com/en-us/azure/data-factory/quickstart-create-data-factory-rest-api
+- type: Support
+  url: https://support.microsoft.com/
+- type: HelpCenter
+  url: https://learn.microsoft.com/en-us/answers/tags/194/azure-data-factory
+- type: Blog
+  url: https://techcommunity.microsoft.com/category/analytics/blog/azuredatafactoryblog
+- type: GitHubOrganization
+  url: https://github.com/Azure
+- type: Roadmap
+  url: https://azure.microsoft.com/en-us/updates/
+- type: Pricing
+  url: https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/
+- type: SignUp
+  url: https://signup.azure.com/
+- type: TermsOfService
+  url: https://www.microsoft.com/en-us/legal/terms-of-use
+- type: PrivacyPolicy
+  url: https://privacy.microsoft.com/en-us/privacystatement
+- type: StatusPage
+  url: https://azure.status.microsoft/en-us/status
+- type: ChangeLog
+  url: changelog/microsoft-azure-data-factory-changelog.yml
+- type: ChangeLog
+  name: What's new in Azure Data Factory
+  url: https://learn.microsoft.com/en-us/azure/data-factory/whats-new
+- type: Deprecation
+  url: lifecycle/microsoft-azure-data-factory-lifecycle.yml
+- type: Lifecycle
+  url: lifecycle/microsoft-azure-data-factory-lifecycle.yml
+- type: Authentication
+  url: authentication/microsoft-azure-data-factory-authentication.yml
+- type: OAuthScopes
+  url: scopes/microsoft-azure-data-factory-scopes.yml
+- type: Conventions
+  url: conventions/microsoft-azure-data-factory-conventions.yml
+- type: Idempotency
+  url: conventions/microsoft-azure-data-factory-conventions.yml
+- type: ErrorCatalog
+  url: errors/microsoft-azure-data-factory-problem-types.yml
+- type: RateLimits
+  url: rate-limits/microsoft-azure-data-factory-rate-limits.yml
+- type: Plans
+  url: plans/microsoft-azure-data-factory-plans-pricing.yml
+- type: FinOps
+  url: finops/microsoft-azure-data-factory-finops.yml
+- type: DataModel
+  url: data-model/microsoft-azure-data-factory-data-model.yml
+- type: Examples
+  url: examples/_index.yml
+- type: Packages
+  url: packages/microsoft-azure-data-factory-packages.yml
+- type: SDKs
+  url: packages/microsoft-azure-data-factory-packages.yml
+- type: CLI
+  url: cli/microsoft-azure-data-factory-cli.yml
+- type: Sandbox
+  name: Azure Data Factory Studio
+  url: sandbox/microsoft-azure-data-factory-sandbox.yml
+- type: Conformance
+  url: conformance/microsoft-azure-data-factory-conformance.yml
+- type: Compliance
+  url: conformance/microsoft-azure-data-factory-conformance.yml
+- type: TrustCenter
+  url: security/microsoft-azure-data-factory-trust-center.yml
+- type: Security
+  url: security/microsoft-azure-data-factory-vulnerability-disclosure.yml
+- type: VulnerabilityDisclosure
+  url: security/microsoft-azure-data-factory-vulnerability-disclosure.yml
+- type: SecurityTxt
+  url: well-known/microsoft-azure-data-factory-security.txt
+- type: WellKnown
+  url: well-known/microsoft-azure-data-factory-well-known.yml
+- type: DomainSecurity
+  url: security/microsoft-azure-data-factory-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/microsoft-azure-data-factory-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/microsoft-azure-data-factory-llms.txt
 x-parent: microsoft-azure
 x-relationship: product
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 183
+  pass: local-v3
