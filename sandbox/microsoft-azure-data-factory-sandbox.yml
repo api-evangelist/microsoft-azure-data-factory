@@ -1,0 +1,68 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://adf.azure.com/ (HTTP 200, probed 2026-09-17),
+  https://azure.microsoft.com/en-us/free/ (HTTP 200 via redirect to the Azure account
+  purchase-options page),
+  https://learn.microsoft.com/en-us/azure/data-factory/quickstart-create-data-factory-rest-api
+description: >-
+  Azure Data Factory publishes no API sandbox in the Stripe sense — there is no test mode, no
+  test-vs-live key prefix, no fixture generator and no simulated clock, because there are no API
+  keys at all: every call is a Microsoft Entra ID bearer token against a real subscription, and
+  every call bills real meters. What it does publish is an interactive authoring console and a
+  platform-level free credit, which are what an evaluator actually uses instead.
+test_mode:
+  exists: false
+  key_prefixes: null
+  note: >-
+    No test/live key separation. Isolation is achieved the Azure way — a separate subscription or
+    resource group with its own RBAC assignments and budget — not by a mode flag on a credential.
+console:
+  name: Azure Data Factory Studio
+  url: https://adf.azure.com/
+  probed: '2026-09-17'
+  status: 200
+  type: hosted authoring and monitoring console
+  description: >-
+    The first-party web console for authoring pipelines, datasets, linked services and data flows,
+    running debug executions, and monitoring runs. Requires an Azure sign-in and a real factory.
+  also: https://portal.azure.com/
+debug_execution:
+  exists: true
+  description: >-
+    Data Factory exposes a real rehearsal surface for data flows — a debug session, created with
+    DataFlowDebugSession_Create, extended with DataFlowDebugSession_AddDataFlow, driven with
+    DataFlowDebugSession_ExecuteCommand and torn down with DataFlowDebugSession_Delete. It runs a
+    live Spark cluster against real data and is billed, so it is a debug facility rather than a
+    free sandbox.
+  operations:
+  - DataFlowDebugSession_Create
+  - DataFlowDebugSession_AddDataFlow
+  - DataFlowDebugSession_ExecuteCommand
+  - DataFlowDebugSession_QueryByFactory
+  - DataFlowDebugSession_Delete
+  note: These are the closest thing in the contract to a dry run. Pipeline activities themselves
+    have no validate-only mode.
+free_credit:
+  exists: true
+  url: https://azure.microsoft.com/en-us/free/
+  type: platform-level Azure account offer, not a Data Factory plan
+  note: >-
+    Terms and credit amounts are set by Azure and change; no figure is transcribed here because
+    the offer page renders its numbers client-side. Follow the URL for current terms.
+test_values:
+  published: false
+  note: >-
+    No published test identifiers, test cards, magic values or fixture tokens. Nothing is invented
+    here to fill the slot.
+getting_started:
+  rest_quickstart: https://learn.microsoft.com/en-us/azure/data-factory/quickstart-create-data-factory-rest-api
+  portal_quickstart: https://learn.microsoft.com/en-us/azure/data-factory/quickstart-create-data-factory
+  samples_repo: https://github.com/Azure/Azure-DataFactory
+  request_examples: examples/ (112 request/response example documents published by Microsoft
+    alongside the contract)
+summary:
+  sandbox_published: false
+  console_published: true
+  test_credentials_published: false
+  dry_run_mode: false

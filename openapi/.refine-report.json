@@ -1,8 +1,7 @@
 {
   "provider": "microsoft-azure-data-factory",
   "sources": [
-    "microsoft-azure-data-factory-factories-api-openapi.yml",
-    "microsoft-azure-data-factory-operations-api-openapi.yml"
+    "_ae-authored/microsoft-azure-data-factory-openapi.yml"
   ],
   "outputs": [
     "microsoft-azure-data-factory-factories-api-openapi.yml",
@@ -12,9 +11,12 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "microsoft-azure-data-factory-factories-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-data-factory-operations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "microsoft-azure-data-factory-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "microsoft-azure-data-factory-factories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-data-factory-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

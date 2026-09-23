@@ -1,0 +1,222 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Derived from openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json
+  (104 operations) and confirmed against the Azure Resource Manager convention docs:
+  https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/async-operations and
+  https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling
+description: >-
+  Azure Data Factory has no bespoke API style of its own. It is a Microsoft.DataFactory resource
+  provider behind Azure Resource Manager, so every cross-cutting semantic — auth, versioning,
+  pagination, long-running operations, throttling and the error envelope — is an ARM convention
+  and is shared with every other Azure control-plane service. That is good news for an agent
+  already speaking ARM and the single most important thing to know before writing a client.
+auth:
+  style: oauth2
+  scheme: azure_auth
+  flow: implicit (declared in the contract); authorization code and client credentials are the
+    flows Microsoft Entra ID actually recommends for this audience
+  audience: https://management.azure.com/
+  scope: user_impersonation
+  header: 'Authorization: Bearer <token>'
+  authorization_server: https://login.microsoftonline.com/common/v2.0
+  discovery: well-known/microsoft-azure-data-factory-openid-configuration.json
+  authorization_model: >-
+    Azure RBAC on the factory resource, not API scopes. The token carries one delegated scope
+    (user_impersonation); what the caller may actually do is decided by role assignment
+    (Data Factory Contributor, Reader, Contributor, Owner) on the factory, resource group or
+    subscription.
+  see_also: authentication/microsoft-azure-data-factory-authentication.yml
+versioning:
+  style: query-parameter
+  parameter: api-version
+  required: true
+  current: '2018-06-01'
+  note: >-
+    Every request must carry ?api-version=2018-06-01. Omitting it returns HTTP 400
+    MissingApiVersionParameter before any resource logic runs — verified live against
+    management.azure.com on 2026-09-17. Versions are dated and additive; a new dated version
+    is a new surface rather than a replacement.
+  see_also: lifecycle/microsoft-azure-data-factory-lifecycle.yml
+pagination:
+  style: continuation-link
+  request_params: []
+  response_fields:
+    items: value
+    next: nextLink
+  note: >-
+    List operations return {"value": [...], "nextLink": "<absolute URL>"}. The client follows
+    nextLink verbatim until it is absent; there is no page number, offset, cursor or page-size
+    parameter to set. 18 list response schemas in the contract carry nextLink.
+  query_operations: >-
+    The high-volume run surfaces are POST queries rather than GETs — PipelineRuns_QueryByFactory,
+    TriggerRuns_QueryByFactory, ActivityRuns_QueryByPipelineRun, Triggers_QueryByFactory — taking
+    a filter body with lastUpdatedAfter/lastUpdatedBefore plus filters and orderBy, and returning
+    a continuationToken instead of a nextLink.
+field_expansion:
+  supported: false
+  note: No $expand, $select or sparse-fieldset support. Resources are returned whole.
+metadata:
+  etag: >-
+    Every resource carries an ETag. GET returns it; a conditional GET with If-None-Match returns
+    304 Not Modified on 12 operations (see idempotency.scope).
+  tags: Factory resources carry ARM resource tags (key/value) via the tags property.
+request_id_tracing:
+  request_header: x-ms-client-request-id
+  response_headers:
+  - x-ms-request-id
+  - x-ms-correlation-request-id
+  note: >-
+    ARM echoes a per-request id and a correlation id on every response. Log both; they are what
+    Azure support asks for. These are platform headers, not declared in the Data Factory contract.
+error_envelope:
+  format: azure-arm
+  rfc9457: false
+  content_type: application/json
+  schema: CloudError
+  shape: |
+    {"error": {"code": "<PascalCaseErrorCode>", "message": "<human readable>",
+               "target": "<field or resource>", "details": [ ... ]}}
+  note: >-
+    Not RFC 9457 problem+json. The contract declares exactly one error response per operation —
+    a `default` response bound to CloudError — so there is no per-status-code error typing to
+    read from the spec.
+  see_also: errors/microsoft-azure-data-factory-problem-types.yml
+long_running_operations:
+  supported: true
+  note: >-
+    Nine operations are marked x-ms-long-running-operation and return 202 Accepted alongside 200.
+    The client polls the URL in the Azure-AsyncOperation response header (falling back to
+    Location when Azure-AsyncOperation is absent), waiting Retry-After seconds between polls,
+    until the returned status is Succeeded, Failed or Canceled.
+  headers:
+  - Azure-AsyncOperation
+  - Location
+  - Retry-After
+  operations:
+  - DataFlowDebugSession_Create
+  - DataFlowDebugSession_ExecuteCommand
+  - IntegrationRuntime_EnableInteractiveQuery
+  - IntegrationRuntime_DisableInteractiveQuery
+  - IntegrationRuntimeObjectMetadata_Refresh
+  - IntegrationRuntimes_Start
+  - IntegrationRuntimes_Stop
+  - Triggers_SubscribeToEvents
+  - Triggers_UnsubscribeFromEvents
+  docs: https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/async-operations
+rate_limit_signaling:
+  status: 429
+  headers:
+  - x-ms-ratelimit-remaining-subscription-reads
+  - x-ms-ratelimit-remaining-subscription-writes
+  - x-ms-ratelimit-remaining-subscription-deletes
+  - x-ms-ratelimit-remaining-tenant-reads
+  - x-ms-ratelimit-remaining-tenant-writes
+  - Retry-After
+  see_also: rate-limits/microsoft-azure-data-factory-rate-limits.yml
+idempotency:
+  mechanism: http-semantics + etag-conditional-write
+  header: if-match
+  idempotency_key_header: null
+  coverage: partial
+  scope:
+  - Factories_CreateOrUpdate
+  - ChangeDataCapture_CreateOrUpdate
+  - CredentialOperations_CreateOrUpdate
+  - DataFlows_CreateOrUpdate
+  - Datasets_CreateOrUpdate
+  - IntegrationRuntimes_CreateOrUpdate
+  - LinkedServices_CreateOrUpdate
+  - ManagedVirtualNetworks_CreateOrUpdate
+  - ManagedPrivateEndpoints_CreateOrUpdate
+  - Pipelines_CreateOrUpdate
+  - PrivateEndpointConnection_CreateOrUpdate
+  - Triggers_CreateOrUpdate
+  retention: not applicable — there is no replayed-request cache; correctness comes from the
+    ETag comparison at write time
+  note: >-
+    There is no Idempotency-Key header anywhere in this API. Replay safety comes from two
+    weaker things. First, the 12 CreateOrUpdate operations above are PUTs that accept an
+    optional `if-match` ETag header, so a retry either writes the same state or fails 412
+    rather than duplicating. Second, PUT is idempotent by HTTP method semantics across the
+    whole declarative surface. The gap that matters to an agent is the POST action surface:
+    71 of the 104 operations mutate, only 12 accept a conditional header, and
+    Pipelines_CreateRun — the one operation that spends money — has NO replay protection at
+    all. Calling it twice starts two pipeline runs and bills both. An agent must dedupe on its
+    own side, by recording the returned runId before retrying.
+  coverage_basis: 12 of 71 mutating operations accept if-match; 0 accept an idempotency key
+reversibility:
+  grade: documented
+  na: false
+  note: >-
+    Reversal paths exist and are named in the contract, but Microsoft does not state a time
+    window for any of them, so this grades `documented` rather than `verified`. No window is
+    asserted below that the docs do not state.
+  reversals:
+  - action: Pipelines_CreateRun
+    reverses_with: PipelineRuns_Cancel
+    window: null
+    window_basis: >-
+      Works only while the run is still in flight (Queued or InProgress). The docs do not state
+      a duration; once a run reaches a terminal status it cannot be cancelled.
+    docs: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  - action: trigger-initiated run
+    reverses_with: TriggerRuns_Cancel
+    window: null
+    window_basis: single trigger instance, cancellable by runId while in flight
+  - action: Triggers_Start
+    reverses_with: Triggers_Stop
+    window: null
+    window_basis: fully reversible at any time; stopping a trigger halts future firings but does
+      not roll back runs it already started
+  - action: IntegrationRuntimes_Start
+    reverses_with: IntegrationRuntimes_Stop
+    window: null
+  - action: ChangeDataCapture_Start
+    reverses_with: ChangeDataCapture_Stop
+    window: null
+  - action: DataFlowDebugSession_Create
+    reverses_with: DataFlowDebugSession_Delete
+    window: null
+  - action: Triggers_SubscribeToEvents
+    reverses_with: Triggers_UnsubscribeFromEvents
+    window: null
+  - action: IntegrationRuntimes_CreateLinkedIntegrationRuntime
+    reverses_with: IntegrationRuntimes_RemoveLinks
+    window: null
+  irreversible:
+  - operations:
+    - Factories_Delete
+    - Pipelines_Delete
+    - Datasets_Delete
+    - LinkedServices_Delete
+    - DataFlows_Delete
+    - Triggers_Delete
+    - CredentialOperations_Delete
+    - GlobalParameters_Delete
+    - ChangeDataCapture_Delete
+    - IntegrationRuntimes_Delete
+    - IntegrationRuntimeNodes_Delete
+    - ManagedPrivateEndpoints_Delete
+    - PrivateEndpointConnection_Delete
+    note: >-
+      The contract exposes no undelete, restore or soft-delete operation for any resource type.
+      A DELETE is final as far as this API is concerned. Factories configured with Git
+      integration can be redeployed from source control, but that is a source-control action
+      outside this API and is not a reversal of the call.
+  - operations:
+    - IntegrationRuntimes_RegenerateAuthKey
+    note: Regenerating an integration-runtime auth key immediately invalidates the previous key;
+      the old value is not recoverable.
+dry_run_mode:
+  supported: false
+  note: >-
+    No validate-only or what-if mode on any Data Factory operation. (ARM template deployments
+    have a what-if operation, but that is Microsoft.Resources, not this API.) An agent cannot
+    rehearse a write here.
+cross_links:
+  errors: errors/microsoft-azure-data-factory-problem-types.yml
+  lifecycle: lifecycle/microsoft-azure-data-factory-lifecycle.yml
+  authentication: authentication/microsoft-azure-data-factory-authentication.yml
+  rate_limits: rate-limits/microsoft-azure-data-factory-rate-limits.yml
+  scopes: scopes/microsoft-azure-data-factory-scopes.yml

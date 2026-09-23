@@ -1,0 +1,86 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://learn.microsoft.com/en-us/azure/data-factory/whats-new,
+  https://learn.microsoft.com/en-us/rest/api/datafactory/,
+  https://azure.status.microsoft/en-us/status,
+  https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services
+  and the api-version set published in
+  github.com/Azure/azure-rest-api-specs/specification/datafactory
+versioning:
+  scheme: dated api-version query parameter
+  current: '2018-06-01'
+  stability: stable
+  transport: query parameter `api-version`, required on every request
+  versions:
+  - version: '2018-06-01'
+    channel: stable
+    status: current
+    spec: openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json
+  - version: 2017-09-01-preview
+    channel: preview
+    status: superseded
+    note: Published in the same Microsoft.DataFactory spec folder; predates the GA surface.
+  policy: >-
+    Azure dated api-versions are additive. A new dated version is a new surface that runs
+    alongside the old one; a client pinned to 2018-06-01 is not moved by Microsoft shipping a
+    newer version. The GA control-plane surface has held at 2018-06-01 since Data Factory V2
+    reached general availability.
+  breaking_change_policy: >-
+    Microsoft does not publish a Data-Factory-specific breaking-change policy. Breaking changes
+    to an Azure control-plane resource provider are made by introducing a new dated api-version
+    rather than by changing an existing one.
+deprecation:
+  policy_published: true
+  policy_url: https://learn.microsoft.com/en-us/azure/data-factory/whats-new
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    Deprecations are announced in prose on the What's new page (which explicitly lists
+    "Deprecated functionality" and "Plans for changes" among the things it covers) and on Azure
+    Updates, not through RFC 8594 Sunset/Deprecation response headers. No operation in the
+    2018-06-01 contract is marked `deprecated: true`.
+  channels:
+  - https://learn.microsoft.com/en-us/azure/data-factory/whats-new
+  - https://azure.microsoft.com/en-us/updates/
+  deprecated_operations: []
+  strategic_signal: >-
+    The most consequential lifecycle fact about this product is not in the contract. Every
+    2026 entry on the What's new page is a Fabric MIGRATION entry — "Upgrading your Azure Data
+    Factory pipelines to Fabric" (March 2026), "Assessing your Azure Data Factory and Synapse
+    pipelines for migration to Fabric" (January 2026), "Mounting your Azure Data Factory in
+    Fabric is now generally available" (May 2025). Microsoft has not deprecated the
+    Microsoft.DataFactory API and the control plane remains GA, but the published roadmap for
+    new work points at Data Factory in Microsoft Fabric. Anyone building against this API for
+    the long term should read that signal.
+status_page:
+  url: https://azure.status.microsoft/en-us/status
+  status: 200
+  probed: '2026-09-17'
+  scope: Azure-wide service health, filterable to Data Factory by region
+  history: https://azure.status.microsoft/en-us/status/history/
+  per_resource: Azure Service Health and Resource Health in the portal give per-subscription and
+    per-resource views
+sla:
+  published: true
+  url: https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services
+  note: >-
+    The former per-product page
+    https://azure.microsoft.com/en-us/support/legal/sla/data-factory/v1_2/ now issues a
+    301 to the consolidated Microsoft SLA for Online Services document, where the Data Factory
+    terms live. No uptime percentage is recorded here because the consolidated document was not
+    parsed to a specific figure during this pass; recording a number we did not read would be a
+    fabrication.
+  probed: '2026-09-17'
+  probe_status: 301 -> 200
+support:
+  community: https://learn.microsoft.com/en-us/answers/tags/194/azure-data-factory
+  product_blog: https://techcommunity.microsoft.com/category/analytics/blog/azuredatafactoryblog
+  enterprise: Azure support plans
+summary:
+  versioning_documented: true
+  deprecation_policy_published: true
+  status_page_published: true
+  sla_published: true
+  sunset_headers: false

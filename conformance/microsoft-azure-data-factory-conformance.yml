@@ -1,0 +1,106 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json;
+  well-known/microsoft-azure-data-factory-openid-configuration.json (fetched 2026-09-17 from
+  https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration, HTTP 200);
+  well-known/microsoft-azure-data-factory-security.txt (fetched from
+  https://www.microsoft.com/.well-known/security.txt, HTTP 200);
+  https://www.microsoft.com/en-us/trust-center/compliance/compliance-overview and
+  https://servicetrust.microsoft.com/
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    securityDefinitions.azure_auth declares type oauth2 with authorizationUrl
+    https://login.microsoftonline.com/common/oauth2/authorize and scope user_impersonation;
+    applied globally via the root security requirement.
+- id: oidc
+  conforms: true
+  evidence: >-
+    The authorization server named by the contract publishes a complete OpenID Connect discovery
+    document at https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+    (HTTP 200, fetched 2026-09-17) carrying issuer, authorization_endpoint, token_endpoint,
+    jwks_uri, scopes_supported [openid, profile, email, offline_access] and RS256 id-token
+    signing. Saved verbatim to well-known/.
+- id: rfc9116
+  conforms: true
+  evidence: >-
+    RFC 9116 security.txt served at https://www.microsoft.com/.well-known/security.txt (HTTP 200,
+    text/plain) with Contact, Canonical, Policy, Acknowledgments, Encryption, Expires,
+    Preferred-Languages and a CSAF field. Saved verbatim.
+- id: csaf
+  conforms: true
+  evidence: >-
+    security.txt advertises CSAF provider metadata at
+    https://msrc.microsoft.com/csaf/provider-metadata.json — Microsoft publishes security
+    advisories in the OASIS Common Security Advisory Framework.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors use the Azure CloudError envelope ({"error":{"code","message","target","details"}}),
+    not application/problem+json. No operation declares a problem+json media type.
+- id: pagination
+  conforms: true
+  evidence: >-
+    18 list response schemas declare a nextLink continuation property alongside `value`; the run
+    query operations return a continuationToken. Consistent across the whole surface.
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    No Idempotency-Key header. 12 of 71 mutating operations accept an `if-match` ETag for
+    conditional writes; see conventions/microsoft-azure-data-factory-conventions.yml.
+- id: conditional-requests
+  conforms: true
+  evidence: >-
+    RFC 9110 conditional requests: `if-none-match` on 12 Get operations (declaring 304) and
+    `if-match` on the 12 matching CreateOrUpdate operations.
+- id: long-running-operations
+  conforms: true
+  evidence: >-
+    9 operations carry x-ms-long-running-operation and return 202; the ARM
+    Azure-AsyncOperation / Location / Retry-After polling convention applies.
+- id: azure-resource-manager
+  conforms: true
+  evidence: >-
+    The whole surface is Microsoft.DataFactory under ARM — host management.azure.com, the
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/
+    path shape, the required api-version parameter, the Operations_List discovery endpoint, and
+    ARM RBAC/throttling/error semantics.
+- id: odata
+  conforms: false
+  evidence: No $metadata document, no OData query options; ARM uses its own conventions.
+- id: scim
+  conforms: false
+  evidence: Not an identity-provisioning surface; no urn:ietf:params:scim schema URNs in the contract.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare API.
+- id: psd2
+  conforms: false
+  evidence: Not a payments API.
+domain_standard:
+  applicable: false
+  note: >-
+    Data integration and ETL orchestration has no cross-vendor machine-readable contract standard
+    for a control plane to declare. There is no analogue of SCIM, FHIR or OpenRTB here that this
+    contract could conform to, so no domain_standard_conformance is claimed. This is
+    reward-only: the absence is a property of the market, not a deficiency of the provider.
+compliance:
+  published: true
+  programs_url: https://www.microsoft.com/en-us/trust-center/compliance/compliance-overview
+  evidence_portal: https://servicetrust.microsoft.com/
+  probed: '2026-09-17'
+  probe_status: 200
+  note: >-
+    Microsoft publishes its audited compliance evidence through the Service Trust Portal and the
+    Trust Center compliance overview, which cover Azure and therefore Azure Data Factory.
+    Individual certification report names are not transcribed here because the Service Trust
+    Portal gates the reports themselves behind sign-in; the programme pages are public and were
+    probed live.
+  see_also: security/microsoft-azure-data-factory-trust-center.yml
+summary:
+  assertions: 14
+  conforms_true: 8
+  conforms_partial: 1
+  conforms_false: 5

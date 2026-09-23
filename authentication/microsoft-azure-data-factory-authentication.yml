@@ -1,6 +1,12 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/microsoft-azure-data-factory-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml, openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-credentials-api-openapi.yml, openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml, openapi/microsoft-azure-data-factory-datasets-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml, openapi/microsoft-azure-data-factory-factories-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml, openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml, openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml
+  ...
 summary:
   types:
   - oauth2
@@ -15,4 +21,70 @@ schemes:
     scopes: 1
   description: Azure Active Directory OAuth2 Flow.
   sources:
-  - openapi/microsoft-azure-data-factory-openapi.yml
+  - openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-credentials-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-datasets-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-factories-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-integration-runtime-object-metadata-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-integration-runtimes-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-linked-services-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-managed-private-endpoints-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-operations-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-pipelineruns-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-pipelines-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-private-endpoint-connections-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-private-link-resources-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-trigger-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-triggerruns-api-openapi.yml
+  - openapi/microsoft-azure-data-factory-triggers-api-openapi.yml
+docs: https://learn.microsoft.com/en-us/rest/api/azure/
+searched_on: '2026-09-17'
+discovery:
+  openid_configuration: https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+  probed: '2026-09-17'
+  status: 200
+  saved: well-known/microsoft-azure-data-factory-openid-configuration.json
+  issuer: https://login.microsoftonline.com/{tenantid}/v2.0
+  authorization_endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+  token_endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/token
+  jwks_uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
+  id_token_signing_alg_values_supported:
+  - RS256
+runtime:
+  header: 'Authorization: Bearer <access_token>'
+  audience: https://management.azure.com/
+  resource_scope: https://management.azure.com/.default
+  api_keys: false
+  note: The contract declares the legacy implicit flow against the v1.0 authorize endpoint. In practice Microsoft
+    Entra ID issues tokens for this audience through the authorization-code flow with PKCE (interactive) or the
+    client-credentials flow (service principal / workload identity), and Azure-hosted callers use a managed identity.
+    Implicit is declared, not recommended; do not read it as the flow to implement.
+authorization_model:
+  style: azure-rbac
+  note: The single delegated scope user_impersonation authenticates; it does not authorize. What a principal may
+    do is decided by Azure role assignment on the factory, resource group or subscription. A token that lists factories
+    fine will return 403 on a write if the role is missing, which is why 403 here means "assign a role", not "fix
+    the token".
+  roles:
+  - name: Data Factory Contributor
+    effect: full management of factories and their child resources
+  - name: Contributor
+    effect: full management including role-free resource operations
+  - name: Reader
+    effect: read-only across the factory surface
+  - name: Owner
+    effect: full management plus role assignment
+  docs: https://learn.microsoft.com/en-us/azure/data-factory/concepts-roles-permissions
+secret_handling:
+  note: 'Two operations return live secrets: IntegrationRuntimes_ListAuthKeys and Factories_GetDataPlaneAccess.
+    Treat both responses as credentials. Linked-service secrets should be held in Key Vault and referenced with
+    AzureKeyVaultSecretReference rather than inlined into a definition.'

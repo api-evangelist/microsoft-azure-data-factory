@@ -1,17 +1,48 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/microsoft-azure-data-factory-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml, openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-credentials-api-openapi.yml, openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml, openapi/microsoft-azure-data-factory-datasets-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml, openapi/microsoft-azure-data-factory-factories-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml, openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml, openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-integration-runtime-object-metadata-api-openapi.yml, openapi/microsoft-azure-data-factory-integration-runtimes-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-linked-services-api-openapi.yml, openapi/microsoft-azure-data-factory-managed-private-endpoints-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml, openapi/microsoft-azure-data-factory-operations-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-pipelineruns-api-openapi.yml, openapi/microsoft-azure-data-factory-pipelines-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-private-endpoint-connections-api-openapi.yml, openapi/microsoft-azure-data-factory-private-link-resources-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-trigger-api-openapi.yml, openapi/microsoft-azure-data-factory-triggerruns-api-openapi.yml,
+  openapi/microsoft-azure-data-factory-triggers-api-openapi.yml
 schemes:
 - name: azure_auth
-  source: openapi/microsoft-azure-data-factory-openapi.yml
+  type: oauth2
   flows:
   - flow: implicit
     authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
   description: Azure Active Directory OAuth2 Flow.
+  declared_in: all 25 per-tag OpenAPI documents in openapi/ (identical definition in each)
 scopes:
 - scope: user_impersonation
-  description: Impersonate your user account
+  description: Impersonate your user account against the Azure Service Management API.
   flows:
   - implicit
   sources:
-  - openapi/microsoft-azure-data-factory-openapi.yml
+  - openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json
+docs: https://learn.microsoft.com/en-us/azure/data-factory/concepts-roles-permissions
+searched_on: '2026-09-17'
+note: Azure Data Factory has effectively ONE OAuth scope and it is not where the authorization decision is made.
+  user_impersonation is the single delegated permission on the Azure Service Management API; the real permission
+  model is Azure RBAC role assignment plus the Microsoft.DataFactory/* resource-provider actions those roles carry.
+  Searching Microsoft documentation for a Data Factory scope reference page confirms none exists, because there
+  is no scope catalogue to publish. The rows below record that honestly rather than padding the artifact with invented
+  scopes.
+client_credentials_scope:
+  value: https://management.azure.com/.default
+  note: The .default scope a service principal or managed identity requests for this audience.
+rbac_actions:
+  namespace: Microsoft.DataFactory/*
+  discovery_operation: Operations_List
+  note: The authoritative permission list is the resource-provider action list returned by GET /providers/Microsoft.DataFactory/operations?api-version=2018-06-01
+    (Operations_List), which enumerates every Microsoft.DataFactory/... action a role can grant. That endpoint,
+    not an OAuth scope table, is what an agent should read to reason about permissions here.
+  docs: https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations

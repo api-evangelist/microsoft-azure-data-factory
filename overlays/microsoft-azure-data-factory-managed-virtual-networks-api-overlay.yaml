@@ -1,0 +1,48 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Azure Data Factory managedVirtualNetworks
+  version: 1.0.0
+extends: ../openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml
+x-generated: '2026-09-17'
+x-method: generated
+x-source: Records what API Evangelist changed relative to the provider source document openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json.
+  The original is never mutated; this overlay is the diff.
+actions:
+- target: $.info
+  description: Microsoft ships this contract as Swagger 2.0 titled "DataFactoryManagementClient" with no description,
+    contact or externalDocs. We converted it to OpenAPI 3.0.3, split it per tag, and added a product title, a description,
+    a contact and provenance extensions naming the source document.
+  update:
+    contact:
+      name: Microsoft Azure
+      url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+    x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+    x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3)
+- target: $
+  description: Added an externalDocs pointer to the Microsoft REST reference. The Swagger 2.0 source carries none.
+  update:
+    externalDocs:
+      description: Azure Data Factory REST API reference
+      url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+- target: $.servers
+  description: Swagger 2.0 expressed the host as host+schemes (management.azure.com, https). Converted to an OpenAPI
+    3 servers[] entry with a description. The host is unchanged.
+- target: $.tags[?(@.name=='managedVirtualNetworks')]
+  description: Tag descriptions in the source are the bare tag name repeated. Left as published; noted here so a
+    reader knows the thinness is Microsoft's, not a conversion artifact.
+- target: $.paths.*.*.x-ms-examples.*
+  description: x-ms-examples in the source use relative $refs (./examples/*.json) that do not resolve outside Microsofts
+    spec repo. Rewritten to absolute raw.githubusercontent.com URLs, and the 112 referenced example documents are
+    harvested verbatim into examples/.
+x-not-changed:
+- paths
+- operationIds
+- parameters
+- requestBodies
+- responses
+- components.schemas
+- components.securitySchemes
+- security
+x-note: No operation, schema, parameter or response was added, removed or reworded. Everything under paths and components
+  is Microsofts, carried through the Swagger 2.0 -> OpenAPI 3.0.3 conversion unmodified apart from the mechanical
+  2.0->3.0 restructuring (body parameter -> requestBody, response schema -> response content, definitions -> components.schemas).

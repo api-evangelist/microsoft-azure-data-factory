@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST privateLinkResources API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: privateLinkResources
+  description: privateLinkResources operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateLinkResources
+  : get:
+      operationId: privateLinkResources_Get
+      description: Gets the private link resources
+      tags:
+      - privateLinkResources
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateLinkResourcesWrapper'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Get private link resources of a site:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/GetPrivateLinkResources.json
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    PrivateLinkResource:
+      type: object
+      description: A private link resource
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
+    PrivateLinkResourceProperties:
+      type: object
+      description: Properties of a private link resource
+      properties:
+        groupId:
+          type: string
+          description: GroupId of a private link resource
+          readOnly: true
+        requiredMembers:
+          type: array
+          description: RequiredMembers of a private link resource
+          items:
+            type: string
+          readOnly: true
+        requiredZoneNames:
+          type: array
+          description: RequiredZoneNames of a private link resource
+          items:
+            type: string
+          readOnly: true
+    PrivateLinkResourcesWrapper:
+      type: object
+      description: Wrapper for a collection of private link resources
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateLinkResource'
+      required:
+      - value
+    SubResource:
+      type: object
+      description: Azure Data Factory nested resource, which belongs to a factory.
+      properties:
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

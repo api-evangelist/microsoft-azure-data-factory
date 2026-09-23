@@ -1,0 +1,70 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/azure/data-factory/whats-new
+docs: https://learn.microsoft.com/en-us/azure/data-factory/whats-new
+archive: https://learn.microsoft.com/en-us/azure/data-factory/whats-new-archive
+also: https://azure.microsoft.com/en-us/updates/
+scheme:
+  style: dated monthly release notes
+  granularity: month
+  covers:
+  - latest releases
+  - known issues
+  - bug fixes
+  - deprecated functionality
+  - plans for changes
+  note: >-
+    Product release notes, not API release notes. The control-plane contract has held at
+    api-version 2018-06-01 throughout every entry below; these are connector, data-flow,
+    runtime and migration changes, not changes to the REST surface.
+current_api_version: '2018-06-01'
+page_last_updated: '2026-07-20'
+entries:
+- date: '2026-03'
+  category: Migration
+  breaking: false
+  highlights:
+  - Upgrading your Azure Data Factory pipelines to Fabric.
+  - Upgrading your Azure Synapse Analytics pipelines to Fabric.
+- date: '2026-01'
+  category: Migration
+  breaking: false
+  highlights:
+  - Assessing your Azure Data Factory and Synapse pipelines for migration to Fabric.
+- date: '2025-12'
+  category: Data movement
+  breaking: false
+  highlights:
+  - HDInsight Hive activity now supports Managed Identity authentication to ADLS Gen2 storage
+    accounts for Bring Your Own Compute.
+- date: '2025-10'
+  category: Data movement
+  breaking: false
+  highlights:
+  - HDInsight Hive activity now supports Managed Identity authentication to ADLS Gen2 storage
+    accounts for Bring Your Own Compute.
+- date: '2025-08'
+  category: Data flow
+  breaking: false
+  highlights:
+  - Mapping Data Flows updated to Spark 3.4.
+- date: '2025-06'
+  category: Data movement
+  breaking: false
+  highlights:
+  - Connector Upgrade Advisor now supports additional connectors.
+- date: '2025-05'
+  category: Migration
+  breaking: false
+  highlights:
+  - Mounting your Azure Data Factory in Fabric is now generally available.
+- date: '2024-08'
+  category: Data movement
+  breaking: false
+  highlights:
+  - HDInsight On-demand Spark activity now supports Managed Identity authentication.
+summary:
+  entries_recorded: 8
+  window: 2024-08 to 2026-03
+  breaking_changes_in_window: 0
+  dominant_theme: migration to Data Factory in Microsoft Fabric

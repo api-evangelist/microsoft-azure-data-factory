@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST exposureControl API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: exposureControl
+  description: exposureControl operations
+paths:
+  /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue:
+    post:
+      operationId: ExposureControl_GetFeatureValue
+      description: Get exposure control feature for specific location.
+      tags:
+      - exposureControl
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - name: locationId
+        in: path
+        required: true
+        description: The location identifier.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExposureControlRequest'
+        description: The request body
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureControlResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ExposureControl_GetFeatureValue:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ExposureControl_GetFeatureValue.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getFeatureValue
+  : post:
+      operationId: ExposureControl_GetFeatureValueByFactory
+      description: Get exposure control feature for specific factory.
+      tags:
+      - exposureControl
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExposureControlRequest'
+        description: The exposure control request.
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureControlResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ExposureControl_GetFeatureValueByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ExposureControl_GetFeatureValueByFactory.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryFeaturesValue
+  : post:
+      operationId: ExposureControl_QueryFeatureValuesByFactory
+      description: Get list of exposure control features for specific factory.
+      tags:
+      - exposureControl
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExposureControlBatchRequest'
+        description: The exposure control request for list of features.
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureControlBatchResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ExposureControl_QueryFeatureValuesByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ExposureControl_QueryFeatureValuesByFactory.json
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    ExposureControlBatchRequest:
+      type: object
+      description: A list of exposure control features.
+      properties:
+        exposureControlRequests:
+          type: array
+          description: List of exposure control features.
+          items:
+            $ref: '#/components/schemas/ExposureControlRequest'
+          x-ms-identifiers:
+          - featureName
+      required:
+      - exposureControlRequests
+    ExposureControlBatchResponse:
+      type: object
+      description: A list of exposure control feature values.
+      properties:
+        exposureControlResponses:
+          type: array
+          description: List of exposure control feature values.
+          items:
+            $ref: '#/components/schemas/ExposureControlResponse'
+          x-ms-identifiers:
+          - featureName
+      required:
+      - exposureControlResponses
+    ExposureControlRequest:
+      type: object
+      description: The exposure control request.
+      properties:
+        featureName:
+          type: string
+          description: The feature name.
+        featureType:
+          type: string
+          description: The feature type.
+    ExposureControlResponse:
+      type: object
+      description: The exposure control response.
+      properties:
+        featureName:
+          type: string
+          description: The feature name.
+          readOnly: true
+        value:
+          type: string
+          description: The feature value.
+          readOnly: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

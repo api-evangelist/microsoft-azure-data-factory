@@ -1,0 +1,129 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Registry metadata endpoints queried directly on 2026-09-17: registry.npmjs.org,
+  pypi.org/pypi/<pkg>/json, api.nuget.org registration index, search.maven.org solrsearch,
+  proxy.golang.org, rubygems.org/api/v1/gems. All six answered unauthenticated.
+note: >-
+  Every package below is published by Microsoft from an Azure SDK monorepo and generated from
+  the same Microsoft.DataFactory contract this repo harvests
+  (openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json), so
+  official: true is a first-party claim, not an inference from the name. Two currency findings
+  are recorded rather than smoothed over: the Ruby gem has not shipped since 2021 (the Azure
+  Ruby SDK was retired) and the track-1 .NET package
+  Microsoft.Azure.Management.DataFactory has not shipped since 2023 (superseded by
+  Azure.ResourceManager.DataFactory). Both still resolve and install; neither tracks the
+  current API surface.
+packages:
+- name: '@azure/arm-datafactory'
+  registry: npm
+  language: javascript
+  official: true
+  version: 20.0.0
+  published: '2026-07-08'
+  url: https://www.npmjs.com/package/@azure/arm-datafactory
+  source_code: https://github.com/Azure/azure-sdk-for-js
+  install: npm install @azure/arm-datafactory
+  description: DataFactoryManagementClient for JavaScript/TypeScript, generated from the Microsoft.DataFactory
+    resource-provider contract.
+  status: current
+- name: azure-mgmt-datafactory
+  registry: pypi
+  language: python
+  official: true
+  version: 10.0.0
+  published: '2026-07-08'
+  url: https://pypi.org/project/azure-mgmt-datafactory/
+  source_code: https://github.com/Azure/azure-sdk-for-python
+  install: pip install azure-mgmt-datafactory
+  description: Microsoft Azure Data Factory Management Client Library for Python.
+  status: current
+- name: Azure.ResourceManager.DataFactory
+  registry: nuget
+  language: dotnet
+  official: true
+  version: 1.11.1
+  published: '2026-06-05'
+  url: https://www.nuget.org/packages/Azure.ResourceManager.DataFactory
+  source_code: https://github.com/Azure/azure-sdk-for-net
+  install: dotnet add package Azure.ResourceManager.DataFactory
+  description: Azure Resource Manager client SDK (track 2) for the Microsoft.DataFactory resource
+    provider.
+  status: current
+- name: Microsoft.Azure.Management.DataFactory
+  registry: nuget
+  language: dotnet
+  official: true
+  version: 9.3.0
+  published: '2023-04-07'
+  url: https://www.nuget.org/packages/Microsoft.Azure.Management.DataFactory
+  source_code: https://github.com/Azure/azure-sdk-for-net
+  install: dotnet add package Microsoft.Azure.Management.DataFactory
+  description: Track-1 (legacy) .NET management library for Azure Data Factory V2.
+  status: superseded
+  note: >-
+    Last published 2023-04-07, three years behind the track-2 package above. Microsoft's .NET
+    guidance directs new work to Azure.ResourceManager.DataFactory.
+- name: com.azure.resourcemanager:azure-resourcemanager-datafactory
+  registry: maven
+  language: java
+  official: true
+  version: 1.2.0
+  published: '2025-05-27'
+  url: https://central.sonatype.com/artifact/com.azure.resourcemanager/azure-resourcemanager-datafactory
+  source_code: https://github.com/Azure/azure-sdk-for-java
+  install: |
+    <dependency>
+      <groupId>com.azure.resourcemanager</groupId>
+      <artifactId>azure-resourcemanager-datafactory</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+  description: Azure Resource Manager DataFactory Management client library for Java.
+  status: current
+- name: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/datafactory/armdatafactory/v9
+  registry: gomod
+  language: go
+  official: true
+  version: v9.1.0
+  published: '2024-12-13'
+  url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/datafactory/armdatafactory/v9
+  source_code: https://github.com/Azure/azure-sdk-for-go
+  install: go get github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/datafactory/armdatafactory/v9
+  description: armdatafactory — Go management-plane client for Microsoft.DataFactory.
+  status: current
+- name: azure_mgmt_data_factory
+  registry: rubygems
+  language: ruby
+  official: true
+  version: 0.18.7
+  published: '2021-02-26'
+  url: https://rubygems.org/gems/azure_mgmt_data_factory
+  source_code: https://github.com/Azure/azure-sdk-for-ruby
+  install: gem install azure_mgmt_data_factory
+  description: Official Ruby client library to consume DataFactory.
+  status: abandoned
+  note: >-
+    Last published 2021-02-26. The Azure SDK for Ruby is retired; this gem predates five years
+    of Microsoft.DataFactory API changes and should not be treated as a supported client.
+summary:
+  package_count: 7
+  official_count: 7
+  languages:
+  - javascript
+  - python
+  - dotnet
+  - java
+  - go
+  - ruby
+  registries:
+  - npm
+  - pypi
+  - nuget
+  - maven
+  - gomod
+  - rubygems
+  newest_release: '2026-07-08'
+  oldest_release: '2021-02-26'
+  stale_or_abandoned:
+  - azure_mgmt_data_factory
+  - Microsoft.Azure.Management.DataFactory

@@ -1,0 +1,370 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST managedPrivateEndpoints API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: managedPrivateEndpoints
+  description: managedPrivateEndpoints operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}/managedPrivateEndpoints
+  : get:
+      operationId: ManagedPrivateEndpoints_ListByFactory
+      description: Lists managed private endpoints.
+      tags:
+      - managedPrivateEndpoints
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: managedVirtualNetworkName
+        in: path
+        required: true
+        description: Managed virtual network name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managedPrivateEndpointListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ManagedPrivateEndpoints_ListByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}/managedPrivateEndpoints/{managedPrivateEndpointName}
+  : get:
+      operationId: ManagedPrivateEndpoints_Get
+      description: Gets a managed private endpoint.
+      tags:
+      - managedPrivateEndpoints
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: managedVirtualNetworkName
+        in: path
+        required: true
+        description: Managed virtual network name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      - name: managedPrivateEndpointName
+        in: path
+        required: true
+        description: Managed private endpoint name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the managed private endpoint entity. Should only be specified for get. If the ETag matches the
+          existing entity tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedPrivateEndpointResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ManagedPrivateEndpoints_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
+    put:
+      operationId: ManagedPrivateEndpoints_CreateOrUpdate
+      description: Creates or updates a managed private endpoint.
+      tags:
+      - managedPrivateEndpoints
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: managedVirtualNetworkName
+        in: path
+        required: true
+        description: Managed virtual network name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      - name: managedPrivateEndpointName
+        in: path
+        required: true
+        description: Managed private endpoint name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      - name: if-match
+        in: header
+        required: false
+        description: ETag of the managed private endpoint entity. Should only be specified for update, for which it should
+          match existing entity or can be * for unconditional update.
+        schema:
+          type: string
+        x-ms-client-name: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManagedPrivateEndpointResource'
+        description: Managed private endpoint resource definition.
+      responses:
+        '200':
+          description: Resource 'ManagedPrivateEndpointResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedPrivateEndpointResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ManagedVirtualNetworks_Create:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Create.json
+    delete:
+      operationId: ManagedPrivateEndpoints_Delete
+      description: Deletes a managed private endpoint.
+      tags:
+      - managedPrivateEndpoints
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: managedVirtualNetworkName
+        in: path
+        required: true
+        description: Managed virtual network name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      - name: managedPrivateEndpointName
+        in: path
+        required: true
+        description: Managed private endpoint name
+        schema:
+          type: string
+          maxLength: 127
+          minLength: 1
+          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ManagedVirtualNetworks_Delete:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Delete.json
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    ConnectionStateProperties:
+      type: object
+      description: The connection state of a managed private endpoint
+      properties:
+        actionsRequired:
+          type: string
+          description: The actions required on the managed private endpoint
+          readOnly: true
+        description:
+          type: string
+          description: The managed private endpoint description
+          readOnly: true
+        status:
+          type: string
+          description: The approval status
+          readOnly: true
+    ManagedPrivateEndpoint:
+      type: object
+      description: Properties of a managed private endpoint
+      properties:
+        connectionState:
+          $ref: '#/components/schemas/ConnectionStateProperties'
+          description: The managed private endpoint connection state
+        fqdns:
+          type: array
+          description: Fully qualified domain names
+          items:
+            type: string
+        groupId:
+          type: string
+          description: The groupId to which the managed private endpoint is created
+        isReserved:
+          type: boolean
+          description: Denotes whether the managed private endpoint is reserved
+          readOnly: true
+        privateLinkResourceId:
+          type: string
+          description: The ARM resource ID of the resource to which the managed private endpoint is created
+        provisioningState:
+          type: string
+          description: The managed private endpoint provisioning state
+          readOnly: true
+      additionalProperties: {}
+    ManagedPrivateEndpointResource:
+      type: object
+      description: Managed private endpoint resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/ManagedPrivateEndpoint'
+          description: Managed private endpoint properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    managedPrivateEndpointListResponse:
+      type: object
+      description: Paged collection of ManagedPrivateEndpointResource items
+      properties:
+        value:
+          type: array
+          description: The ManagedPrivateEndpointResource items on this page
+          items:
+            $ref: '#/components/schemas/ManagedPrivateEndpointResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

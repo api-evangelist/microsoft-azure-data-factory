@@ -1,0 +1,577 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST dataFlows API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: dataFlows
+  description: dataFlows operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows
+  : get:
+      operationId: DataFlows_ListByFactory
+      description: Lists data flows.
+      tags:
+      - dataFlows
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFlowListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        DataFlows_ListByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlows_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows/{dataFlowName}
+  : get:
+      operationId: DataFlows_Get
+      description: Gets a data flow.
+      tags:
+      - dataFlows
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: dataFlowName
+        in: path
+        required: true
+        description: The data flow name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity
+          tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFlowResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        DataFlows_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlows_Get.json
+    put:
+      operationId: DataFlows_CreateOrUpdate
+      description: Creates or updates a data flow.
+      tags:
+      - dataFlows
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: dataFlowName
+        in: path
+        required: true
+        description: The data flow name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-match
+        in: header
+        required: false
+        description: ETag of the data flow entity. Should only be specified for update, for which it should match existing
+          entity or can be * for unconditional update.
+        schema:
+          type: string
+        x-ms-client-name: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataFlowResource'
+        description: Data flow resource definition.
+      responses:
+        '200':
+          description: Resource 'DataFlowResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFlowResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        DataFlows_Create:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlows_Create.json
+        DataFlows_Update:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlows_Update.json
+    delete:
+      operationId: DataFlows_Delete
+      description: Deletes a data flow.
+      tags:
+      - dataFlows
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: dataFlowName
+        in: path
+        required: true
+        description: The data flow name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        DataFlows_Delete:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DataFlows_Delete.json
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    DataFlow:
+      type: object
+      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
+      properties:
+        type:
+          type: string
+          description: Type of data flow.
+        description:
+          type: string
+          description: The description of the data flow.
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the data flow.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DataFlowFolder'
+          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      discriminator: type
+      required:
+      - type
+    DataFlowFolder:
+      type: object
+      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this data flow is in.
+    DataFlowListResponse:
+      type: object
+      description: A list of data flow resources.
+      properties:
+        value:
+          type: array
+          description: The DataFlowResource items on this page
+          items:
+            $ref: '#/components/schemas/DataFlowResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    DataFlowReference:
+      type: object
+      description: Data flow reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/DataFlowReferenceType'
+          description: Data flow reference type.
+        referenceName:
+          type: string
+          description: Reference data flow name.
+        datasetParameters:
+          description: Reference data flow parameters from dataset.
+        parameters:
+          type: object
+          description: Data flow parameters
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+      additionalProperties: {}
+    DataFlowReferenceType:
+      type: string
+      description: Data flow reference type.
+      enum:
+      - DataFlowReference
+      x-ms-enum:
+        name: DataFlowReferenceType
+        modelAsString: true
+        values:
+        - name: DataFlowReference
+          value: DataFlowReference
+          description: DataFlowReference
+    DataFlowResource:
+      type: object
+      description: Data flow resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/DataFlow'
+          description: Data flow properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    DataFlowSink:
+      type: object
+      description: Transformation for data flow sink.
+      properties:
+        schemaLinkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Schema linked service reference.
+        rejectedDataLinkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Rejected data linked service reference.
+      allOf:
+      - $ref: '#/components/schemas/Transformation'
+    DataFlowSource:
+      type: object
+      description: Transformation for data flow source.
+      properties:
+        schemaLinkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Schema linked service reference.
+      allOf:
+      - $ref: '#/components/schemas/Transformation'
+    DatasetReference:
+      type: object
+      description: Dataset reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/DatasetReferenceType'
+          description: Dataset reference type.
+        referenceName:
+          type: string
+          description: Reference dataset name.
+        parameters:
+          type: object
+          description: Arguments for dataset.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    DatasetReferenceType:
+      type: string
+      description: Dataset reference type.
+      enum:
+      - DatasetReference
+      x-ms-enum:
+        name: DatasetReferenceType
+        modelAsString: true
+        values:
+        - name: DatasetReference
+          value: DatasetReference
+          description: DatasetReference
+    Flowlet:
+      type: object
+      description: Data flow flowlet
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/FlowletTypeProperties'
+          description: Flowlet type properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/DataFlow'
+      x-ms-discriminator-value: Flowlet
+    FlowletTypeProperties:
+      type: object
+      description: Flowlet type properties.
+      properties:
+        sources:
+          type: array
+          description: List of sources in Flowlet.
+          items:
+            $ref: '#/components/schemas/DataFlowSource'
+          x-ms-identifiers:
+          - name
+        sinks:
+          type: array
+          description: List of sinks in Flowlet.
+          items:
+            $ref: '#/components/schemas/DataFlowSink'
+          x-ms-identifiers:
+          - name
+        transformations:
+          type: array
+          description: List of transformations in Flowlet.
+          items:
+            $ref: '#/components/schemas/Transformation'
+          x-ms-identifiers:
+          - name
+        script:
+          type: string
+          description: Flowlet script.
+        scriptLines:
+          type: array
+          description: Flowlet script lines.
+          items:
+            type: string
+    LinkedServiceReference:
+      type: object
+      description: Linked service reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+          description: Linked service reference type.
+        referenceName:
+          type: string
+          description: Reference LinkedService name.
+        parameters:
+          type: object
+          description: Arguments for LinkedService.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    MappingDataFlow:
+      type: object
+      description: Mapping data flow.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MappingDataFlowTypeProperties'
+          description: Mapping data flow type properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/DataFlow'
+      x-ms-discriminator-value: MappingDataFlow
+    MappingDataFlowTypeProperties:
+      type: object
+      description: Mapping data flow type properties.
+      properties:
+        sources:
+          type: array
+          description: List of sources in data flow.
+          items:
+            $ref: '#/components/schemas/DataFlowSource'
+          x-ms-identifiers:
+          - name
+        sinks:
+          type: array
+          description: List of sinks in data flow.
+          items:
+            $ref: '#/components/schemas/DataFlowSink'
+          x-ms-identifiers:
+          - name
+        transformations:
+          type: array
+          description: List of transformations in data flow.
+          items:
+            $ref: '#/components/schemas/Transformation'
+          x-ms-identifiers:
+          - name
+        script:
+          type: string
+          description: DataFlow script.
+        scriptLines:
+          type: array
+          description: Data flow script lines.
+          items:
+            type: string
+    PowerQuerySource:
+      type: object
+      description: Power query source.
+      properties:
+        script:
+          type: string
+          description: source script.
+      allOf:
+      - $ref: '#/components/schemas/DataFlowSource'
+    PowerQueryTypeProperties:
+      type: object
+      description: Power Query data flow type properties.
+      properties:
+        sources:
+          type: array
+          description: List of sources in Power Query.
+          items:
+            $ref: '#/components/schemas/PowerQuerySource'
+          x-ms-identifiers:
+          - name
+        script:
+          type: string
+          description: Power query mashup script.
+        documentLocale:
+          type: string
+          description: Locale of the Power query mashup document.
+    Transformation:
+      type: object
+      description: A data flow transformation.
+      properties:
+        name:
+          type: string
+          description: Transformation name.
+        description:
+          type: string
+          description: Transformation description.
+        dataset:
+          $ref: '#/components/schemas/DatasetReference'
+          description: Dataset reference.
+        linkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Linked service reference.
+        flowlet:
+          $ref: '#/components/schemas/DataFlowReference'
+          description: Flowlet Reference
+      required:
+      - name
+    Type:
+      type: string
+      description: Linked service reference type.
+      enum:
+      - LinkedServiceReference
+      x-ms-enum:
+        name: Type
+        modelAsString: true
+        values:
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+    WranglingDataFlow:
+      type: object
+      description: Power Query data flow.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/PowerQueryTypeProperties'
+          description: PowerQuery data flow type properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/DataFlow'
+      x-ms-discriminator-value: WranglingDataFlow
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

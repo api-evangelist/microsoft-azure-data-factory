@@ -1,0 +1,350 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json —
+  1,199 schema definitions, walked for allOf discriminator hierarchies and *Reference
+  id-reference properties. Counts below are computed from the contract, not estimated.
+description: >-
+  Azure Data Factory's object model is a small set of resources hanging off one root (the
+  factory) joined by named *Reference objects, sitting on top of an unusually large
+  polymorphic type system. The whole design is the interesting part: 6 first-class child
+  resources and roughly 20 resource schemas, against 1,199 definitions — because every
+  connector, source, sink, storage format and activity is a discriminated subtype rather than
+  a free-form blob. An agent that understands the discriminator pattern can navigate all of it;
+  one that does not will find the request bodies impenetrable.
+root:
+  entity: Factory
+  id_form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}
+  note: Every other entity is addressed beneath a factory. There is no cross-factory operation.
+entities:
+- name: Factory
+  schema: Factory
+  operations:
+  - Factories_CreateOrUpdate
+  - Factories_Get
+  - Factories_List
+  - Factories_ListByResourceGroup
+  - Factories_Update
+  - Factories_Delete
+  key: factoryName
+  properties_of_note:
+  - repoConfiguration (FactoryRepoConfiguration — 2 subtypes: GitHub, VSTS)
+  - globalParameters
+  - identity (managed identity)
+  - encryption
+  - publicNetworkAccess
+- name: Pipeline
+  schema: PipelineResource
+  operations:
+  - Pipelines_CreateOrUpdate
+  - Pipelines_Get
+  - Pipelines_ListByFactory
+  - Pipelines_Delete
+  - Pipelines_CreateRun
+  key: pipelineName
+- name: Dataset
+  schema: DatasetResource
+  operations:
+  - Datasets_CreateOrUpdate
+  - Datasets_Get
+  - Datasets_ListByFactory
+  - Datasets_Delete
+  key: datasetName
+  polymorphic: true
+  subtypes: 105
+- name: LinkedService
+  schema: LinkedServiceResource
+  operations:
+  - LinkedServices_CreateOrUpdate
+  - LinkedServices_Get
+  - LinkedServices_ListByFactory
+  - LinkedServices_Delete
+  key: linkedServiceName
+  polymorphic: true
+  subtypes: 121
+- name: DataFlow
+  schema: DataFlowResource
+  operations:
+  - DataFlows_CreateOrUpdate
+  - DataFlows_Get
+  - DataFlows_ListByFactory
+  - DataFlows_Delete
+  key: dataFlowName
+  polymorphic: true
+  subtypes: 3
+- name: Trigger
+  schema: TriggerResource
+  operations:
+  - Triggers_CreateOrUpdate
+  - Triggers_Get
+  - Triggers_ListByFactory
+  - Triggers_Delete
+  - Triggers_Start
+  - Triggers_Stop
+  - Triggers_SubscribeToEvents
+  - Triggers_UnsubscribeFromEvents
+  key: triggerName
+  polymorphic: true
+  subtypes: 4
+- name: IntegrationRuntime
+  schema: IntegrationRuntimeResource
+  operations:
+  - IntegrationRuntimes_CreateOrUpdate
+  - IntegrationRuntimes_Get
+  - IntegrationRuntimes_ListByFactory
+  - IntegrationRuntimes_Delete
+  key: integrationRuntimeName
+  polymorphic: true
+  subtypes: 2
+  children:
+  - IntegrationRuntimeNode
+- name: Credential
+  schema: CredentialResource
+  operations:
+  - CredentialOperations_CreateOrUpdate
+  - CredentialOperations_Get
+  - CredentialOperations_ListByFactory
+  - CredentialOperations_Delete
+  key: credentialName
+  polymorphic: true
+  subtypes: 2
+- name: GlobalParameter
+  schema: GlobalParameterResource
+  operations:
+  - GlobalParameters_CreateOrUpdate
+  - GlobalParameters_Get
+  - GlobalParameters_ListByFactory
+  - GlobalParameters_Delete
+- name: ChangeDataCapture
+  schema: ChangeDataCaptureResource
+  operations:
+  - ChangeDataCapture_CreateOrUpdate
+  - ChangeDataCapture_Get
+  - ChangeDataCapture_ListByFactory
+  - ChangeDataCapture_Delete
+  - ChangeDataCapture_Start
+  - ChangeDataCapture_Stop
+  - ChangeDataCapture_Status
+- name: ManagedVirtualNetwork
+  schema: ManagedVirtualNetworkResource
+  operations:
+  - ManagedVirtualNetworks_CreateOrUpdate
+  - ManagedVirtualNetworks_Get
+  - ManagedVirtualNetworks_ListByFactory
+  children:
+  - ManagedPrivateEndpoint
+- name: ManagedPrivateEndpoint
+  schema: ManagedPrivateEndpointResource
+  operations:
+  - ManagedPrivateEndpoints_CreateOrUpdate
+  - ManagedPrivateEndpoints_Get
+  - ManagedPrivateEndpoints_ListByFactory
+  - ManagedPrivateEndpoints_Delete
+- name: PipelineRun
+  schema: PipelineRun
+  kind: run record (created by execution, not by CRUD)
+  operations:
+  - Pipelines_CreateRun
+  - PipelineRuns_Get
+  - PipelineRuns_QueryByFactory
+  - PipelineRuns_Cancel
+- name: ActivityRun
+  schema: ActivityRun
+  kind: run record
+  operations:
+  - ActivityRuns_QueryByPipelineRun
+- name: TriggerRun
+  schema: TriggerRun
+  kind: run record
+  operations:
+  - TriggerRuns_QueryByFactory
+  - TriggerRuns_Cancel
+  - TriggerRuns_Rerun
+relationships:
+- from: Factory
+  to: Pipeline
+  type: has_many
+  via: URL path segment /pipelines/{pipelineName}
+- from: Factory
+  to: Dataset
+  type: has_many
+  via: URL path segment /datasets/{datasetName}
+- from: Factory
+  to: LinkedService
+  type: has_many
+  via: URL path segment /linkedservices/{linkedServiceName}
+- from: Factory
+  to: DataFlow
+  type: has_many
+- from: Factory
+  to: Trigger
+  type: has_many
+- from: Factory
+  to: IntegrationRuntime
+  type: has_many
+- from: Factory
+  to: Credential
+  type: has_many
+- from: Factory
+  to: GlobalParameter
+  type: has_many
+- from: Factory
+  to: ChangeDataCapture
+  type: has_many
+- from: Factory
+  to: ManagedVirtualNetwork
+  type: has_many
+- from: ManagedVirtualNetwork
+  to: ManagedPrivateEndpoint
+  type: has_many
+- from: IntegrationRuntime
+  to: IntegrationRuntimeNode
+  type: has_many
+- from: Dataset
+  to: LinkedService
+  type: belongs_to
+  via: properties.linkedServiceName (LinkedServiceReference)
+- from: LinkedService
+  to: IntegrationRuntime
+  type: belongs_to
+  via: properties.connectVia (IntegrationRuntimeReference)
+- from: LinkedService
+  to: Credential
+  type: belongs_to
+  via: CredentialReference
+- from: Pipeline
+  to: Dataset
+  type: has_many
+  via: activity inputs/outputs (DatasetReference)
+- from: Pipeline
+  to: DataFlow
+  type: has_many
+  via: ExecuteDataFlowActivity (DataFlowReference)
+- from: Pipeline
+  to: Pipeline
+  type: has_many
+  via: ExecutePipelineActivity (PipelineReference)
+- from: Trigger
+  to: Pipeline
+  type: has_many
+  via: pipelines[] (TriggerPipelineReference)
+- from: Trigger
+  to: Trigger
+  type: has_many
+  via: TumblingWindowTrigger dependsOn (TriggerDependencyReference / SelfDependencyTumblingWindowTriggerReference)
+- from: PipelineRun
+  to: Pipeline
+  type: belongs_to
+  via: pipelineName
+- from: ActivityRun
+  to: PipelineRun
+  type: belongs_to
+  via: pipelineRunId
+- from: TriggerRun
+  to: Trigger
+  type: belongs_to
+  via: triggerName
+- from: LinkedService
+  to: AzureKeyVaultSecret
+  type: belongs_to
+  via: AzureKeyVaultSecretReference (the recommended way to keep secrets out of a linked service
+    definition)
+reference_types:
+  count: 23
+  note: >-
+    Cross-entity links are never bare strings. They are objects of the form
+    {"type": "<EntityType>Reference", "referenceName": "<name>", "parameters": {...}}, which is
+    what lets a reference carry parameter bindings. The 23 *Reference schemas are the join table
+    of this data model.
+  schemas:
+  - LinkedServiceReference
+  - DatasetReference
+  - PipelineReference
+  - TriggerReference
+  - DataFlowReference
+  - IntegrationRuntimeReference
+  - CredentialReference
+  - ManagedVirtualNetworkReference
+  - AzureKeyVaultSecretReference
+  - TriggerPipelineReference
+  - TriggerDependencyReference
+  - SelfDependencyTumblingWindowTriggerReference
+  - TumblingWindowTriggerDependencyReference
+  - DependencyReference
+  - EntityReference
+  - SynapseNotebookReference
+  - SynapseSparkJobReference
+  - BigDataPoolParametrizationReference
+  - SparkConfigurationParametrizationReference
+  - SsisEnvironmentReference
+  - MapperAttributeReference
+  - MapperConnectionReference
+  - ContinuationSettingsReference
+polymorphism:
+  mechanism: OpenAPI discriminator on a `type` property, with subtypes joined by allOf
+  note: >-
+    This is where 1,199 definitions come from and the single thing to understand before writing
+    a request body. Send {"type": "AzureBlobStorage", "typeProperties": {...}} and the server
+    validates against the AzureBlobStorageLinkedService subtype.
+  hierarchies:
+  - base: LinkedService
+    subtypes: 121
+    meaning: one per connector — the breadth of the product expressed as a type system
+  - base: Dataset
+    subtypes: 105
+  - base: CopySink
+    subtypes: 46
+  - base: CopySource
+    subtypes: 40
+  - base: DatasetLocation
+    subtypes: 14
+  - base: StoreReadSettings
+    subtypes: 14
+  - base: StoreWriteSettings
+    subtypes: 7
+  - base: FormatWriteSettings
+    subtypes: 6
+  - base: DatasetStorageFormat
+    subtypes: 5
+  - base: FormatReadSettings
+    subtypes: 5
+  - base: Trigger
+    subtypes: 4
+  - base: CustomSetupBase
+    subtypes: 4
+  - base: SsisObjectMetadata
+    subtypes: 4
+  - base: Activity
+    subtypes: 3
+  - base: DataFlow
+    subtypes: 3
+  - base: ImportSettings
+    subtypes: 3
+  - base: CompressionReadSettings
+    subtypes: 3
+  - base: WebLinkedServiceTypeProperties
+    subtypes: 3
+  - base: IntegrationRuntime
+    subtypes: 2
+  - base: IntegrationRuntimeStatus
+    subtypes: 2
+  - base: Credential
+    subtypes: 2
+  - base: SecretBase
+    subtypes: 2
+  - base: FactoryRepoConfiguration
+    subtypes: 2
+  - base: DependencyReference
+    subtypes: 2
+  - base: ExportSettings
+    subtypes: 2
+  - base: LinkedIntegrationRuntimeType
+    subtypes: 2
+  discriminated_bases: 27
+summary:
+  entities: 15
+  relationships: 24
+  reference_types: 23
+  schemas_total: 1199
+  discriminated_bases: 27
+  largest_hierarchy: LinkedService (121 subtypes)

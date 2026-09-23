@@ -1,0 +1,147 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTPS probes of every host this record knows
+note: >-
+  Every registrable domain, API baseURL host, OpenAPI servers[] host, docs host and the
+  authorization-server host named by the OpenAPI azure_auth securityScheme was probed for the
+  named /.well-known/ paths. Two real documents were served: RFC 9116 security.txt on
+  www.microsoft.com / microsoft.com, and the Microsoft Entra ID (Azure AD) OpenID Connect
+  discovery document on login.microsoftonline.com, which is the authorization server the
+  Data Factory OpenAPI names. management.azure.com answers every path with HTTP 400
+  MissingApiVersionParameter (Azure Resource Manager requires ?api-version on every request),
+  which is a refusal, not a document. learn.microsoft.com, azure.microsoft.com and
+  portal.azure.com return HTML 404 shells.
+hosts:
+- host: www.microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain; charset=utf-8
+    file: microsoft-azure-data-factory-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain; charset=utf-8
+    file: microsoft-azure-data-factory-security.txt
+    note: same document as www.microsoft.com; Canonical field names the www host
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: login.microsoftonline.com
+  note: >-
+    Authorization server named by the azure_auth oauth2 securityScheme in the Data Factory
+    OpenAPI (authorizationUrl https://login.microsoftonline.com/common/oauth2/authorize).
+    Probed because the pipeline requires probing any host a discovery document or security
+    scheme names, not only the primary domain.
+  documents:
+  - path: /common/v2.0/.well-known/openid-configuration
+    status: 200
+    content_type: application/json; charset=utf-8
+    file: microsoft-azure-data-factory-openid-configuration.json
+  - path: /common/.well-known/openid-configuration
+    status: 200
+    note: v1.0 endpoint; the v2.0 document above is the one saved
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /common/v2.0/.well-known/oauth-authorization-server
+    status: 404
+- host: management.azure.com
+  note: >-
+    API baseURL and OpenAPI servers[] host. Azure Resource Manager answers every path,
+    including /.well-known/*, with HTTP 400 MissingApiVersionParameter. Recorded as a
+    refusal; no document is served.
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+  - path: /.well-known/openid-configuration
+    status: 400
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+  - path: /.well-known/api-catalog
+    status: 400
+  - path: /.well-known/ai-plugin.json
+    status: 400
+  - path: /.well-known/agent-card.json
+    status: 400
+  - path: /.well-known/agent.json
+    status: 400
+- host: learn.microsoft.com
+  note: docs host; all paths return the site's HTML 404 shell
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: azure.microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: portal.azure.com
+  note: console host; returns 404 with an empty body on every path
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+summary:
+  hosts_probed: 7
+  paths_probed: 45
+  documents_served: 2
+  api_catalog_served: false
+  agent_card_served: false
+  security_txt_served: true
+  openid_configuration_served: true

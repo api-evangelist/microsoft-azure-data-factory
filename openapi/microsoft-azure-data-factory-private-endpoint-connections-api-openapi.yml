@@ -1,0 +1,358 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST privateEndpointConnections API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: privateEndpointConnections
+  description: privateEndpointConnections operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateEndpointConnections
+  : get:
+      operationId: privateEndPointConnections_ListByFactory
+      description: Lists Private endpoint connections
+      tags:
+      - privateEndpointConnections
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateEndpointConnectionListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        privateEndPointConnections_ListByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/PrivateEndPointConnections_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateEndpointConnections/{privateEndpointConnectionName}
+  : get:
+      operationId: PrivateEndpointConnection_Get
+      description: Gets a private endpoint connection
+      tags:
+      - privateEndpointConnections
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: privateEndpointConnectionName
+        in: path
+        required: true
+        description: The private endpoint connection name.
+        schema:
+          type: string
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the private endpoint connection entity. Should only be specified for get. If the ETag matches
+          the existing entity tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateEndpointConnectionResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Get a private endpoint connection for a datafactory.:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/GetPrivateEndpointConnection.json
+    put:
+      operationId: PrivateEndpointConnection_CreateOrUpdate
+      description: Approves or rejects a private endpoint connection
+      tags:
+      - privateEndpointConnections
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: privateEndpointConnectionName
+        in: path
+        required: true
+        description: The private endpoint connection name.
+        schema:
+          type: string
+      - name: if-match
+        in: header
+        required: false
+        description: ETag of the private endpoint connection entity.  Should only be specified for update, for which it should
+          match existing entity or can be * for unconditional update.
+        schema:
+          type: string
+        x-ms-client-name: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivateLinkConnectionApprovalRequestResource'
+      responses:
+        '200':
+          description: Resource 'PrivateEndpointConnectionResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateEndpointConnectionResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Approves or rejects a private endpoint connection for a factory.:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ApproveRejectPrivateEndpointConnection.json
+    delete:
+      operationId: PrivateEndpointConnection_Delete
+      description: Deletes a private endpoint connection
+      tags:
+      - privateEndpointConnections
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: privateEndpointConnectionName
+        in: path
+        required: true
+        description: The private endpoint connection name.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Delete a private endpoint connection for a datafactory.:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DeletePrivateEndpointConnection.json
+components:
+  schemas:
+    ArmIdWrapper:
+      type: object
+      description: A wrapper for an ARM resource id
+      properties:
+        id:
+          type: string
+          readOnly: true
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    PrivateEndpoint:
+      type: object
+      description: Private endpoint which a connection belongs to.
+      properties:
+        id:
+          type: string
+          description: The resource Id for private endpoint
+    PrivateEndpointConnectionListResponse:
+      type: object
+      description: A list of linked service resources.
+      properties:
+        value:
+          type: array
+          description: The PrivateEndpointConnectionResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateEndpointConnectionResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    PrivateEndpointConnectionResource:
+      type: object
+      description: Private Endpoint Connection ARM resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/RemotePrivateEndpointConnection'
+          description: Core resource properties
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    PrivateLinkConnectionApprovalRequest:
+      type: object
+      description: A request to approve or reject a private endpoint connection
+      properties:
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkConnectionState'
+          description: The state of a private link connection
+        privateEndpoint:
+          $ref: '#/components/schemas/PrivateEndpoint'
+          description: The resource of private endpoint.
+    PrivateLinkConnectionApprovalRequestResource:
+      type: object
+      description: Private Endpoint Connection Approval ARM resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkConnectionApprovalRequest'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
+    PrivateLinkConnectionState:
+      type: object
+      description: The state of a private link connection
+      properties:
+        status:
+          type: string
+          description: Status of a private link connection
+        description:
+          type: string
+          description: Description of a private link connection
+        actionsRequired:
+          type: string
+          description: ActionsRequired for a private link connection
+    RemotePrivateEndpointConnection:
+      type: object
+      description: A remote private endpoint connection
+      properties:
+        provisioningState:
+          type: string
+          readOnly: true
+        privateEndpoint:
+          $ref: '#/components/schemas/ArmIdWrapper'
+          description: PrivateEndpoint of a remote private endpoint connection
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkConnectionState'
+          description: The state of a private link connection
+    SubResource:
+      type: object
+      description: Azure Data Factory nested resource, which belongs to a factory.
+      properties:
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

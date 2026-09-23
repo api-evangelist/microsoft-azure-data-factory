@@ -1,0 +1,130 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/microsoft-azure-data-factory-*-api-openapi.yml (104 operations, Microsoft.DataFactory 2018-06-01)
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+  note: >-
+    No MCP server covers Azure Data Factory. Microsoft ships two MCP servers and neither
+    reaches this resource provider. (1) Azure MCP Server — npm @azure/mcp 3.0.0-beta.44
+    (2026-09-15), source github.com/microsoft/mcp, distributed as a local stdio binary; its
+    published tool catalogue at
+    https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/tools/ enumerates every
+    supported namespace (storage, cosmos, kusto, keyvault, monitor, aks, postgres, sql,
+    eventgrid, eventhubs, servicebus, search, foundry and ~40 more) and there is no
+    datafactory namespace. (2) Microsoft Learn MCP Server at https://learn.microsoft.com/api/mcp
+    — probed live on 2026-09-17 with tools/list, HTTP 200, returns microsoft_docs_search and
+    microsoft_docs_fetch; it searches documentation and calls no Azure control plane. The
+    tools below are therefore a DERIVED CANDIDATE list, not a shipped server: no endpoint and
+    no install command are recorded because none exists to record.
+surfaces:
+  openapi: openapi/ (25 per-tag OpenAPI 3.0.3 documents, 104 operations)
+  mcp: null
+  graphql: null
+probes:
+- url: https://learn.microsoft.com/api/mcp
+  method: POST tools/list
+  status: 200
+  result: 2 tools (microsoft_docs_search, microsoft_docs_fetch) — documentation search only, no Data Factory surface
+- url: https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/tools/
+  method: GET
+  status: 200
+  result: Azure MCP Server namespace catalogue — no datafactory namespace listed
+tools:
+- name: datafactory_factories_list
+  description: List the data factories in a subscription or resource group.
+  rest:
+  - Factories_List
+  - Factories_ListByResourceGroup
+  consequence: read
+- name: datafactory_factory_get
+  description: Get a single data factory by name.
+  rest:
+  - Factories_Get
+  consequence: read
+- name: datafactory_factory_create_or_update
+  description: Create or update a data factory, optionally wiring its Git repo configuration.
+  rest:
+  - Factories_CreateOrUpdate
+  consequence: write
+- name: datafactory_pipelines_list
+  description: List the pipelines in a factory.
+  rest:
+  - Pipelines_ListByFactory
+  consequence: read
+- name: datafactory_pipeline_get
+  description: Get a pipeline definition, including its activity graph.
+  rest:
+  - Pipelines_Get
+  consequence: read
+- name: datafactory_pipeline_create_run
+  description: Start a run of a pipeline, optionally with parameters or a rerun reference.
+  rest:
+  - Pipelines_CreateRun
+  consequence: write
+- name: datafactory_pipeline_runs_query
+  description: Query pipeline runs in a factory by time window and filters.
+  rest:
+  - PipelineRuns_QueryByFactory
+  consequence: read
+- name: datafactory_pipeline_run_get
+  description: Get a single pipeline run by run ID.
+  rest:
+  - PipelineRuns_Get
+  consequence: read
+- name: datafactory_pipeline_run_cancel
+  description: Cancel an in-flight pipeline run.
+  rest:
+  - PipelineRuns_Cancel
+  consequence: write
+- name: datafactory_activity_runs_query
+  description: Query the activity runs inside one pipeline run.
+  rest:
+  - ActivityRuns_QueryByPipelineRun
+  consequence: read
+- name: datafactory_datasets_list
+  description: List the datasets defined in a factory.
+  rest:
+  - Datasets_ListByFactory
+  consequence: read
+- name: datafactory_linked_services_list
+  description: List the linked services (connections) defined in a factory.
+  rest:
+  - LinkedServices_ListByFactory
+  consequence: read
+- name: datafactory_triggers_list
+  description: List the triggers defined in a factory.
+  rest:
+  - Triggers_ListByFactory
+  consequence: read
+- name: datafactory_trigger_start
+  description: Start a trigger so it begins firing pipeline runs.
+  rest:
+  - Triggers_Start
+  consequence: write
+- name: datafactory_trigger_stop
+  description: Stop a running trigger.
+  rest:
+  - Triggers_Stop
+  consequence: write
+- name: datafactory_trigger_runs_query
+  description: Query trigger runs in a factory.
+  rest:
+  - TriggerRuns_QueryByFactory
+  consequence: read
+- name: datafactory_integration_runtimes_list
+  description: List the integration runtimes in a factory.
+  rest:
+  - IntegrationRuntimes_ListByFactory
+  consequence: read
+- name: datafactory_integration_runtime_status
+  description: Get detailed status for an integration runtime, including node health.
+  rest:
+  - IntegrationRuntimes_GetStatus
+  consequence: read
+summary:
+  tool_count: 18
+  derived_from_operations: 104
+  server_published: false

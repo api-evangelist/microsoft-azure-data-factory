@@ -1,0 +1,48 @@
+generated: '2026-09-17'
+method: generated
+source: >-
+  Authored by API Evangelist from the Microsoft.DataFactory 2018-06-01 contract in this
+  repository. Every operationId named in every skill was grepped out of
+  openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json; none is
+  invented. Microsoft publishes no Agent Skills or AGENTS.md of its own for Data Factory.
+api: microsoft-azure-data-factory
+version: '2018-06-01'
+base_url: https://management.azure.com
+skills:
+- name: microsoft-azure-data-factory-run-a-pipeline
+  file: microsoft-azure-data-factory-run-a-pipeline.md
+  summary: Start a pipeline run, poll it to a terminal state, read per-activity detail, and cancel
+    it safely.
+  operations: 7
+  risk: writes and bills; Pipelines_CreateRun has no idempotency key
+- name: microsoft-azure-data-factory-manage-factory-resources
+  file: microsoft-azure-data-factory-manage-factory-resources.md
+  summary: CRUD the declarative objects — linked services, datasets, data flows, pipelines — using
+    ETag conditional writes so a concurrent editor is never silently overwritten.
+  operations: 19
+  risk: deletes are irreversible; omitting if-match is last-write-wins
+- name: microsoft-azure-data-factory-manage-triggers
+  file: microsoft-azure-data-factory-manage-triggers.md
+  summary: Create, start, stop and inspect triggers, including Event Grid subscription for event
+    triggers, and rerun or cancel individual trigger instances.
+  operations: 13
+  risk: TriggerRuns_Rerun starts billable work with no replay protection
+- name: microsoft-azure-data-factory-manage-integration-runtimes
+  file: microsoft-azure-data-factory-manage-integration-runtimes.md
+  summary: Provision, start, stop, monitor and key-rotate integration runtimes, including
+    self-hosted node management.
+  operations: 20
+  risk: ListAuthKeys returns live secrets; RegenerateAuthKey is irreversible
+shared_rules:
+  api_version_required: Every request must carry ?api-version=2018-06-01.
+  auth: OAuth 2.0 bearer token, audience https://management.azure.com/, scope user_impersonation;
+    authorization is Azure RBAC on the factory.
+  idempotency: No idempotency key exists. 12 CreateOrUpdate operations accept if-match; the POST
+    action surface has none.
+  reversibility: Cancel and stop operations exist; no delete is reversible and no restore
+    operation exists.
+  dry_run: Not supported anywhere in this API.
+  errors: errors/microsoft-azure-data-factory-problem-types.yml
+  conventions: conventions/microsoft-azure-data-factory-conventions.yml
+summary:
+  skill_count: 4

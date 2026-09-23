@@ -1,0 +1,757 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST changeDataCapture API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: changeDataCapture
+  description: changeDataCapture operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs
+  : get:
+      operationId: ChangeDataCapture_ListByFactory
+      description: Lists all resources of type change data capture.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeDataCaptureListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_ListByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}
+  : get:
+      operationId: ChangeDataCapture_Get
+      description: Gets a change data capture.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing
+          entity tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeDataCaptureResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
+    put:
+      operationId: ChangeDataCapture_CreateOrUpdate
+      description: Creates or updates a change data capture resource.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-match
+        in: header
+        required: false
+        description: ETag of the change data capture entity. Should only be specified for update, for which it should match
+          existing entity or can be * for unconditional update.
+        schema:
+          type: string
+        x-ms-client-name: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeDataCaptureResource'
+        description: Change data capture resource definition.
+      responses:
+        '200':
+          description: Resource 'ChangeDataCaptureResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeDataCaptureResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Create:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Create.json
+        ChangeDataCapture_Update:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Update.json
+    delete:
+      operationId: ChangeDataCapture_Delete
+      description: Deletes a change data capture.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Delete:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Delete.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}/start
+  : post:
+      operationId: ChangeDataCapture_Start
+      description: Starts a change data capture.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: The request has succeeded.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Start:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Start.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}/status
+  : get:
+      operationId: ChangeDataCapture_Status
+      description: Gets the current status for the change data capture resource.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeDataCaptureStatusResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Start:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Status.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/adfcdcs/{changeDataCaptureName}/stop
+  : post:
+      operationId: ChangeDataCapture_Stop
+      description: Stops a change data capture.
+      tags:
+      - changeDataCapture
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: changeDataCaptureName
+        in: path
+        required: true
+        description: The change data capture name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: The request has succeeded.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ChangeDataCapture_Stop:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Stop.json
+components:
+  schemas:
+    ChangeDataCapture:
+      type: object
+      description: A Azure Data Factory object which automatically detects data changes at the source and then sends the updated
+        data to the destination.
+      properties:
+        folder:
+          $ref: '#/components/schemas/ChangeDataCaptureFolder'
+          description: The folder that this CDC is in. If not specified, CDC will appear at the root level.
+        description:
+          type: string
+          description: The description of the change data capture.
+        sourceConnectionsInfo:
+          type: array
+          description: List of sources connections that can be used as sources in the CDC.
+          items:
+            $ref: '#/components/schemas/MapperSourceConnectionsInfo'
+          x-ms-identifiers: []
+        targetConnectionsInfo:
+          type: array
+          description: List of target connections that can be used as sources in the CDC.
+          items:
+            $ref: '#/components/schemas/MapperTargetConnectionsInfo'
+          x-ms-identifiers: []
+        policy:
+          $ref: '#/components/schemas/MapperPolicy'
+          description: CDC policy
+        allowVNetOverride:
+          type: boolean
+          description: A boolean to determine if the vnet configuration needs to be overwritten.
+        status:
+          type: string
+          description: Status of the CDC as to if it is running or stopped.
+      required:
+      - sourceConnectionsInfo
+      - targetConnectionsInfo
+      - policy
+    ChangeDataCaptureFolder:
+      type: object
+      description: The folder that this CDC is in. If not specified, CDC will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this CDC is in.
+    ChangeDataCaptureListResponse:
+      type: object
+      description: A list of change data capture resources.
+      properties:
+        value:
+          type: array
+          description: The ChangeDataCaptureResource items on this page
+          items:
+            $ref: '#/components/schemas/ChangeDataCaptureResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    ChangeDataCaptureResource:
+      type: object
+      description: Change data capture resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/ChangeDataCapture'
+          description: Properties of the change data capture.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      additionalProperties: {}
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    ChangeDataCaptureStatusResponse:
+      type: string
+      description: Current status of the change data capture resource.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    ConnectionType:
+      type: string
+      description: Type of connection via linked service or dataset.
+      enum:
+      - linkedservicetype
+      x-ms-enum:
+        name: ConnectionType
+        modelAsString: true
+        values:
+        - name: linkedservicetype
+          value: linkedservicetype
+          description: linkedservicetype
+    DataMapperMapping:
+      type: object
+      description: Source and target table mapping details.
+      properties:
+        targetEntityName:
+          type: string
+          description: Name of the target table
+        sourceEntityName:
+          type: string
+          description: Name of the source table
+        sourceConnectionReference:
+          $ref: '#/components/schemas/MapperConnectionReference'
+          description: The connection reference for the source connection.
+        attributeMappingInfo:
+          $ref: '#/components/schemas/MapperAttributeMappings'
+          description: This holds the user provided attribute mapping information.
+        sourceDenormalizeInfo:
+          description: This holds the source denormalization information used while joining multiple sources.
+    FrequencyType:
+      type: string
+      description: Frequency of period in terms of 'Hour', 'Minute' or 'Second'.
+      enum:
+      - Hour
+      - Minute
+      - Second
+      x-ms-enum:
+        name: FrequencyType
+        modelAsString: true
+        values:
+        - name: Hour
+          value: Hour
+          description: Hour
+        - name: Minute
+          value: Minute
+          description: Minute
+        - name: Second
+          value: Second
+          description: Second
+    LinkedServiceReference:
+      type: object
+      description: Linked service reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+          description: Linked service reference type.
+        referenceName:
+          type: string
+          description: Reference LinkedService name.
+        parameters:
+          type: object
+          description: Arguments for LinkedService.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    MapperAttributeMapping:
+      type: object
+      description: Source and target column mapping details.
+      properties:
+        name:
+          type: string
+          description: Name of the target column.
+        type:
+          $ref: '#/components/schemas/MappingType'
+          description: 'Type of the CDC attribute mapping. Note: ''Advanced'' mapping type is also saved as ''Derived''.'
+        functionName:
+          type: string
+          description: Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping.
+        expression:
+          type: string
+          description: Expression used for 'Aggregate' and 'Derived' type mapping.
+        attributeReference:
+          $ref: '#/components/schemas/MapperAttributeReference'
+          description: Reference of the source column used in the mapping. It is used for 'Direct' mapping type only.
+        attributeReferences:
+          type: array
+          description: List of references for source columns. It is used for 'Derived' and 'Aggregate' type mappings only.
+          items:
+            $ref: '#/components/schemas/MapperAttributeReference'
+          x-ms-identifiers:
+          - name
+    MapperAttributeMappings:
+      type: object
+      description: Attribute mapping details.
+      properties:
+        attributeMappings:
+          type: array
+          description: List of attribute mappings.
+          items:
+            $ref: '#/components/schemas/MapperAttributeMapping'
+          x-ms-identifiers:
+          - name
+    MapperAttributeReference:
+      type: object
+      description: Attribute reference details for the referred column.
+      properties:
+        name:
+          type: string
+          description: Name of the column.
+        entity:
+          type: string
+          description: Name of the table.
+        entityConnectionReference:
+          $ref: '#/components/schemas/MapperConnectionReference'
+          description: The connection reference for the connection.
+    MapperConnection:
+      type: object
+      description: Source connection details.
+      properties:
+        linkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Linked service reference.
+        linkedServiceType:
+          type: string
+          description: 'Type of the linked service e.g.: AzureBlobFS.'
+        type:
+          $ref: '#/components/schemas/ConnectionType'
+          description: Type of connection via linked service or dataset.
+        isInlineDataset:
+          type: boolean
+          description: A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets
+            are supported.
+        commonDslConnectorProperties:
+          type: array
+          description: List of name/value pairs for connection properties.
+          items:
+            $ref: '#/components/schemas/MapperDslConnectorProperties'
+          x-ms-identifiers: []
+      required:
+      - type
+    MapperConnectionReference:
+      type: object
+      description: Source or target connection reference details.
+      properties:
+        connectionName:
+          type: string
+          description: Name of the connection
+        type:
+          $ref: '#/components/schemas/ConnectionType'
+          description: Type of connection via linked service or dataset.
+    MapperDslConnectorProperties:
+      type: object
+      description: Connector properties of a CDC table in terms of name / value pairs.
+      properties:
+        name:
+          type: string
+          description: Name of the property.
+        value:
+          description: Value of the property.
+    MapperPolicy:
+      type: object
+      description: CDC Policy.
+      properties:
+        mode:
+          type: string
+          description: 'Mode of running the CDC: batch vs continuous.'
+        recurrence:
+          $ref: '#/components/schemas/MapperPolicyRecurrence'
+          description: Defines the frequency and interval for running the CDC for batch mode.
+    MapperPolicyRecurrence:
+      type: object
+      description: CDC policy recurrence details.
+      properties:
+        frequency:
+          $ref: '#/components/schemas/FrequencyType'
+          description: Frequency of period in terms of 'Hour', 'Minute' or 'Second'.
+        interval:
+          type: integer
+          format: int32
+          description: Actual interval value as per chosen frequency.
+    MapperSourceConnectionsInfo:
+      type: object
+      description: A object which contains list of tables and connection details for a source connection.
+      properties:
+        sourceEntities:
+          type: array
+          description: List of source tables for a source connection.
+          items:
+            $ref: '#/components/schemas/MapperTable'
+          x-ms-identifiers:
+          - name
+        connection:
+          $ref: '#/components/schemas/MapperConnection'
+          description: Source connection details.
+    MapperTable:
+      type: object
+      description: CDC table details.
+      properties:
+        name:
+          type: string
+          description: Name of the table.
+        properties:
+          $ref: '#/components/schemas/MapperTableProperties'
+          description: Table properties.
+          x-ms-client-flatten: true
+    MapperTableProperties:
+      type: object
+      description: Properties for a CDC table.
+      properties:
+        schema:
+          type: array
+          description: List of columns for the source table.
+          items:
+            $ref: '#/components/schemas/MapperTableSchema'
+          x-ms-identifiers:
+          - name
+        dslConnectorProperties:
+          type: array
+          description: List of name/value pairs for connection properties.
+          items:
+            $ref: '#/components/schemas/MapperDslConnectorProperties'
+          x-ms-identifiers: []
+    MapperTableSchema:
+      type: object
+      description: Schema of a CDC table in terms of column names and their corresponding data types.
+      properties:
+        name:
+          type: string
+          description: Name of the column.
+        dataType:
+          type: string
+          description: Data type of the column.
+    MapperTargetConnectionsInfo:
+      type: object
+      description: A object which contains list of tables and connection details for a target connection.
+      properties:
+        targetEntities:
+          type: array
+          description: List of source tables for a target connection.
+          items:
+            $ref: '#/components/schemas/MapperTable'
+          x-ms-identifiers:
+          - name
+        connection:
+          $ref: '#/components/schemas/MapperConnection'
+          description: Source connection details.
+        dataMapperMappings:
+          type: array
+          description: List of table mappings.
+          items:
+            $ref: '#/components/schemas/DataMapperMapping'
+          x-ms-identifiers:
+          - targetEntityName
+          - sourceEntityName
+        relationships:
+          type: array
+          description: List of relationship info among the tables.
+          items: {}
+    MappingType:
+      type: string
+      description: 'Type of the CDC attribute mapping. Note: ''Advanced'' mapping type is also saved as ''Derived''.'
+      enum:
+      - Direct
+      - Derived
+      - Aggregate
+      x-ms-enum:
+        name: MappingType
+        modelAsString: true
+        values:
+        - name: Direct
+          value: Direct
+          description: Direct
+        - name: Derived
+          value: Derived
+          description: Derived
+        - name: Aggregate
+          value: Aggregate
+          description: Aggregate
+    Type:
+      type: string
+      description: Linked service reference type.
+      enum:
+      - LinkedServiceReference
+      x-ms-enum:
+        name: Type
+        modelAsString: true
+        values:
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

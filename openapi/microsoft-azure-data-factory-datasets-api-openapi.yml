@@ -1,0 +1,2702 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST datasets API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: datasets
+  description: datasets operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets
+  : get:
+      operationId: Datasets_ListByFactory
+      description: Lists datasets.
+      tags:
+      - datasets
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Datasets_ListByFactory:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Datasets_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}
+  : get:
+      operationId: Datasets_Get
+      description: Gets a dataset.
+      tags:
+      - datasets
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: datasetName
+        in: path
+        required: true
+        description: The dataset name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity
+          tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetResource'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Datasets_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Datasets_Get.json
+    put:
+      operationId: Datasets_CreateOrUpdate
+      description: Creates or updates a dataset.
+      tags:
+      - datasets
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: datasetName
+        in: path
+        required: true
+        description: The dataset name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-match
+        in: header
+        required: false
+        description: ETag of the dataset entity.  Should only be specified for update, for which it should match existing
+          entity or can be * for unconditional update.
+        schema:
+          type: string
+        x-ms-client-name: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatasetResource'
+        description: Dataset resource definition.
+      responses:
+        '200':
+          description: Resource 'DatasetResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Datasets_Create:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Datasets_Create.json
+        Datasets_Update:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Datasets_Update.json
+    delete:
+      operationId: Datasets_Delete
+      description: Deletes a dataset.
+      tags:
+      - datasets
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: datasetName
+        in: path
+        required: true
+        description: The dataset name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Datasets_Delete:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Datasets_Delete.json
+components:
+  schemas:
+    AmazonMWSObjectDataset:
+      type: object
+      description: Amazon Marketplace Web Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AmazonMWSObject
+    AmazonRdsForOracleTableDataset:
+      type: object
+      description: The AmazonRdsForOracle database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AmazonRdsForOracleTableDatasetTypeProperties'
+          description: AmazonRdsForOracle dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AmazonRdsForOracleTable
+    AmazonRdsForOracleTableDatasetTypeProperties:
+      type: object
+      description: AmazonRdsForOracle dataset properties.
+      properties:
+        schema:
+          description: 'The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string).'
+    AmazonRdsForSqlServerTableDataset:
+      type: object
+      description: The Amazon RDS for SQL Server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AmazonRdsForSqlServerTableDatasetTypeProperties'
+          description: The Amazon RDS for SQL Server dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AmazonRdsForSqlServerTable
+    AmazonRdsForSqlServerTableDatasetTypeProperties:
+      type: object
+      description: The Amazon RDS for SQL Server dataset properties.
+      properties:
+        schema:
+          description: 'The schema name of the SQL Server dataset. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the SQL Server dataset. Type: string (or Expression with resultType string).'
+    AmazonRedshiftTableDataset:
+      type: object
+      description: The Amazon Redshift table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AmazonRedshiftTableDatasetTypeProperties'
+          description: Amazon Redshift table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AmazonRedshiftTable
+    AmazonRedshiftTableDatasetTypeProperties:
+      type: object
+      description: Amazon Redshift table dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The Amazon Redshift table name. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The Amazon Redshift schema name. Type: string (or Expression with resultType string).'
+    AmazonS3CompatibleLocation:
+      type: object
+      description: The location of Amazon S3 Compatible dataset.
+      properties:
+        bucketName:
+          description: 'Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string)'
+        version:
+          description: 'Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AmazonS3CompatibleLocation
+    AmazonS3Dataset:
+      type: object
+      description: A single Amazon Simple Storage Service (S3) object or a set of S3 objects.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AmazonS3DatasetTypeProperties'
+          description: Amazon S3 dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AmazonS3Object
+    AmazonS3DatasetTypeProperties:
+      type: object
+      description: Amazon S3 dataset properties.
+      properties:
+        bucketName:
+          description: 'The name of the Amazon S3 bucket. Type: string (or Expression with resultType string).'
+        key:
+          description: 'The key of the Amazon S3 object. Type: string (or Expression with resultType string).'
+        prefix:
+          description: 'The prefix filter for the S3 object name. Type: string (or Expression with resultType string).'
+        version:
+          description: 'The version for the S3 object. Type: string (or Expression with resultType string).'
+        modifiedDatetimeStart:
+          description: 'The start of S3 object''s modified datetime. Type: string (or Expression with resultType string).'
+        modifiedDatetimeEnd:
+          description: 'The end of S3 object''s modified datetime. Type: string (or Expression with resultType string).'
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of files.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the Amazon S3 object.
+      required:
+      - bucketName
+    AmazonS3Location:
+      type: object
+      description: The location of amazon S3 dataset.
+      properties:
+        bucketName:
+          description: 'Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)'
+        version:
+          description: 'Specify the version of amazon S3. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AmazonS3Location
+    AvroDataset:
+      type: object
+      description: Avro dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AvroDatasetTypeProperties'
+          description: Avro dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Avro
+    AvroDatasetTypeProperties:
+      type: object
+      description: Avro dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the avro storage.
+        avroCompressionCodec:
+          description: 'The data avroCompressionCodec. Type: string (or Expression with resultType string).'
+        avroCompressionLevel:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9
+      required:
+      - location
+    AvroFormat:
+      type: object
+      description: The data stored in Avro format.
+      allOf:
+      - $ref: '#/components/schemas/DatasetStorageFormat'
+      x-ms-discriminator-value: AvroFormat
+    AzureBlobDataset:
+      type: object
+      description: The Azure Blob storage.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureBlobDatasetTypeProperties'
+          description: Azure Blob dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureBlob
+    AzureBlobDatasetTypeProperties:
+      type: object
+      description: Azure Blob dataset properties.
+      properties:
+        folderPath:
+          description: 'The path of the Azure Blob storage. Type: string (or Expression with resultType string).'
+        tableRootLocation:
+          description: 'The root of blob path. Type: string (or Expression with resultType string).'
+        fileName:
+          description: 'The name of the Azure Blob. Type: string (or Expression with resultType string).'
+        modifiedDatetimeStart:
+          description: 'The start of Azure Blob''s modified datetime. Type: string (or Expression with resultType string).'
+        modifiedDatetimeEnd:
+          description: 'The end of Azure Blob''s modified datetime. Type: string (or Expression with resultType string).'
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of the Azure Blob storage.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the blob storage.
+    AzureBlobFSDataset:
+      type: object
+      description: The Azure Data Lake Storage Gen2 storage.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureBlobFSDatasetTypeProperties'
+          description: Azure Data Lake Storage Gen2 dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureBlobFSFile
+    AzureBlobFSDatasetTypeProperties:
+      type: object
+      description: Azure Data Lake Storage Gen2 dataset properties.
+      properties:
+        folderPath:
+          description: 'The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType
+            string).'
+        fileName:
+          description: 'The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string).'
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of the Azure Data Lake Storage Gen2 storage.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the blob storage.
+    AzureBlobFSLocation:
+      type: object
+      description: The location of azure blobFS dataset.
+      properties:
+        fileSystem:
+          description: 'Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AzureBlobFSLocation
+    AzureBlobStorageLocation:
+      type: object
+      description: The location of azure blob dataset.
+      properties:
+        container:
+          description: 'Specify the container of azure blob. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AzureBlobStorageLocation
+    AzureDataExplorerDatasetTypeProperties:
+      type: object
+      description: Azure Data Explorer (Kusto) dataset properties.
+      properties:
+        table:
+          description: 'The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string).'
+    AzureDataExplorerTableDataset:
+      type: object
+      description: The Azure Data Explorer (Kusto) dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureDataExplorerDatasetTypeProperties'
+          description: Azure Data Explorer (Kusto) dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureDataExplorerTable
+    AzureDataLakeStoreDataset:
+      type: object
+      description: Azure Data Lake Store dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureDataLakeStoreDatasetTypeProperties'
+          description: Azure Data Lake Store dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureDataLakeStoreFile
+    AzureDataLakeStoreDatasetTypeProperties:
+      type: object
+      description: Azure Data Lake Store dataset properties.
+      properties:
+        folderPath:
+          description: 'Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string).'
+        fileName:
+          description: 'The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string).'
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of the Data Lake Store.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the item(s) in the Azure Data Lake Store.
+    AzureDataLakeStoreLocation:
+      type: object
+      description: The location of azure data lake store dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AzureDataLakeStoreLocation
+    AzureDatabricksDeltaLakeDataset:
+      type: object
+      description: Azure Databricks Delta Lake dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureDatabricksDeltaLakeDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureDatabricksDeltaLakeDataset
+    AzureDatabricksDeltaLakeDatasetTypeProperties:
+      type: object
+      description: Azure Databricks Delta Lake Dataset Properties
+      properties:
+        table:
+          description: 'The name of delta table. Type: string (or Expression with resultType string).'
+        database:
+          description: 'The database name of delta table. Type: string (or Expression with resultType string).'
+    AzureFileStorageLocation:
+      type: object
+      description: The location of file server dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: AzureFileStorageLocation
+    AzureMariaDBTableDataset:
+      type: object
+      description: Azure Database for MariaDB dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureMariaDBTable
+    AzureMySqlTableDataset:
+      type: object
+      description: The Azure MySQL database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureMySqlTableDatasetTypeProperties'
+          description: Azure MySQL database dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureMySqlTable
+    AzureMySqlTableDatasetTypeProperties:
+      type: object
+      description: Azure MySQL database dataset properties.
+      properties:
+        tableName:
+          description: 'The Azure MySQL database table name. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The name of Azure MySQL database table. Type: string (or Expression with resultType string).'
+    AzurePostgreSqlTableDataset:
+      type: object
+      description: Azure PostgreSQL dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzurePostgreSqlTableDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzurePostgreSqlTable
+    AzurePostgreSqlTableDatasetTypeProperties:
+      type: object
+      description: Azure PostgreSQL dataset properties.
+      properties:
+        tableName:
+          description: 'The table name of the Azure PostgreSQL database which includes both schema and table. Type: string
+            (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).'
+    AzureSearchIndexDataset:
+      type: object
+      description: The Azure Search Index.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureSearchIndexDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureSearchIndex
+    AzureSearchIndexDatasetTypeProperties:
+      type: object
+      description: Properties specific to this dataset type.
+      properties:
+        indexName:
+          description: 'The name of the Azure Search Index. Type: string (or Expression with resultType string).'
+      required:
+      - indexName
+    AzureSqlDWTableDataset:
+      type: object
+      description: The Azure SQL Data Warehouse dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureSqlDWTableDatasetTypeProperties'
+          description: Azure SQL Data Warehouse dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureSqlDWTable
+    AzureSqlDWTableDatasetTypeProperties:
+      type: object
+      description: Azure SQL Data Warehouse dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).'
+    AzureSqlMITableDataset:
+      type: object
+      description: The Azure SQL Managed Instance dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureSqlMITableDatasetTypeProperties'
+          description: Azure SQL Managed Instance dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureSqlMITable
+    AzureSqlMITableDatasetTypeProperties:
+      type: object
+      description: Azure SQL Managed Instance dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Azure SQL Managed Instance dataset. Type: string (or Expression with resultType
+            string).'
+    AzureSqlTableDataset:
+      type: object
+      description: The Azure SQL Server database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureSqlTableDatasetTypeProperties'
+          description: Azure SQL dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureSqlTable
+    AzureSqlTableDatasetTypeProperties:
+      type: object
+      description: Azure SQL dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The schema name of the Azure SQL database. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Azure SQL database. Type: string (or Expression with resultType string).'
+    AzureTableDataset:
+      type: object
+      description: The Azure Table storage dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzureTableDatasetTypeProperties'
+          description: Azure Table dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: AzureTable
+    AzureTableDatasetTypeProperties:
+      type: object
+      description: Azure Table dataset properties.
+      properties:
+        tableName:
+          description: 'The table name of the Azure Table storage. Type: string (or Expression with resultType string).'
+      required:
+      - tableName
+    BinaryDataset:
+      type: object
+      description: Binary dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/BinaryDatasetTypeProperties'
+          description: Binary dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Binary
+    BinaryDatasetTypeProperties:
+      type: object
+      description: Binary dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the Binary storage.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the binary dataset.
+      required:
+      - location
+    CassandraTableDataset:
+      type: object
+      description: The Cassandra database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/CassandraTableDatasetTypeProperties'
+          description: Cassandra dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CassandraTable
+    CassandraTableDatasetTypeProperties:
+      type: object
+      description: Cassandra dataset properties.
+      properties:
+        tableName:
+          description: 'The table name of the Cassandra database. Type: string (or Expression with resultType string).'
+        keyspace:
+          description: 'The keyspace of the Cassandra database. Type: string (or Expression with resultType string).'
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    CommonDataServiceForAppsEntityDataset:
+      type: object
+      description: The Common Data Service for Apps entity dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/CommonDataServiceForAppsEntityDatasetTypeProperties'
+          description: Common Data Service for Apps entity dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CommonDataServiceForAppsEntity
+    CommonDataServiceForAppsEntityDatasetTypeProperties:
+      type: object
+      description: Common Data Service for Apps entity dataset properties.
+      properties:
+        entityName:
+          description: 'The logical name of the entity. Type: string (or Expression with resultType string).'
+    ConcurObjectDataset:
+      type: object
+      description: Concur Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ConcurObject
+    CosmosDbMongoDbApiCollectionDataset:
+      type: object
+      description: The CosmosDB (MongoDB API) database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/CosmosDbMongoDbApiCollectionDatasetTypeProperties'
+          description: CosmosDB (MongoDB API) database dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CosmosDbMongoDbApiCollection
+    CosmosDbMongoDbApiCollectionDatasetTypeProperties:
+      type: object
+      description: CosmosDB (MongoDB API) database dataset properties.
+      properties:
+        collection:
+          description: 'The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType
+            string).'
+      required:
+      - collection
+    CosmosDbSqlApiCollectionDataset:
+      type: object
+      description: Microsoft Azure CosmosDB (SQL API) Collection dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/CosmosDbSqlApiCollectionDatasetTypeProperties'
+          description: CosmosDB (SQL API) Collection dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CosmosDbSqlApiCollection
+    CosmosDbSqlApiCollectionDatasetTypeProperties:
+      type: object
+      description: CosmosDB (SQL API) Collection dataset properties.
+      properties:
+        collectionName:
+          description: 'CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string).'
+      required:
+      - collectionName
+    CouchbaseTableDataset:
+      type: object
+      description: Couchbase server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CouchbaseTable
+    CustomDataset:
+      type: object
+      description: The custom dataset.
+      properties:
+        typeProperties:
+          description: Custom dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: CustomDataset
+    Dataset:
+      type: object
+      description: The Azure Data Factory nested object which identifies data within different data stores, such as tables,
+        files, folders, and documents.
+      properties:
+        type:
+          type: string
+          description: Type of dataset.
+        description:
+          type: string
+          description: Dataset description.
+        structure:
+          description: 'Columns that define the structure of the dataset. Type: array (or Expression with resultType array),
+            itemType: DatasetDataElement.'
+        schema:
+          description: 'Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType
+            array), itemType: DatasetSchemaDataElement.'
+        linkedServiceName:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Linked service reference.
+        parameters:
+          type: object
+          description: Parameters for dataset.
+          additionalProperties:
+            $ref: '#/components/schemas/ParameterSpecification'
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the Dataset.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DatasetFolder'
+          description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+      discriminator: type
+      required:
+      - type
+      - linkedServiceName
+      additionalProperties: {}
+    DatasetCompression:
+      type: object
+      description: The compression method used on a dataset.
+      properties:
+        type:
+          description: 'Type of dataset compression. Type: string (or Expression with resultType string).'
+        level:
+          description: 'The dataset compression level. Type: string (or Expression with resultType string).'
+      required:
+      - type
+      additionalProperties: {}
+    DatasetFolder:
+      type: object
+      description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this Dataset is in.
+    DatasetListResponse:
+      type: object
+      description: A list of dataset resources.
+      properties:
+        value:
+          type: array
+          description: The DatasetResource items on this page
+          items:
+            $ref: '#/components/schemas/DatasetResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    DatasetLocation:
+      type: object
+      description: Dataset location.
+      properties:
+        type:
+          type: string
+          description: Type of dataset storage location.
+        folderPath:
+          description: 'Specify the folder path of dataset. Type: string (or Expression with resultType string)'
+        fileName:
+          description: 'Specify the file name of dataset. Type: string (or Expression with resultType string).'
+      discriminator: type
+      required:
+      - type
+      additionalProperties: {}
+    DatasetResource:
+      type: object
+      description: Dataset resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Dataset'
+          description: Dataset properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    DatasetStorageFormat:
+      type: object
+      description: The format definition of a storage.
+      properties:
+        type:
+          type: string
+          description: Type of dataset storage format.
+        serializer:
+          description: 'Serializer. Type: string (or Expression with resultType string).'
+        deserializer:
+          description: 'Deserializer. Type: string (or Expression with resultType string).'
+      discriminator: type
+      required:
+      - type
+      additionalProperties: {}
+    Db2TableDataset:
+      type: object
+      description: The Db2 table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/Db2TableDatasetTypeProperties'
+          description: Db2 table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Db2Table
+    Db2TableDatasetTypeProperties:
+      type: object
+      description: Db2 table dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The Db2 schema name. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The Db2 table name. Type: string (or Expression with resultType string).'
+    DelimitedTextDataset:
+      type: object
+      description: Delimited text dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DelimitedTextDatasetTypeProperties'
+          description: Delimited text dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DelimitedText
+    DelimitedTextDatasetTypeProperties:
+      type: object
+      description: DelimitedText dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the delimited text storage.
+        columnDelimiter:
+          description: 'The column delimiter. Type: string (or Expression with resultType string).'
+        rowDelimiter:
+          description: 'The row delimiter. Type: string (or Expression with resultType string).'
+        encodingName:
+          description: 'The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes
+            another Unicode encoding. Refer to the name column of the table in the following link to set supported values:
+            https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).'
+        compressionCodec:
+          description: 'The data compressionCodec. Type: string (or Expression with resultType string).'
+        compressionLevel:
+          description: The data compression method used for DelimitedText.
+        quoteChar:
+          description: 'The quote character. Type: string (or Expression with resultType string).'
+        escapeChar:
+          description: 'The escape character. Type: string (or Expression with resultType string).'
+        firstRowAsHeader:
+          description: 'When used as input, treat the first row of data as headers. When used as output,write the headers
+            into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType
+            boolean).'
+        nullValue:
+          description: 'The null value string. Type: string (or Expression with resultType string).'
+      required:
+      - location
+    DocumentDbCollectionDataset:
+      type: object
+      description: Microsoft Azure Document Database Collection dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DocumentDbCollectionDatasetTypeProperties'
+          description: DocumentDB Collection dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DocumentDbCollection
+    DocumentDbCollectionDatasetTypeProperties:
+      type: object
+      description: DocumentDB Collection dataset properties.
+      properties:
+        collectionName:
+          description: 'Document Database collection name. Type: string (or Expression with resultType string).'
+      required:
+      - collectionName
+    DrillDatasetTypeProperties:
+      type: object
+      description: Drill Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Drill. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Drill. Type: string (or Expression with resultType string).'
+    DrillTableDataset:
+      type: object
+      description: Drill server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DrillDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DrillTable
+    DynamicsAXResourceDataset:
+      type: object
+      description: The path of the Dynamics AX OData entity.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DynamicsAXResourceDatasetTypeProperties'
+          description: Dynamics AX OData resource dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DynamicsAXResource
+    DynamicsAXResourceDatasetTypeProperties:
+      type: object
+      description: Dynamics AX OData resource dataset properties.
+      properties:
+        path:
+          description: 'The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string).'
+      required:
+      - path
+    DynamicsCrmEntityDataset:
+      type: object
+      description: The Dynamics CRM entity dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DynamicsCrmEntityDatasetTypeProperties'
+          description: Dynamics CRM entity dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DynamicsCrmEntity
+    DynamicsCrmEntityDatasetTypeProperties:
+      type: object
+      description: Dynamics CRM entity dataset properties.
+      properties:
+        entityName:
+          description: 'The logical name of the entity. Type: string (or Expression with resultType string).'
+    DynamicsEntityDataset:
+      type: object
+      description: The Dynamics entity dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/DynamicsEntityDatasetTypeProperties'
+          description: Dynamics entity dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: DynamicsEntity
+    DynamicsEntityDatasetTypeProperties:
+      type: object
+      description: Dynamics entity dataset properties.
+      properties:
+        entityName:
+          description: 'The logical name of the entity. Type: string (or Expression with resultType string).'
+    EloquaObjectDataset:
+      type: object
+      description: Eloqua server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: EloquaObject
+    ExcelDataset:
+      type: object
+      description: Excel dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/ExcelDatasetTypeProperties'
+          description: Excel dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Excel
+    ExcelDatasetTypeProperties:
+      type: object
+      description: Excel dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the excel storage.
+        sheetName:
+          description: 'The sheet name of excel file. Type: string (or Expression with resultType string).'
+        sheetIndex:
+          description: 'The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType
+            integer)'
+        range:
+          description: 'The partial data of one sheet. Type: string (or Expression with resultType string).'
+        firstRowAsHeader:
+          description: 'When used as input, treat the first row of data as headers. When used as output,write the headers
+            into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType
+            boolean).'
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the json dataset.
+        nullValue:
+          description: 'The null value string. Type: string (or Expression with resultType string).'
+      required:
+      - location
+    FileServerLocation:
+      type: object
+      description: The location of file server dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: FileServerLocation
+    FileShareDataset:
+      type: object
+      description: An on-premises file system dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/FileShareDatasetTypeProperties'
+          description: On-premises file system dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: FileShare
+    FileShareDatasetTypeProperties:
+      type: object
+      description: On-premises file system dataset properties.
+      properties:
+        folderPath:
+          description: 'The path of the on-premises file system. Type: string (or Expression with resultType string).'
+        fileName:
+          description: 'The name of the on-premises file system. Type: string (or Expression with resultType string).'
+        modifiedDatetimeStart:
+          description: 'The start of file''s modified datetime. Type: string (or Expression with resultType string).'
+        modifiedDatetimeEnd:
+          description: 'The end of file''s modified datetime. Type: string (or Expression with resultType string).'
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of the files.
+        fileFilter:
+          description: 'Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type:
+            string (or Expression with resultType string).'
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the file system.
+    FtpServerLocation:
+      type: object
+      description: The location of ftp server dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: FtpServerLocation
+    GenericDatasetTypeProperties:
+      type: object
+      description: Properties specific to this dataset type.
+      properties:
+        tableName:
+          description: 'The table name. Type: string (or Expression with resultType string).'
+    GoogleAdWordsObjectDataset:
+      type: object
+      description: Google AdWords service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: GoogleAdWordsObject
+    GoogleBigQueryDatasetTypeProperties:
+      type: object
+      description: Google BigQuery Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using database + table properties instead.
+        table:
+          description: 'The table name of the Google BigQuery. Type: string (or Expression with resultType string).'
+        dataset:
+          description: 'The database name of the Google BigQuery. Type: string (or Expression with resultType string).'
+    GoogleBigQueryObjectDataset:
+      type: object
+      description: Google BigQuery service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GoogleBigQueryDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: GoogleBigQueryObject
+    GoogleBigQueryV2DatasetTypeProperties:
+      type: object
+      description: Google BigQuery Dataset Properties
+      properties:
+        table:
+          description: 'The table name of the Google BigQuery. Type: string (or Expression with resultType string).'
+        dataset:
+          description: 'The database name of the Google BigQuery. Type: string (or Expression with resultType string).'
+    GoogleBigQueryV2ObjectDataset:
+      type: object
+      description: Google BigQuery service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GoogleBigQueryV2DatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: GoogleBigQueryV2Object
+    GoogleCloudStorageLocation:
+      type: object
+      description: The location of Google Cloud Storage dataset.
+      properties:
+        bucketName:
+          description: 'Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)'
+        version:
+          description: 'Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: GoogleCloudStorageLocation
+    GreenplumDatasetTypeProperties:
+      type: object
+      description: Greenplum Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of Greenplum. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of Greenplum. Type: string (or Expression with resultType string).'
+    GreenplumTableDataset:
+      type: object
+      description: Greenplum Database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GreenplumDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: GreenplumTable
+    HBaseObjectDataset:
+      type: object
+      description: HBase server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: HBaseObject
+    HdfsLocation:
+      type: object
+      description: The location of HDFS.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: HdfsLocation
+    HiveDatasetTypeProperties:
+      type: object
+      description: Hive Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Hive. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Hive. Type: string (or Expression with resultType string).'
+    HiveObjectDataset:
+      type: object
+      description: Hive Server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/HiveDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: HiveObject
+    HttpDataset:
+      type: object
+      description: A file in an HTTP web server.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/HttpDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: HttpFile
+    HttpDatasetTypeProperties:
+      type: object
+      description: Properties specific to this dataset type.
+      properties:
+        relativeUrl:
+          description: 'The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or
+            Expression with resultType string).'
+        requestMethod:
+          description: 'The HTTP method for the HTTP request. Type: string (or Expression with resultType string).'
+        requestBody:
+          description: 'The body for the HTTP request. Type: string (or Expression with resultType string).'
+        additionalHeaders:
+          description: |-
+            The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
+            ...
+            request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
+        format:
+          $ref: '#/components/schemas/DatasetStorageFormat'
+          description: The format of files.
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used on files.
+    HttpServerLocation:
+      type: object
+      description: The location of http server.
+      properties:
+        relativeUrl:
+          description: 'Specify the relativeUrl of http server. Type: string (or Expression with resultType string)'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: HttpServerLocation
+    HubspotObjectDataset:
+      type: object
+      description: Hubspot Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: HubspotObject
+    IcebergDataset:
+      type: object
+      description: Iceberg dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/IcebergDatasetTypeProperties'
+          description: Iceberg dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Iceberg
+    IcebergDatasetTypeProperties:
+      type: object
+      description: Iceberg dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the iceberg storage. Setting a file name is not allowed for iceberg format.
+      required:
+      - location
+    ImpalaDatasetTypeProperties:
+      type: object
+      description: Impala Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Impala. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Impala. Type: string (or Expression with resultType string).'
+    ImpalaObjectDataset:
+      type: object
+      description: Impala server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/ImpalaDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ImpalaObject
+    InformixTableDataset:
+      type: object
+      description: The Informix table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/InformixTableDatasetTypeProperties'
+          description: Informix table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: InformixTable
+    InformixTableDatasetTypeProperties:
+      type: object
+      description: Informix table dataset properties.
+      properties:
+        tableName:
+          description: 'The Informix table name. Type: string (or Expression with resultType string).'
+    JiraObjectDataset:
+      type: object
+      description: Jira Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/JiraTableDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: JiraObject
+    JiraTableDatasetTypeProperties:
+      type: object
+      description: Jira dataset properties.
+      properties:
+        tableName:
+          description: This property is only supported in Jira V1 Dataset, please consider upgrading to V2 dataset.
+        schema:
+          description: 'The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType
+            string).'
+        table:
+          description: 'The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType
+            string).'
+    JsonDataset:
+      type: object
+      description: Json dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/JsonDatasetTypeProperties'
+          description: Json dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Json
+    JsonDatasetTypeProperties:
+      type: object
+      description: Json dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the json data storage.
+        encodingName:
+          description: 'The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless
+            BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported
+            values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType
+            string).'
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the json dataset.
+      required:
+      - location
+    JsonFormat:
+      type: object
+      description: The data stored in JSON format.
+      properties:
+        filePattern:
+          description: File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The
+            default value is 'setOfObjects'. It is case-sensitive.
+        nestingSeparator:
+          description: 'The character used to separate nesting levels. Default value is ''.'' (dot). Type: string (or Expression
+            with resultType string).'
+        encodingName:
+          description: 'The code page name of the preferred encoding. If not provided, the default value is ''utf-8'', unless
+            the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in
+            the ''Name'' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078.
+            Type: string (or Expression with resultType string).'
+        jsonNodeReference:
+          description: 'The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression
+            with resultType string).'
+        jsonPathDefinition:
+          description: 'The JSONPath definition for each column mapping with a customized column name to extract data from
+            JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference
+            property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}.
+            Type: object (or Expression with resultType object).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetStorageFormat'
+      x-ms-discriminator-value: JsonFormat
+    LakeHouseLocation:
+      type: object
+      description: The location of Microsoft Fabric Lakehouse Files dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: LakeHouseLocation
+    LakeHouseTableDataset:
+      type: object
+      description: Microsoft Fabric Lakehouse Table.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/LakeHouseTableDatasetTypeProperties'
+          description: Microsoft Fabric Lakehouse Table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: LakehouseTable
+    LakeHouseTableDatasetTypeProperties:
+      type: object
+      description: Microsoft Fabric Lakehouse Table dataset properties.
+      properties:
+        schema:
+          description: 'The schema name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string).'
+    LinkedServiceReference:
+      type: object
+      description: Linked service reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+          description: Linked service reference type.
+        referenceName:
+          type: string
+          description: Reference LinkedService name.
+        parameters:
+          type: object
+          description: Arguments for LinkedService.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    MagentoObjectDataset:
+      type: object
+      description: Magento server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MagentoObject
+    MariaDBTableDataset:
+      type: object
+      description: MariaDB server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MariaDBTable
+    MarketoObjectDataset:
+      type: object
+      description: Marketo server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MarketoObject
+    MicrosoftAccessTableDataset:
+      type: object
+      description: The Microsoft Access table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MicrosoftAccessTableDatasetTypeProperties'
+          description: Microsoft Access table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MicrosoftAccessTable
+    MicrosoftAccessTableDatasetTypeProperties:
+      type: object
+      description: Microsoft Access table dataset properties.
+      properties:
+        tableName:
+          description: 'The Microsoft Access table name. Type: string (or Expression with resultType string).'
+    MongoDbAtlasCollectionDataset:
+      type: object
+      description: The MongoDB Atlas database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MongoDbAtlasCollectionDatasetTypeProperties'
+          description: MongoDB Atlas database dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MongoDbAtlasCollection
+    MongoDbAtlasCollectionDatasetTypeProperties:
+      type: object
+      description: MongoDB Atlas database dataset properties.
+      properties:
+        collection:
+          description: 'The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string).'
+      required:
+      - collection
+    MongoDbCollectionDataset:
+      type: object
+      description: The MongoDB database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MongoDbCollectionDatasetTypeProperties'
+          description: MongoDB database dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MongoDbCollection
+    MongoDbCollectionDatasetTypeProperties:
+      type: object
+      description: MongoDB database dataset properties.
+      properties:
+        collectionName:
+          description: 'The table name of the MongoDB database. Type: string (or Expression with resultType string).'
+      required:
+      - collectionName
+    MongoDbV2CollectionDataset:
+      type: object
+      description: The MongoDB database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MongoDbV2CollectionDatasetTypeProperties'
+          description: MongoDB database dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MongoDbV2Collection
+    MongoDbV2CollectionDatasetTypeProperties:
+      type: object
+      description: MongoDB database dataset properties.
+      properties:
+        collection:
+          description: 'The collection name of the MongoDB database. Type: string (or Expression with resultType string).'
+      required:
+      - collection
+    MySqlTableDataset:
+      type: object
+      description: The MySQL table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/MySqlTableDatasetTypeProperties'
+          description: MySQL table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: MySqlTable
+    MySqlTableDatasetTypeProperties:
+      type: object
+      description: MySql table dataset properties.
+      properties:
+        tableName:
+          description: 'The MySQL table name. Type: string (or Expression with resultType string).'
+    NetezzaTableDataset:
+      type: object
+      description: Netezza dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/NetezzaTableDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: NetezzaTable
+    NetezzaTableDatasetTypeProperties:
+      type: object
+      description: Netezza dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Netezza. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Netezza. Type: string (or Expression with resultType string).'
+    ODataResourceDataset:
+      type: object
+      description: The Open Data Protocol (OData) resource dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/ODataResourceDatasetTypeProperties'
+          description: OData dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ODataResource
+    ODataResourceDatasetTypeProperties:
+      type: object
+      description: OData dataset properties.
+      properties:
+        path:
+          description: 'The OData resource path. Type: string (or Expression with resultType string).'
+    OdbcTableDataset:
+      type: object
+      description: The ODBC table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/OdbcTableDatasetTypeProperties'
+          description: ODBC table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: OdbcTable
+    OdbcTableDatasetTypeProperties:
+      type: object
+      description: ODBC table dataset properties.
+      properties:
+        tableName:
+          description: 'The ODBC table name. Type: string (or Expression with resultType string).'
+    Office365Dataset:
+      type: object
+      description: The Office365 account.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/Office365DatasetTypeProperties'
+          description: Office365 dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Office365Table
+    Office365DatasetTypeProperties:
+      type: object
+      description: Office365 dataset properties.
+      properties:
+        tableName:
+          description: 'Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).'
+        predicate:
+          description: 'A predicate expression that can be used to filter the specific rows to extract from Office 365. Type:
+            string (or Expression with resultType string).'
+      required:
+      - tableName
+    OracleCloudStorageLocation:
+      type: object
+      description: The location of Oracle Cloud Storage dataset.
+      properties:
+        bucketName:
+          description: 'Specify the bucketName of Oracle Cloud Storage. Type: string (or Expression with resultType string)'
+        version:
+          description: 'Specify the version of Oracle Cloud Storage. Type: string (or Expression with resultType string).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: OracleCloudStorageLocation
+    OracleServiceCloudObjectDataset:
+      type: object
+      description: Oracle Service Cloud dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: OracleServiceCloudObject
+    OracleTableDataset:
+      type: object
+      description: The on-premises Oracle database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/OracleTableDatasetTypeProperties'
+          description: On-premises Oracle dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: OracleTable
+    OracleTableDatasetTypeProperties:
+      type: object
+      description: On-premises Oracle dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the on-premises Oracle database. Type: string (or Expression with resultType string).'
+    OrcDataset:
+      type: object
+      description: ORC dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/OrcDatasetTypeProperties'
+          description: ORC dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Orc
+    OrcDatasetTypeProperties:
+      type: object
+      description: ORC dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the ORC data storage.
+        orcCompressionCodec:
+          description: 'The data orcCompressionCodec. Type: string (or Expression with resultType string).'
+      required:
+      - location
+    OrcFormat:
+      type: object
+      description: The data stored in Optimized Row Columnar (ORC) format.
+      allOf:
+      - $ref: '#/components/schemas/DatasetStorageFormat'
+      x-ms-discriminator-value: OrcFormat
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    ParameterType:
+      type: string
+      description: Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      - SecureString
+      x-ms-enum:
+        name: ParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+        - name: SecureString
+          value: SecureString
+          description: SecureString
+    ParquetDataset:
+      type: object
+      description: Parquet dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/ParquetDatasetTypeProperties'
+          description: Parquet dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Parquet
+    ParquetDatasetTypeProperties:
+      type: object
+      description: Parquet dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the parquet storage.
+        compressionCodec:
+          description: 'The data compressionCodec. Type: string (or Expression with resultType string).'
+      required:
+      - location
+    ParquetFormat:
+      type: object
+      description: The data stored in Parquet format.
+      allOf:
+      - $ref: '#/components/schemas/DatasetStorageFormat'
+      x-ms-discriminator-value: ParquetFormat
+    PaypalObjectDataset:
+      type: object
+      description: Paypal Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: PaypalObject
+    PhoenixDatasetTypeProperties:
+      type: object
+      description: Phoenix Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Phoenix. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Phoenix. Type: string (or Expression with resultType string).'
+    PhoenixObjectDataset:
+      type: object
+      description: Phoenix server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/PhoenixDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: PhoenixObject
+    PostgreSqlTableDataset:
+      type: object
+      description: The PostgreSQL table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/PostgreSqlTableDatasetTypeProperties'
+          description: PostgreSQL table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: PostgreSqlTable
+    PostgreSqlTableDatasetTypeProperties:
+      type: object
+      description: PostgreSQL table dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The PostgreSQL table name. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The PostgreSQL schema name. Type: string (or Expression with resultType string).'
+    PostgreSqlV2TableDataset:
+      type: object
+      description: The PostgreSQLV2 table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/PostgreSqlV2TableDatasetTypeProperties'
+          description: PostgreSQLV2 table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: PostgreSqlV2Table
+    PostgreSqlV2TableDatasetTypeProperties:
+      type: object
+      description: PostgreSQLV2 table dataset properties.
+      properties:
+        table:
+          description: 'The PostgreSQL table name. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The PostgreSQL schema name. Type: string (or Expression with resultType string).'
+    PrestoDatasetTypeProperties:
+      type: object
+      description: Presto Dataset Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Presto. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Presto. Type: string (or Expression with resultType string).'
+    PrestoObjectDataset:
+      type: object
+      description: Presto server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/PrestoDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: PrestoObject
+    QuickBooksObjectDataset:
+      type: object
+      description: QuickBooks server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: QuickBooksObject
+    RelationalTableDataset:
+      type: object
+      description: The relational table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/RelationalTableDatasetTypeProperties'
+          description: Relational table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: RelationalTable
+    RelationalTableDatasetTypeProperties:
+      type: object
+      description: Relational table dataset properties.
+      properties:
+        tableName:
+          description: 'The relational table name. Type: string (or Expression with resultType string).'
+    ResponsysObjectDataset:
+      type: object
+      description: Responsys dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ResponsysObject
+    RestResourceDataset:
+      type: object
+      description: A Rest service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/RestResourceDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: RestResource
+    RestResourceDatasetTypeProperties:
+      type: object
+      description: Properties specific to this dataset type.
+      properties:
+        relativeUrl:
+          description: 'The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType
+            string).'
+        requestMethod:
+          description: 'The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with
+            resultType string).'
+        requestBody:
+          description: 'The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with
+            resultType string).'
+        additionalHeaders:
+          type: object
+          description: The additional HTTP headers in the request to the RESTful API.
+          additionalProperties: {}
+        paginationRules:
+          type: object
+          description: The pagination rules to compose next page requests.
+          additionalProperties: {}
+    SalesforceMarketingCloudObjectDataset:
+      type: object
+      description: Salesforce Marketing Cloud dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SalesforceMarketingCloudObject
+    SalesforceObjectDataset:
+      type: object
+      description: The Salesforce object dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SalesforceObjectDatasetTypeProperties'
+          description: Salesforce object dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SalesforceObject
+    SalesforceObjectDatasetTypeProperties:
+      type: object
+      description: Salesforce object dataset properties.
+      properties:
+        objectApiName:
+          description: 'The Salesforce object API name. Type: string (or Expression with resultType string).'
+    SalesforceServiceCloudObjectDataset:
+      type: object
+      description: The Salesforce Service Cloud object dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SalesforceServiceCloudObjectDatasetTypeProperties'
+          description: Salesforce Service Cloud object dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SalesforceServiceCloudObject
+    SalesforceServiceCloudObjectDatasetTypeProperties:
+      type: object
+      description: Salesforce Service Cloud object dataset properties.
+      properties:
+        objectApiName:
+          description: 'The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string).'
+    SalesforceServiceCloudV2ObjectDataset:
+      type: object
+      description: The Salesforce Service Cloud V2 object dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SalesforceServiceCloudV2ObjectDatasetTypeProperties'
+          description: Salesforce Service Cloud V2 object dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SalesforceServiceCloudV2Object
+    SalesforceServiceCloudV2ObjectDatasetTypeProperties:
+      type: object
+      description: Salesforce Service Cloud V2 object dataset properties.
+      properties:
+        objectApiName:
+          description: 'The Salesforce Service Cloud V2 object API name. Type: string (or Expression with resultType string).'
+        reportId:
+          description: 'The Salesforce Service Cloud V2 reportId. Type: string (or Expression with resultType string).'
+    SalesforceV2ObjectDataset:
+      type: object
+      description: The Salesforce V2 object dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SalesforceV2ObjectDatasetTypeProperties'
+          description: Salesforce V2 object dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SalesforceV2Object
+    SalesforceV2ObjectDatasetTypeProperties:
+      type: object
+      description: Salesforce V2 object dataset properties.
+      properties:
+        objectApiName:
+          description: 'The Salesforce V2 object API name. Type: string (or Expression with resultType string).'
+        reportId:
+          description: 'The Salesforce V2 report Id. Type: string (or Expression with resultType string).'
+    SapBwCubeDataset:
+      type: object
+      description: The SAP BW cube dataset.
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapBwCube
+    SapCloudForCustomerResourceDataset:
+      type: object
+      description: The path of the SAP Cloud for Customer OData entity.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapCloudForCustomerResourceDatasetTypeProperties'
+          description: SAP Cloud For Customer OData resource dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapCloudForCustomerResource
+    SapCloudForCustomerResourceDatasetTypeProperties:
+      type: object
+      description: Sap Cloud For Customer OData resource dataset properties.
+      properties:
+        path:
+          description: 'The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string).'
+      required:
+      - path
+    SapEccResourceDataset:
+      type: object
+      description: The path of the SAP ECC OData entity.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapEccResourceDatasetTypeProperties'
+          description: SAP ECC OData resource dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapEccResource
+    SapEccResourceDatasetTypeProperties:
+      type: object
+      description: Sap ECC OData resource dataset properties.
+      properties:
+        path:
+          description: 'The path of the SAP ECC OData entity. Type: string (or Expression with resultType string).'
+      required:
+      - path
+    SapHanaTableDataset:
+      type: object
+      description: SAP HANA Table properties.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapHanaTableDatasetTypeProperties'
+          description: SAP HANA Table properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapHanaTable
+    SapHanaTableDatasetTypeProperties:
+      type: object
+      description: SAP HANA Table properties.
+      properties:
+        schema:
+          description: 'The schema name of SAP HANA. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of SAP HANA. Type: string (or Expression with resultType string).'
+    SapOdpResourceDataset:
+      type: object
+      description: SAP ODP Resource properties.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapOdpResourceDatasetTypeProperties'
+          description: SAP ODP Resource properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapOdpResource
+    SapOdpResourceDatasetTypeProperties:
+      type: object
+      description: SAP ODP Resource properties.
+      properties:
+        context:
+          description: 'The context of the SAP ODP Object. Type: string (or Expression with resultType string).'
+        objectName:
+          description: 'The name of the SAP ODP Object. Type: string (or Expression with resultType string).'
+      required:
+      - context
+      - objectName
+    SapOpenHubTableDataset:
+      type: object
+      description: Sap Business Warehouse Open Hub Destination Table properties.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapOpenHubTableDatasetTypeProperties'
+          description: Sap Business Warehouse Open Hub Destination Table properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapOpenHubTable
+    SapOpenHubTableDatasetTypeProperties:
+      type: object
+      description: Sap Business Warehouse Open Hub Destination Table properties.
+      properties:
+        openHubDestinationName:
+          description: 'The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression
+            with resultType string).'
+        excludeLastRequest:
+          description: 'Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression
+            with resultType boolean).'
+        baseRequestId:
+          description: 'The ID of request for delta loading. Once it is set, only data with requestId larger than the value
+            of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer
+            ).'
+      required:
+      - openHubDestinationName
+    SapTableResourceDataset:
+      type: object
+      description: SAP Table Resource properties.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SapTableResourceDatasetTypeProperties'
+          description: SAP Table Resource properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SapTableResource
+    SapTableResourceDatasetTypeProperties:
+      type: object
+      description: SAP Table Resource properties.
+      properties:
+        tableName:
+          description: 'The name of the SAP Table. Type: string (or Expression with resultType string).'
+      required:
+      - tableName
+    ServiceNowObjectDataset:
+      type: object
+      description: ServiceNow server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ServiceNowObject
+    ServiceNowV2DatasetTypeProperties:
+      type: object
+      description: Properties specific to this dataset type.
+      properties:
+        tableName:
+          description: 'The table name. Type: string (or Expression with resultType string).'
+        valueType:
+          $ref: '#/components/schemas/ValueType'
+          description: Type of value copied from source.
+    ServiceNowV2ObjectDataset:
+      type: object
+      description: ServiceNowV2 server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/ServiceNowV2DatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ServiceNowV2Object
+    SftpLocation:
+      type: object
+      description: The location of SFTP dataset.
+      allOf:
+      - $ref: '#/components/schemas/DatasetLocation'
+      x-ms-discriminator-value: SftpLocation
+    SharePointOnlineListDatasetTypeProperties:
+      type: object
+      description: Sharepoint online list dataset properties.
+      properties:
+        listName:
+          description: 'The name of the SharePoint Online list. Type: string (or Expression with resultType string).'
+    SharePointOnlineListResourceDataset:
+      type: object
+      description: The sharepoint online list resource dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SharePointOnlineListDatasetTypeProperties'
+          description: Sharepoint online list dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SharePointOnlineListResource
+    ShopifyObjectDataset:
+      type: object
+      description: Shopify Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ShopifyObject
+    SnowflakeDataset:
+      type: object
+      description: The snowflake dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SnowflakeDatasetTypeProperties'
+          description: Snowflake dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SnowflakeTable
+    SnowflakeDatasetTypeProperties:
+      type: object
+      description: Snowflake dataset properties.
+      properties:
+        schema:
+          description: 'The schema name of the Snowflake database. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Snowflake database. Type: string (or Expression with resultType string).'
+    SnowflakeV2Dataset:
+      type: object
+      description: The snowflake dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SnowflakeDatasetTypeProperties'
+          description: Snowflake dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SnowflakeV2Table
+    SparkDatasetTypeProperties:
+      type: object
+      description: Spark Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Spark. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Spark. Type: string (or Expression with resultType string).'
+    SparkObjectDataset:
+      type: object
+      description: Spark Server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SparkDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SparkObject
+    SqlServerTableDataset:
+      type: object
+      description: The on-premises SQL Server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SqlServerTableDatasetTypeProperties'
+          description: On-premises SQL Server dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SqlServerTable
+    SqlServerTableDatasetTypeProperties:
+      type: object
+      description: On-premises SQL Server dataset properties.
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        schema:
+          description: 'The schema name of the SQL Server dataset. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the SQL Server dataset. Type: string (or Expression with resultType string).'
+    SquareObjectDataset:
+      type: object
+      description: Square Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SquareObject
+    SybaseTableDataset:
+      type: object
+      description: The Sybase table dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SybaseTableDatasetTypeProperties'
+          description: Sybase table dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: SybaseTable
+    SybaseTableDatasetTypeProperties:
+      type: object
+      description: Sybase table dataset properties.
+      properties:
+        tableName:
+          description: 'The Sybase table name. Type: string (or Expression with resultType string).'
+    TeradataTableDataset:
+      type: object
+      description: The Teradata database dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/TeradataTableDatasetTypeProperties'
+          description: Teradata dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: TeradataTable
+    TeradataTableDatasetTypeProperties:
+      type: object
+      description: Teradata dataset properties.
+      properties:
+        database:
+          description: 'The database name of Teradata. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of Teradata. Type: string (or Expression with resultType string).'
+    TextFormat:
+      type: object
+      description: The data stored in text format.
+      properties:
+        columnDelimiter:
+          description: 'The column delimiter. Type: string (or Expression with resultType string).'
+        rowDelimiter:
+          description: 'The row delimiter. Type: string (or Expression with resultType string).'
+        escapeChar:
+          description: 'The escape character. Type: string (or Expression with resultType string).'
+        quoteChar:
+          description: 'The quote character. Type: string (or Expression with resultType string).'
+        nullValue:
+          description: 'The null value string. Type: string (or Expression with resultType string).'
+        encodingName:
+          description: 'The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM
+            denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported
+            values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType
+            string).'
+        treatEmptyAsNull:
+          description: 'Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression
+            with resultType boolean).'
+        skipLineCount:
+          description: 'The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer
+            (or Expression with resultType integer).'
+        firstRowAsHeader:
+          description: 'When used as input, treat the first row of data as headers. When used as output,write the headers
+            into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType
+            boolean).'
+      allOf:
+      - $ref: '#/components/schemas/DatasetStorageFormat'
+      x-ms-discriminator-value: TextFormat
+    Type:
+      type: string
+      description: Linked service reference type.
+      enum:
+      - LinkedServiceReference
+      x-ms-enum:
+        name: Type
+        modelAsString: true
+        values:
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+    ValueType:
+      type: string
+      description: Type of value copied from source.
+      enum:
+      - actual
+      - display
+      x-ms-enum:
+        name: ValueType
+        modelAsString: true
+        values:
+        - name: actual
+          value: actual
+          description: actual
+        - name: display
+          value: display
+          description: display
+    VerticaDatasetTypeProperties:
+      type: object
+      description: Vertica Properties
+      properties:
+        tableName:
+          description: This property will be retired. Please consider using schema + table properties instead.
+        table:
+          description: 'The table name of the Vertica. Type: string (or Expression with resultType string).'
+        schema:
+          description: 'The schema name of the Vertica. Type: string (or Expression with resultType string).'
+    VerticaTableDataset:
+      type: object
+      description: Vertica dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/VerticaDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: VerticaTable
+    WarehouseTableDataset:
+      type: object
+      description: Microsoft Fabric Warehouse dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/WarehouseTableDatasetTypeProperties'
+          description: Microsoft Fabric Warehouse dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: WarehouseTable
+    WarehouseTableDatasetTypeProperties:
+      type: object
+      description: Microsoft Fabric Warehouse dataset properties.
+      properties:
+        schema:
+          description: 'The schema name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string).'
+        table:
+          description: 'The table name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string).'
+    WebTableDataset:
+      type: object
+      description: The dataset points to a HTML table in the web page.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/WebTableDatasetTypeProperties'
+          description: Web table dataset properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: WebTable
+    WebTableDatasetTypeProperties:
+      type: object
+      description: Web table dataset properties.
+      properties:
+        index:
+          description: 'The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer),
+            minimum: 0.'
+        path:
+          description: 'The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType
+            string).'
+      required:
+      - index
+    XeroObjectDataset:
+      type: object
+      description: Xero Service dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: XeroObject
+    XmlDataset:
+      type: object
+      description: Xml dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/XmlDatasetTypeProperties'
+          description: Xml dataset properties.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: Xml
+    XmlDatasetTypeProperties:
+      type: object
+      description: Xml dataset properties.
+      properties:
+        location:
+          $ref: '#/components/schemas/DatasetLocation'
+          description: The location of the json data storage.
+        encodingName:
+          description: 'The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless
+            BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported
+            values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType
+            string).'
+        nullValue:
+          description: 'The null value string. Type: string (or Expression with resultType string).'
+        compression:
+          $ref: '#/components/schemas/DatasetCompression'
+          description: The data compression method used for the json dataset.
+      required:
+      - location
+    ZohoObjectDataset:
+      type: object
+      description: Zoho server dataset.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/GenericDatasetTypeProperties'
+          description: Properties specific to this dataset type.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/Dataset'
+      x-ms-discriminator-value: ZohoObject
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

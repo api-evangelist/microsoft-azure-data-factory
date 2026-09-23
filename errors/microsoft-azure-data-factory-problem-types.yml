@@ -1,0 +1,111 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json (the
+  CloudError envelope and the per-operation response sets), plus the Azure Resource Manager
+  status-code conventions at
+  https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling
+  and https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/async-operations
+format: azure-arm
+rfc9457: false
+content_type: application/json
+envelope:
+  schema: CloudError
+  required:
+  - error
+  fields:
+    error.code: PascalCase error identifier, stable and matchable
+    error.message: human-readable description
+    error.target: the field or resource the error is about
+    error.details: nested CloudErrorBody array for multi-error responses
+  example: |
+    {
+      "error": {
+        "code": "MissingApiVersionParameter",
+        "message": "The api-version query parameter (?api-version=) is required for all requests."
+      }
+    }
+note: >-
+  This contract declares exactly ONE error response per operation: a `default` response bound to
+  CloudError. It does not enumerate 400/401/403/404/409/429 separately, so the status-code table
+  below is derived from the ARM platform contract that fronts every Microsoft.DataFactory
+  operation, not from per-operation declarations in the spec. Error CODES are not enumerated by
+  Microsoft in a machine-readable registry for this resource provider; the two recorded below
+  were observed live, and none are invented.
+observed:
+- code: MissingApiVersionParameter
+  status: 400
+  message: The api-version query parameter (?api-version=) is required for all requests.
+  observed_at: '2026-09-17'
+  observed_on: https://management.azure.com/.well-known/security.txt
+  remediation: Append ?api-version=2018-06-01 to every request.
+problem_types:
+- status: 400
+  title: Bad Request
+  meaning: Malformed request — missing api-version, invalid resource name, or a body that fails
+    contract validation.
+  retryable: false
+  remediation: Fix the request. Check api-version, the resource-name rules, and required body fields.
+- status: 401
+  title: Unauthorized
+  meaning: Missing, malformed or expired bearer token.
+  retryable: false
+  remediation: Acquire a fresh token for audience https://management.azure.com/ from
+    https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token.
+- status: 403
+  title: Forbidden
+  meaning: The token is valid but the principal lacks the Azure RBAC role assignment for this
+    operation on this scope. Also returned when a policy or a private-endpoint network rule blocks
+    the call.
+  retryable: false
+  remediation: Assign Data Factory Contributor (or a role containing the required
+    Microsoft.DataFactory/* action) at the factory, resource group or subscription scope.
+- status: 404
+  title: Not Found
+  meaning: The subscription, resource group, factory or child resource does not exist — or the
+    caller cannot see it.
+  retryable: false
+- status: 409
+  title: Conflict
+  meaning: The resource is in a state that forbids the operation, or a concurrent operation holds it.
+  retryable: true
+  remediation: Re-read the resource and retry with backoff.
+- status: 412
+  title: Precondition Failed
+  meaning: A conditional write with `if-match` lost the ETag comparison — the resource changed
+    since it was read.
+  retryable: true
+  remediation: GET the resource, merge onto the current version, resend with the new ETag.
+  applies_to: the 12 CreateOrUpdate operations listed in
+    conventions/microsoft-azure-data-factory-conventions.yml idempotency.scope
+- status: 429
+  title: Too Many Requests
+  meaning: Azure Resource Manager throttling. The token bucket for this subscription, service
+    principal or tenant is empty.
+  retryable: true
+  remediation: Wait the number of seconds in Retry-After, then retry. Watch
+    x-ms-ratelimit-remaining-subscription-reads / -writes to back off before hitting the wall.
+  docs: https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling
+- status: 500
+  title: Internal Server Error
+  retryable: true
+  remediation: Retry with exponential backoff; if persistent, capture x-ms-request-id and
+    x-ms-correlation-request-id and open a support case.
+- status: 503
+  title: Service Unavailable
+  retryable: true
+  remediation: Retry with exponential backoff honouring Retry-After when present.
+success_codes_worth_knowing:
+- status: 202
+  meaning: Long-running operation accepted. Poll Azure-AsyncOperation (or Location) until the
+    status is Succeeded, Failed or Canceled. Nine operations can return this.
+- status: 204
+  meaning: DELETE succeeded against a resource that did not exist. 13 delete operations declare it;
+    treat it as success, not as an error.
+- status: 304
+  meaning: Conditional GET with If-None-Match matched the current ETag; no body is returned.
+    Declared on 12 Get operations.
+summary:
+  problem_type_count: 9
+  codes_enumerated_by_provider: false
+  envelope_is_rfc9457: false

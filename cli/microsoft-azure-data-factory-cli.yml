@@ -1,0 +1,242 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/cli/azure/datafactory
+docs: https://learn.microsoft.com/en-us/cli/azure/datafactory
+name: az datafactory
+official: true
+vendor: Microsoft
+distribution: Azure CLI extension
+install:
+  requires: Azure CLI 2.15.0 or higher
+  commands:
+  - az extension add --name datafactory
+  auto_install: The extension installs automatically the first time an `az datafactory` command
+    is run.
+  parent_cli:
+    name: Azure CLI (az)
+    install_docs: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
+auth:
+  command: az login
+  model: Microsoft Entra ID; the CLI credential is the same principal the REST API authorizes via
+    Azure RBAC
+groups:
+- group: az datafactory
+  description: Manage the factory resource itself.
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  - configure-factory-repo
+  - get-data-plane-access
+  - get-git-hub-access-token
+  backing_operations:
+  - Factories_CreateOrUpdate
+  - Factories_Get
+  - Factories_List
+  - Factories_ListByResourceGroup
+  - Factories_Update
+  - Factories_Delete
+  - Factories_ConfigureFactoryRepo
+  - Factories_GetDataPlaneAccess
+  - Factories_GetGitHubAccessToken
+- group: az datafactory pipeline
+  description: Manage pipelines and start runs.
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  - create-run
+  backing_operations:
+  - Pipelines_CreateOrUpdate
+  - Pipelines_Get
+  - Pipelines_ListByFactory
+  - Pipelines_Delete
+  - Pipelines_CreateRun
+- group: az datafactory pipeline-run
+  description: Inspect and cancel pipeline runs.
+  commands:
+  - show
+  - query-by-factory
+  - cancel
+  backing_operations:
+  - PipelineRuns_Get
+  - PipelineRuns_QueryByFactory
+  - PipelineRuns_Cancel
+- group: az datafactory activity-run
+  description: Query the activity runs inside a pipeline run.
+  commands:
+  - query-by-pipeline-run
+  backing_operations:
+  - ActivityRuns_QueryByPipelineRun
+- group: az datafactory dataset
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  backing_operations:
+  - Datasets_CreateOrUpdate
+  - Datasets_Get
+  - Datasets_ListByFactory
+  - Datasets_Delete
+- group: az datafactory linked-service
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  backing_operations:
+  - LinkedServices_CreateOrUpdate
+  - LinkedServices_Get
+  - LinkedServices_ListByFactory
+  - LinkedServices_Delete
+- group: az datafactory data-flow
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  backing_operations:
+  - DataFlows_CreateOrUpdate
+  - DataFlows_Get
+  - DataFlows_ListByFactory
+  - DataFlows_Delete
+- group: az datafactory trigger
+  description: Manage triggers, including event-trigger subscription.
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  - start
+  - stop
+  - query-by-factory
+  - subscribe-to-event
+  - unsubscribe-from-event
+  - get-event-subscription-status
+  - wait
+  backing_operations:
+  - Triggers_CreateOrUpdate
+  - Triggers_Get
+  - Triggers_ListByFactory
+  - Triggers_Delete
+  - Triggers_Start
+  - Triggers_Stop
+  - Triggers_QueryByFactory
+  - Triggers_SubscribeToEvents
+  - Triggers_UnsubscribeFromEvents
+  - Triggers_GetEventSubscriptionStatus
+- group: az datafactory trigger-run
+  commands:
+  - query-by-factory
+  - cancel
+  - rerun
+  backing_operations:
+  - TriggerRuns_QueryByFactory
+  - TriggerRuns_Cancel
+  - TriggerRuns_Rerun
+- group: az datafactory integration-runtime
+  description: Manage integration runtimes, including managed, self-hosted and linked.
+  commands:
+  - managed create
+  - self-hosted create
+  - linked-integration-runtime create
+  - show
+  - list
+  - update
+  - delete
+  - start
+  - stop
+  - upgrade
+  - sync-credentials
+  - list-auth-key
+  - regenerate-auth-key
+  - remove-link
+  - get-status
+  - get-connection-info
+  - get-monitoring-data
+  - wait
+  backing_operations:
+  - IntegrationRuntimes_CreateOrUpdate
+  - IntegrationRuntimes_Get
+  - IntegrationRuntimes_ListByFactory
+  - IntegrationRuntimes_Delete
+  - IntegrationRuntimes_Start
+  - IntegrationRuntimes_Stop
+  - IntegrationRuntimes_Upgrade
+  - IntegrationRuntimes_SyncCredentials
+  - IntegrationRuntimes_ListAuthKeys
+  - IntegrationRuntimes_RegenerateAuthKey
+  - IntegrationRuntimes_RemoveLinks
+  - IntegrationRuntimes_GetStatus
+  - IntegrationRuntimes_GetConnectionInfo
+  - IntegrationRuntimes_GetMonitoringData
+  - IntegrationRuntimes_CreateLinkedIntegrationRuntime
+- group: az datafactory integration-runtime-node
+  commands:
+  - show
+  - update
+  - delete
+  - get-ip-address
+  backing_operations:
+  - IntegrationRuntimeNodes_Get
+  - IntegrationRuntimeNodes_Update
+  - IntegrationRuntimeNodes_Delete
+  - IntegrationRuntimeNodes_GetIpAddress
+- group: az datafactory managed-private-endpoint
+  status: preview
+  commands:
+  - create
+  - show
+  - list
+  - update
+  - delete
+  backing_operations:
+  - ManagedPrivateEndpoints_CreateOrUpdate
+  - ManagedPrivateEndpoints_Get
+  - ManagedPrivateEndpoints_ListByFactory
+  - ManagedPrivateEndpoints_Delete
+- group: az datafactory managed-virtual-network
+  status: preview
+  commands:
+  - create
+  - show
+  - list
+  - update
+  backing_operations:
+  - ManagedVirtualNetworks_CreateOrUpdate
+  - ManagedVirtualNetworks_Get
+  - ManagedVirtualNetworks_ListByFactory
+key_flows:
+- name: Create a factory and start a pipeline run
+  steps:
+  - az login
+  - az datafactory create --resource-group <rg> --factory-name <name> --location "East US"
+  - az datafactory pipeline create --resource-group <rg> --factory-name <name> --name <pipeline>
+      --pipeline @pipeline.json
+  - az datafactory pipeline create-run --resource-group <rg> --factory-name <name> --name <pipeline>
+  - az datafactory pipeline-run show --resource-group <rg> --factory-name <name> --run-id <runId>
+- name: Cancel a running pipeline
+  steps:
+  - az datafactory pipeline-run query-by-factory --resource-group <rg> --factory-name <name>
+      --last-updated-after <iso> --last-updated-before <iso>
+  - az datafactory pipeline-run cancel --resource-group <rg> --factory-name <name> --run-id <runId>
+conventions:
+  conditional_write: '`--if-match` on create/update carries the resource ETag; `--if-none-match`
+    on show is the conditional-GET counterpart. Same mechanism as the REST if-match header.'
+  waiters: '`az datafactory trigger wait` and `az datafactory integration-runtime wait` block until
+    a condition is met — the CLI''s handling of the long-running-operation polling convention.'
+summary:
+  command_groups: 14
+  preview_groups: 2
+  binary_in_packages: false
+  note: The CLI is distributed as an Azure CLI extension, not as a standalone binary, so it has
+    no entry in packages/.

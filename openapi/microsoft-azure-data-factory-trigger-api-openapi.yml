@@ -1,0 +1,477 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST trigger API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: trigger
+  description: trigger operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}
+  : get:
+      operationId: Triggers_Get
+      description: Gets a trigger.
+      tags:
+      - trigger
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: triggerName
+        in: path
+        required: true
+        description: The trigger name.
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        required: false
+        description: ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity
+          tag, or if * was provided, then no content will be returned.
+        schema:
+          type: string
+        x-ms-client-name: If-None-Match
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResource'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Triggers_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Triggers_Get.json
+components:
+  schemas:
+    ChainingTrigger:
+      type: object
+      description: Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value
+        pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those
+        runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream
+        pipeline runs.
+      properties:
+        pipeline:
+          $ref: '#/components/schemas/TriggerPipelineReference'
+          description: Pipeline for which runs are created when all upstream pipelines complete successfully.
+        typeProperties:
+          $ref: '#/components/schemas/ChainingTriggerTypeProperties'
+          description: Chaining Trigger properties.
+          x-ms-client-flatten: true
+      required:
+      - pipeline
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Trigger'
+      x-ms-discriminator-value: ChainingTrigger
+    ChainingTriggerTypeProperties:
+      type: object
+      description: Chaining Trigger properties.
+      properties:
+        dependsOn:
+          type: array
+          description: Upstream Pipelines.
+          items:
+            $ref: '#/components/schemas/PipelineReference'
+          x-ms-identifiers:
+          - referenceName
+        runDimension:
+          type: string
+          description: Run Dimension property that needs to be emitted by upstream pipelines.
+      required:
+      - dependsOn
+      - runDimension
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    DependencyReference:
+      type: object
+      description: Referenced dependency.
+      properties:
+        type:
+          type: string
+          description: The type of dependency reference.
+      discriminator: type
+      required:
+      - type
+    MultiplePipelineTrigger:
+      type: object
+      description: Base class for all triggers that support one to many model for trigger to pipeline.
+      properties:
+        pipelines:
+          type: array
+          description: Pipelines that need to be started.
+          items:
+            $ref: '#/components/schemas/TriggerPipelineReference'
+          x-ms-identifiers:
+          - /pipelineReference/referenceName
+      allOf:
+      - $ref: '#/components/schemas/Trigger'
+      x-ms-discriminator-value: MultiplePipelineTrigger
+    PipelineReference:
+      type: object
+      description: Pipeline reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/PipelineReferenceType'
+          description: Pipeline reference type.
+        referenceName:
+          type: string
+          description: Reference pipeline name.
+        name:
+          type: string
+          description: Reference name.
+      required:
+      - type
+      - referenceName
+    PipelineReferenceType:
+      type: string
+      description: Pipeline reference type.
+      enum:
+      - PipelineReference
+      x-ms-enum:
+        name: PipelineReferenceType
+        modelAsString: true
+        values:
+        - name: PipelineReference
+          value: PipelineReference
+          description: PipelineReference
+    RerunTumblingWindowTrigger:
+      type: object
+      description: Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time
+        to requested end time.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/RerunTumblingWindowTriggerTypeProperties'
+          description: Rerun Trigger properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Trigger'
+      x-ms-discriminator-value: RerunTumblingWindowTrigger
+    RerunTumblingWindowTriggerTypeProperties:
+      type: object
+      description: Rerun Trigger properties.
+      properties:
+        parentTrigger:
+          description: The parent trigger reference.
+        requestedStartTime:
+          type: string
+          format: date-time
+          description: The start time for the time period for which restatement is initiated. Only UTC time is currently supported.
+        requestedEndTime:
+          type: string
+          format: date-time
+          description: The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
+        rerunConcurrency:
+          type: integer
+          format: int32
+          description: The max number of parallel time windows (ready for execution) for which a rerun is triggered.
+          minimum: 1
+          maximum: 50
+      required:
+      - parentTrigger
+      - requestedStartTime
+      - requestedEndTime
+      - rerunConcurrency
+    RetryPolicy:
+      type: object
+      description: Execution policy for an activity.
+      properties:
+        count:
+          description: 'Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer),
+            minimum: 0.'
+        intervalInSeconds:
+          type: integer
+          format: int32
+          description: Interval between retries in seconds. Default is 30.
+          minimum: 30
+          maximum: 86400
+    SelfDependencyTumblingWindowTriggerReference:
+      type: object
+      description: Self referenced tumbling window trigger dependency.
+      properties:
+        offset:
+          type: string
+          description: Timespan applied to the start time of a tumbling window when evaluating dependency.
+          minLength: 8
+          maxLength: 15
+          pattern: -((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))
+        size:
+          type: string
+          description: The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window
+            will be used.
+          minLength: 8
+          maxLength: 15
+          pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))
+      required:
+      - offset
+      allOf:
+      - $ref: '#/components/schemas/DependencyReference'
+      x-ms-discriminator-value: SelfDependencyTumblingWindowTriggerReference
+    Trigger:
+      type: object
+      description: Azure data factory nested object which contains information about creating pipeline run
+      properties:
+        type:
+          type: string
+          description: Trigger type.
+        description:
+          type: string
+          description: Trigger description.
+        runtimeState:
+          $ref: '#/components/schemas/TriggerRuntimeState'
+          description: Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+          readOnly: true
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the trigger.
+          items: {}
+      discriminator: type
+      required:
+      - type
+      additionalProperties: {}
+    TriggerDependencyReference:
+      type: object
+      description: Trigger referenced dependency.
+      properties:
+        referenceTrigger:
+          $ref: '#/components/schemas/TriggerReference'
+          description: Referenced trigger.
+      required:
+      - referenceTrigger
+      allOf:
+      - $ref: '#/components/schemas/DependencyReference'
+      x-ms-discriminator-value: TriggerDependencyReference
+    TriggerPipelineReference:
+      type: object
+      description: Pipeline that needs to be triggered with the given parameters.
+      properties:
+        pipelineReference:
+          $ref: '#/components/schemas/PipelineReference'
+          description: Pipeline reference.
+        parameters:
+          type: object
+          description: Pipeline parameters.
+          additionalProperties: {}
+    TriggerReference:
+      type: object
+      description: Trigger reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/TriggerReferenceType'
+          description: Trigger reference type.
+        referenceName:
+          type: string
+          description: Reference trigger name.
+      required:
+      - type
+      - referenceName
+    TriggerReferenceType:
+      type: string
+      description: Trigger reference type.
+      enum:
+      - TriggerReference
+      x-ms-enum:
+        name: TriggerReferenceType
+        modelAsString: true
+        values:
+        - name: TriggerReference
+          value: TriggerReference
+          description: TriggerReference
+    TriggerResource:
+      type: object
+      description: Trigger resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Trigger'
+          description: Properties of the trigger.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    TriggerRuntimeState:
+      type: string
+      description: Enumerates possible state of Triggers.
+      enum:
+      - Started
+      - Stopped
+      - Disabled
+      x-ms-enum:
+        name: TriggerRuntimeState
+        modelAsString: true
+        values:
+        - name: Started
+          value: Started
+          description: Started
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    TumblingWindowFrequency:
+      type: string
+      description: Enumerates possible frequency option for the tumbling window trigger.
+      enum:
+      - Minute
+      - Hour
+      - Month
+      x-ms-enum:
+        name: TumblingWindowFrequency
+        modelAsString: true
+        values:
+        - name: Minute
+          value: Minute
+          description: Minute
+        - name: Hour
+          value: Hour
+          description: Hour
+        - name: Month
+          value: Month
+          description: Month
+    TumblingWindowTrigger:
+      type: object
+      description: Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps
+        and also supports backfill scenarios (when start time is in the past).
+      properties:
+        pipeline:
+          $ref: '#/components/schemas/TriggerPipelineReference'
+          description: Pipeline for which runs are created when an event is fired for trigger window that is ready.
+        typeProperties:
+          $ref: '#/components/schemas/TumblingWindowTriggerTypeProperties'
+          description: Tumbling Window Trigger properties.
+          x-ms-client-flatten: true
+      required:
+      - pipeline
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/Trigger'
+      x-ms-discriminator-value: TumblingWindowTrigger
+    TumblingWindowTriggerTypeProperties:
+      type: object
+      description: Tumbling Window Trigger properties.
+      properties:
+        frequency:
+          $ref: '#/components/schemas/TumblingWindowFrequency'
+          description: The frequency of the time windows.
+        interval:
+          type: integer
+          format: int32
+          description: The interval of the time windows. The minimum interval allowed is 15 Minutes.
+        startTime:
+          type: string
+          format: date-time
+          description: The start time for the time period for the trigger during which events are fired for windows that are
+            ready. Only UTC time is currently supported.
+        endTime:
+          type: string
+          format: date-time
+          description: The end time for the time period for the trigger during which events are fired for windows that are
+            ready. Only UTC time is currently supported.
+        delay:
+          description: 'Specifies how long the trigger waits past due time before triggering new run. It doesn''t alter window
+            start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).'
+        maxConcurrency:
+          type: integer
+          format: int32
+          description: The max number of parallel time windows (ready for execution) for which a new run is triggered.
+          minimum: 1
+          maximum: 50
+        retryPolicy:
+          $ref: '#/components/schemas/RetryPolicy'
+          description: Retry policy that will be applied for failed pipeline runs.
+        dependsOn:
+          type: array
+          description: Triggers that this trigger depends on. Only tumbling window triggers are supported.
+          items:
+            $ref: '#/components/schemas/DependencyReference'
+          x-ms-identifiers: []
+      required:
+      - frequency
+      - interval
+      - startTime
+      - maxConcurrency
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

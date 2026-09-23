@@ -1,0 +1,895 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST integrationRuntimeDisableInteractiveQuery API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: integrationRuntimeDisableInteractiveQuery
+  description: integrationRuntimeDisableInteractiveQuery operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/disableInteractiveQuery
+  : post:
+      operationId: IntegrationRuntime_DisableInteractiveQuery
+      description: Disable interactive authoring of Managed Virtual Network integration runtime.
+      tags:
+      - integrationRuntimeDisableInteractiveQuery
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        required: true
+        description: The integration runtime name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeResource'
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Azure-AsyncOperation:
+              description: A link to the status monitor
+              schema:
+                type: string
+                format: uri
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation
+                status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ErrorResponse
+      x-ms-examples:
+        IntegrationRuntime_DisableInteractiveQuery:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_DisableInteractiveQuery.json
+      x-ms-long-running-operation-options:
+        final-state-via: azure-async-operation
+        final-state-schema: '#/definitions/IntegrationRuntimeResource'
+      x-ms-long-running-operation: true
+components:
+  schemas:
+    AzPowerShellSetup:
+      type: object
+      description: The express custom setup of installing Azure PowerShell.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/AzPowerShellSetupTypeProperties'
+          description: Install Azure PowerShell type properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/CustomSetupBase'
+      x-ms-discriminator-value: AzPowerShellSetup
+    AzPowerShellSetupTypeProperties:
+      type: object
+      description: Installation of Azure PowerShell type properties.
+      properties:
+        version:
+          type: string
+          description: The required version of Azure PowerShell to install.
+      required:
+      - version
+    AzureKeyVaultSecretReference:
+      type: object
+      description: Azure Key Vault secret reference.
+      properties:
+        store:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: The Azure Key Vault linked service reference.
+        secretName:
+          description: 'The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).'
+        secretVersion:
+          description: 'The version of the secret in Azure Key Vault. The default value is the latest version of the secret.
+            Type: string (or Expression with resultType string).'
+      required:
+      - store
+      - secretName
+      allOf:
+      - $ref: '#/components/schemas/SecretBase'
+      x-ms-discriminator-value: AzureKeyVaultSecret
+    CmdkeySetup:
+      type: object
+      description: The custom setup of running cmdkey commands.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/CmdkeySetupTypeProperties'
+          description: Cmdkey command custom setup type properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/CustomSetupBase'
+      x-ms-discriminator-value: CmdkeySetup
+    CmdkeySetupTypeProperties:
+      type: object
+      description: Cmdkey command custom setup type properties.
+      properties:
+        targetName:
+          description: 'The server name of data source access. Type: string.'
+        userName:
+          description: 'The user name of data source access. Type: string.'
+        password:
+          $ref: '#/components/schemas/SecretBase'
+          description: The password of data source access.
+      required:
+      - targetName
+      - userName
+      - password
+    ComponentSetup:
+      type: object
+      description: The custom setup of installing 3rd party components.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/LicensedComponentSetupTypeProperties'
+          description: Install 3rd party component type properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/CustomSetupBase'
+      x-ms-discriminator-value: ComponentSetup
+    CopyComputeScaleProperties:
+      type: object
+      description: CopyComputeScale properties for managed integration runtime.
+      properties:
+        dataIntegrationUnit:
+          type: integer
+          format: int32
+          description: DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range
+            4-256.
+          minimum: 4
+        timeToLive:
+          type: integer
+          format: int32
+          description: Time to live (in minutes) setting of integration runtime which will execute copy activity.
+          minimum: 5
+      additionalProperties: {}
+    CredentialReference:
+      type: object
+      description: Credential reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/CredentialReferenceType'
+          description: Credential reference type.
+        referenceName:
+          type: string
+          description: Reference credential name.
+      required:
+      - type
+      - referenceName
+      additionalProperties: {}
+    CredentialReferenceType:
+      type: string
+      description: Credential reference type.
+      enum:
+      - CredentialReference
+      x-ms-enum:
+        name: CredentialReferenceType
+        modelAsString: true
+        values:
+        - name: CredentialReference
+          value: CredentialReference
+          description: CredentialReference
+    CustomSetupBase:
+      type: object
+      description: The base definition of the custom setup.
+      properties:
+        type:
+          type: string
+          description: The type of custom setup.
+      discriminator: type
+      required:
+      - type
+    DataFlowComputeType:
+      type: string
+      description: Compute type of the cluster which will execute data flow job.
+      enum:
+      - General
+      - MemoryOptimized
+      - ComputeOptimized
+      x-ms-enum:
+        name: DataFlowComputeType
+        modelAsString: true
+        values:
+        - name: General
+          value: General
+          description: General
+        - name: MemoryOptimized
+          value: MemoryOptimized
+          description: MemoryOptimized
+        - name: ComputeOptimized
+          value: ComputeOptimized
+          description: ComputeOptimized
+    EntityReference:
+      type: object
+      description: The entity reference.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeEntityReferenceType'
+          description: The type of this referenced entity.
+        referenceName:
+          type: string
+          description: The name of this referenced entity.
+    EnvironmentVariableSetup:
+      type: object
+      description: The custom setup of setting environment variable.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/EnvironmentVariableSetupTypeProperties'
+          description: Add environment variable type properties.
+          x-ms-client-flatten: true
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/CustomSetupBase'
+      x-ms-discriminator-value: EnvironmentVariableSetup
+    EnvironmentVariableSetupTypeProperties:
+      type: object
+      description: Environment variable custom setup type properties.
+      properties:
+        variableName:
+          type: string
+          description: The name of the environment variable.
+        variableValue:
+          type: string
+          description: The value of the environment variable.
+      required:
+      - variableName
+      - variableValue
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator: type
+      required:
+      - type
+      additionalProperties: {}
+    IntegrationRuntimeComputeProperties:
+      type: object
+      description: The compute resource properties for managed integration runtime.
+      properties:
+        location:
+          type: string
+          description: The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
+        nodeSize:
+          type: string
+          description: The node size requirement to managed integration runtime.
+        numberOfNodes:
+          type: integer
+          format: int32
+          description: The required number of nodes for managed integration runtime.
+          minimum: 1
+        maxParallelExecutionsPerNode:
+          type: integer
+          format: int32
+          description: Maximum parallel executions count per node for managed integration runtime.
+          minimum: 1
+        dataFlowProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeDataFlowProperties'
+          description: Data flow properties for managed integration runtime.
+        vNetProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeVNetProperties'
+          description: VNet properties for managed integration runtime.
+        copyComputeScaleProperties:
+          $ref: '#/components/schemas/CopyComputeScaleProperties'
+          description: CopyComputeScale properties for managed integration runtime.
+        pipelineExternalComputeScaleProperties:
+          $ref: '#/components/schemas/PipelineExternalComputeScaleProperties'
+          description: PipelineExternalComputeScale properties for managed integration runtime.
+      additionalProperties: {}
+    IntegrationRuntimeCustomSetupScriptProperties:
+      type: object
+      description: Custom setup script properties for a managed dedicated integration runtime.
+      properties:
+        blobContainerUri:
+          type: string
+          description: The URI of the Azure blob container that contains the custom setup script.
+        sasToken:
+          $ref: '#/components/schemas/SecureString'
+          description: The SAS token of the Azure blob container.
+    IntegrationRuntimeCustomerVirtualNetwork:
+      type: object
+      description: The definition and properties of virtual network to which Azure-SSIS integration runtime will join.
+      properties:
+        subnetId:
+          type: string
+          description: The ID of subnet to which Azure-SSIS integration runtime will join.
+    IntegrationRuntimeDataFlowProperties:
+      type: object
+      description: Data flow properties for managed integration runtime.
+      properties:
+        computeType:
+          $ref: '#/components/schemas/DataFlowComputeType'
+          description: Compute type of the cluster which will execute data flow job.
+        coreCount:
+          type: integer
+          format: int32
+          description: 'Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80,
+            144 and 272.'
+        timeToLive:
+          type: integer
+          format: int32
+          description: Time to live (in minutes) setting of the cluster which will execute data flow job.
+          minimum: 0
+        cleanup:
+          type: boolean
+          description: Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to
+            live) is reached if this is set as false. Default is true.
+        customProperties:
+          type: array
+          description: Custom properties are used to tune the data flow runtime performance.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem'
+          x-ms-identifiers: []
+      additionalProperties: {}
+    IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of custom property.
+        value:
+          type: string
+          description: Value of custom property.
+    IntegrationRuntimeDataProxyProperties:
+      type: object
+      description: Data proxy properties for a managed dedicated integration runtime.
+      properties:
+        connectVia:
+          $ref: '#/components/schemas/EntityReference'
+          description: The self-hosted integration runtime reference.
+        stagingLinkedService:
+          $ref: '#/components/schemas/EntityReference'
+          description: The staging linked service reference.
+        path:
+          type: string
+          description: The path to contain the staged data in the Blob storage.
+    IntegrationRuntimeEdition:
+      type: string
+      description: The edition for the SSIS Integration Runtime
+      enum:
+      - Standard
+      - Enterprise
+      x-ms-enum:
+        name: IntegrationRuntimeEdition
+        modelAsString: true
+        values:
+        - name: Standard
+          value: Standard
+          description: Standard
+        - name: Enterprise
+          value: Enterprise
+          description: Enterprise
+    IntegrationRuntimeEntityReferenceType:
+      type: string
+      description: The type of this referenced entity.
+      enum:
+      - IntegrationRuntimeReference
+      - LinkedServiceReference
+      x-ms-enum:
+        name: IntegrationRuntimeEntityReferenceType
+        modelAsString: true
+        values:
+        - name: IntegrationRuntimeReference
+          value: IntegrationRuntimeReference
+          description: IntegrationRuntimeReference
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+    IntegrationRuntimeLicenseType:
+      type: string
+      description: License type for bringing your own license scenario.
+      enum:
+      - BasePrice
+      - LicenseIncluded
+      x-ms-enum:
+        name: IntegrationRuntimeLicenseType
+        modelAsString: true
+        values:
+        - name: BasePrice
+          value: BasePrice
+          description: BasePrice
+        - name: LicenseIncluded
+          value: LicenseIncluded
+          description: LicenseIncluded
+    IntegrationRuntimeResource:
+      type: object
+      description: Integration runtime resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntime'
+          description: Integration runtime properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag
+            convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1
+            uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range
+            (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    IntegrationRuntimeSsisCatalogInfo:
+      type: object
+      description: Catalog information for managed dedicated integration runtime.
+      properties:
+        catalogServerEndpoint:
+          type: string
+          description: The catalog database server URL.
+        catalogAdminUserName:
+          type: string
+          description: The administrator user name of catalog database.
+          minLength: 1
+          maxLength: 128
+        catalogAdminPassword:
+          $ref: '#/components/schemas/SecureString'
+          description: The password of the administrator user account of the catalog database.
+        catalogPricingTier:
+          $ref: '#/components/schemas/IntegrationRuntimeSsisCatalogPricingTier'
+          description: The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+        dualStandbyPairName:
+          type: string
+          description: The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover.
+      additionalProperties: {}
+    IntegrationRuntimeSsisCatalogPricingTier:
+      type: string
+      description: The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+      enum:
+      - Basic
+      - Standard
+      - Premium
+      - PremiumRS
+      x-ms-enum:
+        name: IntegrationRuntimeSsisCatalogPricingTier
+        modelAsString: true
+        values:
+        - name: Basic
+          value: Basic
+          description: Basic
+        - name: Standard
+          value: Standard
+          description: Standard
+        - name: Premium
+          value: Premium
+          description: Premium
+        - name: PremiumRS
+          value: PremiumRS
+          description: PremiumRS
+    IntegrationRuntimeSsisProperties:
+      type: object
+      description: SSIS properties for managed integration runtime.
+      properties:
+        catalogInfo:
+          $ref: '#/components/schemas/IntegrationRuntimeSsisCatalogInfo'
+          description: Catalog information for managed dedicated integration runtime.
+        licenseType:
+          $ref: '#/components/schemas/IntegrationRuntimeLicenseType'
+          description: License type for bringing your own license scenario.
+        customSetupScriptProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeCustomSetupScriptProperties'
+          description: Custom setup script properties for a managed dedicated integration runtime.
+        dataProxyProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeDataProxyProperties'
+          description: Data proxy properties for a managed dedicated integration runtime.
+        edition:
+          $ref: '#/components/schemas/IntegrationRuntimeEdition'
+          description: The edition for the SSIS Integration Runtime
+        expressCustomSetupProperties:
+          type: array
+          description: Custom setup without script properties for a SSIS integration runtime.
+          items:
+            $ref: '#/components/schemas/CustomSetupBase'
+          x-ms-identifiers: []
+        packageStores:
+          type: array
+          description: Package stores for the SSIS Integration Runtime.
+          items:
+            $ref: '#/components/schemas/PackageStore'
+          x-ms-identifiers:
+          - name
+        credential:
+          $ref: '#/components/schemas/CredentialReference'
+          description: The credential reference containing authentication information.
+      additionalProperties: {}
+    IntegrationRuntimeState:
+      type: string
+      description: The state of integration runtime.
+      enum:
+      - Initial
+      - Stopped
+      - Started
+      - Starting
+      - Stopping
+      - NeedRegistration
+      - Online
+      - Limited
+      - Offline
+      - AccessDenied
+      x-ms-enum:
+        name: IntegrationRuntimeState
+        modelAsString: true
+        values:
+        - name: Initial
+          value: Initial
+          description: Initial
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Started
+          value: Started
+          description: Started
+        - name: Starting
+          value: Starting
+          description: Starting
+        - name: Stopping
+          value: Stopping
+          description: Stopping
+        - name: NeedRegistration
+          value: NeedRegistration
+          description: NeedRegistration
+        - name: Online
+          value: Online
+          description: Online
+        - name: Limited
+          value: Limited
+          description: Limited
+        - name: Offline
+          value: Offline
+          description: Offline
+        - name: AccessDenied
+          value: AccessDenied
+          description: AccessDenied
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
+    IntegrationRuntimeVNetProperties:
+      type: object
+      description: VNet properties for managed integration runtime.
+      properties:
+        vNetId:
+          type: string
+          description: The ID of the VNet that this integration runtime will join.
+        subnet:
+          type: string
+          description: The name of the subnet this integration runtime will join.
+        publicIPs:
+          type: array
+          description: Resource IDs of the public IP addresses that this integration runtime will use.
+          items:
+            type: string
+        subnetId:
+          type: string
+          description: The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
+      additionalProperties: {}
+    InteractiveCapabilityStatus:
+      type: string
+      description: The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value
+        is 'Enabling'.
+      enum:
+      - Enabling
+      - Enabled
+      - Disabling
+      - Disabled
+      x-ms-enum:
+        name: InteractiveCapabilityStatus
+        modelAsString: true
+        values:
+        - name: Enabling
+          value: Enabling
+          description: Enabling
+        - name: Enabled
+          value: Enabled
+          description: Enabled
+        - name: Disabling
+          value: Disabling
+          description: Disabling
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    InteractiveQueryProperties:
+      type: object
+      description: Interactive authoring capability type properties.
+      properties:
+        status:
+          $ref: '#/components/schemas/InteractiveCapabilityStatus'
+          description: The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default
+            value is 'Enabling'.
+          readOnly: true
+        autoTerminationMinutes:
+          type: integer
+          format: int32
+          description: The allowed idle time for interactive authoring.
+          readOnly: true
+    LicensedComponentSetupTypeProperties:
+      type: object
+      description: Installation of licensed component setup type properties.
+      properties:
+        componentName:
+          type: string
+          description: The name of the 3rd party component.
+        licenseKey:
+          $ref: '#/components/schemas/SecretBase'
+          description: The license key to activate the component.
+      required:
+      - componentName
+    LinkedIntegrationRuntimeKeyAuthorization:
+      type: object
+      description: The key authorization type integration runtime.
+      properties:
+        key:
+          $ref: '#/components/schemas/SecureString'
+          description: The key used for authorization.
+      required:
+      - key
+      allOf:
+      - $ref: '#/components/schemas/LinkedIntegrationRuntimeType'
+      x-ms-discriminator-value: Key
+    LinkedIntegrationRuntimeRbacAuthorization:
+      type: object
+      description: The role based access control (RBAC) authorization type integration runtime.
+      properties:
+        resourceId:
+          type: string
+          description: The resource identifier of the integration runtime to be shared.
+        credential:
+          $ref: '#/components/schemas/CredentialReference'
+          description: The credential reference containing authentication information.
+      required:
+      - resourceId
+      allOf:
+      - $ref: '#/components/schemas/LinkedIntegrationRuntimeType'
+      x-ms-discriminator-value: RBAC
+    LinkedIntegrationRuntimeType:
+      type: object
+      description: The base definition of a linked integration runtime.
+      properties:
+        authorizationType:
+          type: string
+          description: The authorization type for integration runtime sharing.
+      discriminator: authorizationType
+      required:
+      - authorizationType
+    LinkedServiceReference:
+      type: object
+      description: Linked service reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+          description: Linked service reference type.
+        referenceName:
+          type: string
+          description: Reference LinkedService name.
+        parameters:
+          type: object
+          description: Arguments for LinkedService.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    ManagedIntegrationRuntime:
+      type: object
+      description: Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
+      properties:
+        state:
+          $ref: '#/components/schemas/IntegrationRuntimeState'
+          description: Integration runtime state, only valid for managed dedicated integration runtime.
+          readOnly: true
+        typeProperties:
+          $ref: '#/components/schemas/ManagedIntegrationRuntimeTypeProperties'
+          description: Managed integration runtime properties.
+          x-ms-client-flatten: true
+        managedVirtualNetwork:
+          $ref: '#/components/schemas/ManagedVirtualNetworkReference'
+          description: Managed Virtual Network reference.
+      required:
+      - typeProperties
+      allOf:
+      - $ref: '#/components/schemas/IntegrationRuntime'
+      x-ms-discriminator-value: Managed
+    ManagedIntegrationRuntimeTypeProperties:
+      type: object
+      description: Managed integration runtime type properties.
+      properties:
+        computeProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeComputeProperties'
+          description: The compute resource for managed integration runtime.
+        ssisProperties:
+          $ref: '#/components/schemas/IntegrationRuntimeSsisProperties'
+          description: SSIS properties for managed integration runtime.
+        customerVirtualNetwork:
+          $ref: '#/components/schemas/IntegrationRuntimeCustomerVirtualNetwork'
+          description: The name of virtual network to which Azure-SSIS integration runtime will join
+        interactiveQuery:
+          $ref: '#/components/schemas/InteractiveQueryProperties'
+          description: Interactive authoring capability reference.
+    ManagedVirtualNetworkReference:
+      type: object
+      description: Managed Virtual Network reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/ManagedVirtualNetworkReferenceType'
+          description: Managed Virtual Network reference type.
+        referenceName:
+          type: string
+          description: Reference ManagedVirtualNetwork name.
+      required:
+      - type
+      - referenceName
+    ManagedVirtualNetworkReferenceType:
+      type: string
+      description: Managed Virtual Network reference type.
+      enum:
+      - ManagedVirtualNetworkReference
+      x-ms-enum:
+        name: ManagedVirtualNetworkReferenceType
+        modelAsString: true
+        values:
+        - name: ManagedVirtualNetworkReference
+          value: ManagedVirtualNetworkReference
+          description: ManagedVirtualNetworkReference
+    PackageStore:
+      type: object
+      description: Package store for the SSIS integration runtime.
+      properties:
+        name:
+          type: string
+          description: The name of the package store
+        packageStoreLinkedService:
+          $ref: '#/components/schemas/EntityReference'
+          description: The package store linked service reference.
+      required:
+      - name
+      - packageStoreLinkedService
+    PipelineExternalComputeScaleProperties:
+      type: object
+      description: PipelineExternalComputeScale properties for managed integration runtime.
+      properties:
+        timeToLive:
+          type: integer
+          format: int32
+          description: Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity.
+          minimum: 5
+        numberOfPipelineNodes:
+          type: integer
+          format: int32
+          description: Number of the pipeline nodes, which should be greater than 0 and less than 11.
+          minimum: 1
+          maximum: 10
+        numberOfExternalNodes:
+          type: integer
+          format: int32
+          description: Number of the the external nodes, which should be greater than 0 and less than 11.
+          minimum: 1
+          maximum: 10
+      additionalProperties: {}
+    SecretBase:
+      type: object
+      description: The base definition of a secret type.
+      properties:
+        type:
+          type: string
+          description: Type of the secret.
+      discriminator: type
+      required:
+      - type
+    SecureString:
+      type: object
+      description: Azure Data Factory secure string definition. The string value will be masked with asterisks '*' during
+        Get or List API calls.
+      properties:
+        value:
+          type: string
+          description: Value of secure string.
+      required:
+      - value
+      allOf:
+      - $ref: '#/components/schemas/SecretBase'
+      x-ms-discriminator-value: SecureString
+    SelfHostedIntegrationRuntime:
+      type: object
+      description: Self-hosted integration runtime.
+      properties:
+        typeProperties:
+          $ref: '#/components/schemas/SelfHostedIntegrationRuntimeTypeProperties'
+          description: When this property is not null, means this is a linked integration runtime. The property is used to
+            access original integration runtime.
+          x-ms-client-flatten: true
+      allOf:
+      - $ref: '#/components/schemas/IntegrationRuntime'
+      x-ms-discriminator-value: SelfHosted
+    SelfHostedIntegrationRuntimeTypeProperties:
+      type: object
+      description: The self-hosted integration runtime properties.
+      properties:
+        linkedInfo:
+          $ref: '#/components/schemas/LinkedIntegrationRuntimeType'
+          description: The base definition of a linked integration runtime.
+        selfContainedInteractiveAuthoringEnabled:
+          type: boolean
+          description: An alternative option to ensure interactive authoring function when your self-hosted integration runtime
+            is unable to establish a connection with Azure Relay.
+    Type:
+      type: string
+      description: Linked service reference type.
+      enum:
+      - LinkedServiceReference
+      x-ms-enum:
+        name: Type
+        modelAsString: true
+        values:
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize

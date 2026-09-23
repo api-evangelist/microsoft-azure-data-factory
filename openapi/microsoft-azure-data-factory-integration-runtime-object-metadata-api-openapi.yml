@@ -1,0 +1,419 @@
+openapi: 3.0.3
+info:
+  title: Azure Data Factory REST integrationRuntimeObjectMetadata API
+  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
+    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
+    managed private endpoints and change data capture resources through Azure Resource Manager.
+  version: '2018-06-01'
+  contact:
+    name: Microsoft Azure
+    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
+externalDocs:
+  description: Azure Data Factory REST API reference
+  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+servers:
+- url: https://management.azure.com
+  description: Azure Resource Manager
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: integrationRuntimeObjectMetadata
+  description: integrationRuntimeObjectMetadata operations
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getObjectMetadata
+  : post:
+      operationId: IntegrationRuntimeObjectMetadata_Get
+      description: Get a SSIS integration runtime object metadata by specified path. The return is pageable metadata list.
+      tags:
+      - integrationRuntimeObjectMetadata
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        required: true
+        description: The integration runtime name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSsisObjectMetadataRequest'
+        description: The parameters for getting a SSIS object metadata.
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsisObjectMetadataListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimeObjectMetadata_Get:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeObjectMetadata_Get.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/refreshObjectMetadata
+  : post:
+      operationId: IntegrationRuntimeObjectMetadata_Refresh
+      description: Refresh a SSIS integration runtime object metadata.
+      tags:
+      - integrationRuntimeObjectMetadata
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        required: true
+        description: The factory name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        required: true
+        description: The integration runtime name.
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsisObjectMetadataStatusResponse'
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation
+                status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimeObjectMetadata_Refresh:
+          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeObjectMetadata_Refresh.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+        final-state-schema: '#/definitions/SsisObjectMetadataStatusResponse'
+      x-ms-long-running-operation: true
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    GetSsisObjectMetadataRequest:
+      type: object
+      description: The request payload of get SSIS object metadata.
+      properties:
+        metadataPath:
+          type: string
+          description: Metadata path.
+    SsisEnvironment:
+      type: object
+      description: Ssis environment.
+      properties:
+        folderId:
+          type: integer
+          format: int64
+          description: Folder id which contains environment.
+        variables:
+          type: array
+          description: Variable in environment
+          items:
+            $ref: '#/components/schemas/SsisVariable'
+      allOf:
+      - $ref: '#/components/schemas/SsisObjectMetadata'
+      x-ms-discriminator-value: Environment
+    SsisEnvironmentReference:
+      type: object
+      description: Ssis environment reference.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Environment reference id.
+        environmentFolderName:
+          type: string
+          description: Environment folder name.
+        environmentName:
+          type: string
+          description: Environment name.
+        referenceType:
+          type: string
+          description: Reference type
+    SsisFolder:
+      type: object
+      description: Ssis folder.
+      allOf:
+      - $ref: '#/components/schemas/SsisObjectMetadata'
+      x-ms-discriminator-value: Folder
+    SsisObjectMetadata:
+      type: object
+      description: SSIS object metadata.
+      properties:
+        type:
+          $ref: '#/components/schemas/SsisObjectMetadataType'
+          description: Type of metadata.
+        id:
+          type: integer
+          format: int64
+          description: Metadata id.
+        name:
+          type: string
+          description: Metadata name.
+        description:
+          type: string
+          description: Metadata description.
+      discriminator: type
+      required:
+      - type
+    SsisObjectMetadataListResponse:
+      type: object
+      description: A list of SSIS object metadata.
+      properties:
+        value:
+          type: array
+          description: The SsisObjectMetadata items on this page
+          items:
+            $ref: '#/components/schemas/SsisObjectMetadata'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    SsisObjectMetadataStatusResponse:
+      type: object
+      description: The status of the operation.
+      properties:
+        status:
+          type: string
+          description: The status of the operation.
+        name:
+          type: string
+          description: The operation name.
+        properties:
+          type: string
+          description: The operation properties.
+        error:
+          type: string
+          description: The operation error message.
+    SsisObjectMetadataType:
+      type: string
+      description: The type of SSIS object metadata.
+      enum:
+      - Folder
+      - Project
+      - Package
+      - Environment
+      x-ms-enum:
+        name: SsisObjectMetadataType
+        modelAsString: true
+        values:
+        - name: Folder
+          value: Folder
+          description: Folder
+        - name: Project
+          value: Project
+          description: Project
+        - name: Package
+          value: Package
+          description: Package
+        - name: Environment
+          value: Environment
+          description: Environment
+    SsisPackage:
+      type: object
+      description: Ssis Package.
+      properties:
+        folderId:
+          type: integer
+          format: int64
+          description: Folder id which contains package.
+        projectVersion:
+          type: integer
+          format: int64
+          description: Project version which contains package.
+        projectId:
+          type: integer
+          format: int64
+          description: Project id which contains package.
+        parameters:
+          type: array
+          description: Parameters in package
+          items:
+            $ref: '#/components/schemas/SsisParameter'
+      allOf:
+      - $ref: '#/components/schemas/SsisObjectMetadata'
+      x-ms-discriminator-value: Package
+    SsisParameter:
+      type: object
+      description: Ssis parameter.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Parameter id.
+        name:
+          type: string
+          description: Parameter name.
+        description:
+          type: string
+          description: Parameter description.
+        dataType:
+          type: string
+          description: Parameter type.
+        required:
+          type: boolean
+          description: Whether parameter is required.
+        sensitive:
+          type: boolean
+          description: Whether parameter is sensitive.
+        designDefaultValue:
+          type: string
+          description: Design default value of parameter.
+        defaultValue:
+          type: string
+          description: Default value of parameter.
+        sensitiveDefaultValue:
+          type: string
+          description: Default sensitive value of parameter.
+        valueType:
+          type: string
+          description: Parameter value type.
+        valueSet:
+          type: boolean
+          description: Parameter value set.
+        variable:
+          type: string
+          description: Parameter reference variable.
+    SsisProject:
+      type: object
+      description: Ssis project.
+      properties:
+        folderId:
+          type: integer
+          format: int64
+          description: Folder id which contains project.
+        version:
+          type: integer
+          format: int64
+          description: Project version.
+        environmentRefs:
+          type: array
+          description: Environment reference in project
+          items:
+            $ref: '#/components/schemas/SsisEnvironmentReference'
+        parameters:
+          type: array
+          description: Parameters in project
+          items:
+            $ref: '#/components/schemas/SsisParameter'
+      allOf:
+      - $ref: '#/components/schemas/SsisObjectMetadata'
+      x-ms-discriminator-value: Project
+    SsisVariable:
+      type: object
+      description: Ssis variable.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Variable id.
+        name:
+          type: string
+          description: Variable name.
+        description:
+          type: string
+          description: Variable description.
+        dataType:
+          type: string
+          description: Variable type.
+        sensitive:
+          type: boolean
+          description: Whether variable is sensitive.
+        value:
+          type: string
+          description: Variable value.
+        sensitiveValue:
+          type: string
+          description: Variable sensitive value.
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      description: Azure Active Directory OAuth2 Flow.
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
