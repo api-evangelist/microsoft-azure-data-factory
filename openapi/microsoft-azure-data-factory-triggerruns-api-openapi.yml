@@ -1,54 +1,36 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Azure Data Factory REST triggerruns API
-  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
-    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
-    managed private endpoints and change data capture resources through Azure Resource Manager.
+  title: DataFactoryManagementClient Triggerruns API
   version: '2018-06-01'
-  contact:
-    name: Microsoft Azure
-    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
-  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
-  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
-externalDocs:
-  description: Azure Data Factory REST API reference
-  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
 servers:
 - url: https://management.azure.com
-  description: Azure Resource Manager
 security:
 - azure_auth:
   - user_impersonation
 tags:
 - name: triggerruns
-  description: triggerruns operations
 paths:
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryTriggerRuns
   : post:
       operationId: TriggerRuns_QueryByFactory
-      description: Query trigger runs.
       tags:
       - triggerruns
+      description: Query trigger runs.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
       - name: factoryName
         in: path
-        required: true
         description: The factory name.
+        required: true
         schema:
           type: string
           maxLength: 63
           minLength: 3
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RunFilterParameters'
-        description: Parameters to filter the pipeline run.
       responses:
         '200':
           description: Azure operation completed successfully.
@@ -64,13 +46,22 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         TriggerRuns_QueryByFactory:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/TriggerRuns_QueryByFactory.json
+          $ref: ./examples/TriggerRuns_QueryByFactory.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunFilterParameters'
+        description: Parameters to filter the pipeline run.
+        required: true
+      summary: Trigger runs query by factory
+      x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel
   : post:
       operationId: TriggerRuns_Cancel
-      description: Cancel a single trigger instance by runId.
       tags:
       - triggerruns
+      description: Cancel a single trigger instance by runId.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -93,8 +84,8 @@ paths:
           pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
       - name: runId
         in: path
-        required: true
         description: The pipeline run identifier.
+        required: true
         schema:
           type: string
       responses:
@@ -108,13 +99,15 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         Triggers_Cancel:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/TriggerRuns_Cancel.json
+          $ref: ./examples/TriggerRuns_Cancel.json
+      summary: Trigger runs cancel
+      x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun
   : post:
       operationId: TriggerRuns_Rerun
-      description: Rerun single trigger instance by runId.
       tags:
       - triggerruns
+      description: Rerun single trigger instance by runId.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -137,8 +130,8 @@ paths:
           pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
       - name: runId
         in: path
-        required: true
         description: The pipeline run identifier.
+        required: true
         schema:
           type: string
       responses:
@@ -152,43 +145,11 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         Triggers_Rerun:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/TriggerRuns_Rerun.json
+          $ref: ./examples/TriggerRuns_Rerun.json
+      summary: Trigger runs rerun
+      x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
     RunFilterParameters:
       type: object
       description: Query parameters for listing runs.
@@ -219,145 +180,48 @@ components:
       required:
       - lastUpdatedAfter
       - lastUpdatedBefore
-    RunQueryFilter:
+    TriggerRunsQueryResponse:
       type: object
-      description: Query filter option for listing runs.
+      description: A list of trigger runs.
       properties:
-        operand:
-          $ref: '#/components/schemas/RunQueryFilterOperand'
-          description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName,
-            RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType
-            and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        operator:
-          $ref: '#/components/schemas/RunQueryFilterOperator'
-          description: Operator to be used for filter.
-        values:
+        value:
           type: array
-          description: List of filter values.
+          description: List of trigger runs.
           items:
-            type: string
+            $ref: '#/components/schemas/TriggerRun'
+          x-ms-identifiers:
+          - triggerRunId
+        continuationToken:
+          type: string
+          description: The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
       required:
-      - operand
-      - operator
-      - values
-    RunQueryFilterOperand:
-      type: string
-      description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart,
-        RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status,
-        and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
-      enum:
-      - PipelineName
-      - Status
-      - RunStart
-      - RunEnd
-      - ActivityName
-      - ActivityRunStart
-      - ActivityRunEnd
-      - ActivityType
-      - TriggerName
-      - TriggerRunTimestamp
-      - RunGroupId
-      - LatestOnly
-      x-ms-enum:
-        name: RunQueryFilterOperand
-        modelAsString: true
-        values:
-        - name: PipelineName
-          value: PipelineName
-          description: PipelineName
-        - name: Status
-          value: Status
-          description: Status
-        - name: RunStart
-          value: RunStart
-          description: RunStart
-        - name: RunEnd
-          value: RunEnd
-          description: RunEnd
-        - name: ActivityName
-          value: ActivityName
-          description: ActivityName
-        - name: ActivityRunStart
-          value: ActivityRunStart
-          description: ActivityRunStart
-        - name: ActivityRunEnd
-          value: ActivityRunEnd
-          description: ActivityRunEnd
-        - name: ActivityType
-          value: ActivityType
-          description: ActivityType
-        - name: TriggerName
-          value: TriggerName
-          description: TriggerName
-        - name: TriggerRunTimestamp
-          value: TriggerRunTimestamp
-          description: TriggerRunTimestamp
-        - name: RunGroupId
-          value: RunGroupId
-          description: RunGroupId
-        - name: LatestOnly
-          value: LatestOnly
-          description: LatestOnly
-    RunQueryFilterOperator:
-      type: string
-      description: Operator to be used for filter.
-      enum:
-      - Equals
-      - NotEquals
-      - In
-      - NotIn
-      x-ms-enum:
-        name: RunQueryFilterOperator
-        modelAsString: true
-        values:
-        - name: Equals
-          value: Equals
-          description: Equals
-        - name: NotEquals
-          value: NotEquals
-          description: NotEquals
-        - name: In
-          value: In
-          description: In
-        - name: NotIn
-          value: NotIn
-          description: NotIn
-    RunQueryOrder:
-      type: string
-      description: Sorting order of the parameter.
-      enum:
-      - ASC
-      - DESC
-      x-ms-enum:
-        name: RunQueryOrder
-        modelAsString: true
-        values:
-        - name: ASC
-          value: ASC
-          description: ASC
-        - name: DESC
-          value: DESC
-          description: DESC
-    RunQueryOrderBy:
+      - value
+    CloudErrorBody:
       type: object
-      description: An object to provide order by options for listing runs.
+      description: The object that defines the structure of an Azure Data Factory error.
       properties:
-        orderBy:
-          $ref: '#/components/schemas/RunQueryOrderByField'
-          description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName,
-            RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status;
-            for trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        order:
-          $ref: '#/components/schemas/RunQueryOrder'
-          description: Sorting order of the parameter.
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
       required:
-      - orderBy
-      - order
+      - code
+      - message
+      x-ms-external: true
     RunQueryOrderByField:
       type: string
-      description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName,
-        RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for
-        trigger runs are TriggerName, TriggerRunTimestamp and Status.
+      description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
       enum:
       - RunStart
       - RunEnd
@@ -399,6 +263,22 @@ components:
         - name: TriggerRunTimestamp
           value: TriggerRunTimestamp
           description: TriggerRunTimestamp
+    RunQueryOrder:
+      type: string
+      description: Sorting order of the parameter.
+      enum:
+      - ASC
+      - DESC
+      x-ms-enum:
+        name: RunQueryOrder
+        modelAsString: true
+        values:
+        - name: ASC
+          value: ASC
+          description: ASC
+        - name: DESC
+          value: DESC
+          description: DESC
     TriggerRun:
       type: object
       description: Trigger runs.
@@ -452,6 +332,99 @@ components:
           additionalProperties: {}
           readOnly: true
       additionalProperties: {}
+    RunQueryFilterOperator:
+      type: string
+      description: Operator to be used for filter.
+      enum:
+      - Equals
+      - NotEquals
+      - In
+      - NotIn
+      x-ms-enum:
+        name: RunQueryFilterOperator
+        modelAsString: true
+        values:
+        - name: Equals
+          value: Equals
+          description: Equals
+        - name: NotEquals
+          value: NotEquals
+          description: NotEquals
+        - name: In
+          value: In
+          description: In
+        - name: NotIn
+          value: NotIn
+          description: NotIn
+    RunQueryFilterOperand:
+      type: string
+      description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+      enum:
+      - PipelineName
+      - Status
+      - RunStart
+      - RunEnd
+      - ActivityName
+      - ActivityRunStart
+      - ActivityRunEnd
+      - ActivityType
+      - TriggerName
+      - TriggerRunTimestamp
+      - RunGroupId
+      - LatestOnly
+      x-ms-enum:
+        name: RunQueryFilterOperand
+        modelAsString: true
+        values:
+        - name: PipelineName
+          value: PipelineName
+          description: PipelineName
+        - name: Status
+          value: Status
+          description: Status
+        - name: RunStart
+          value: RunStart
+          description: RunStart
+        - name: RunEnd
+          value: RunEnd
+          description: RunEnd
+        - name: ActivityName
+          value: ActivityName
+          description: ActivityName
+        - name: ActivityRunStart
+          value: ActivityRunStart
+          description: ActivityRunStart
+        - name: ActivityRunEnd
+          value: ActivityRunEnd
+          description: ActivityRunEnd
+        - name: ActivityType
+          value: ActivityType
+          description: ActivityType
+        - name: TriggerName
+          value: TriggerName
+          description: TriggerName
+        - name: TriggerRunTimestamp
+          value: TriggerRunTimestamp
+          description: TriggerRunTimestamp
+        - name: RunGroupId
+          value: RunGroupId
+          description: RunGroupId
+        - name: LatestOnly
+          value: LatestOnly
+          description: LatestOnly
+    RunQueryOrderBy:
+      type: object
+      description: An object to provide order by options for listing runs.
+      properties:
+        orderBy:
+          $ref: '#/components/schemas/RunQueryOrderByField'
+          description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        order:
+          $ref: '#/components/schemas/RunQueryOrder'
+          description: Sorting order of the parameter.
+      required:
+      - orderBy
+      - order
     TriggerRunStatus:
       type: string
       description: Trigger run status.
@@ -472,28 +445,42 @@ components:
         - name: Inprogress
           value: Inprogress
           description: Inprogress
-    TriggerRunsQueryResponse:
+    CloudError:
       type: object
-      description: A list of trigger runs.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        value:
-          type: array
-          description: List of trigger runs.
-          items:
-            $ref: '#/components/schemas/TriggerRun'
-          x-ms-identifiers:
-          - triggerRunId
-        continuationToken:
-          type: string
-          description: The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - value
+      - error
+      x-ms-external: true
+    RunQueryFilter:
+      type: object
+      description: Query filter option for listing runs.
+      properties:
+        operand:
+          $ref: '#/components/schemas/RunQueryFilterOperand'
+          description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        operator:
+          $ref: '#/components/schemas/RunQueryFilterOperator'
+          description: Operator to be used for filter.
+        values:
+          type: array
+          description: List of filter values.
+          items:
+            type: string
+      required:
+      - operand
+      - operator
+      - values
   securitySchemes:
     azure_auth:
       type: oauth2
-      description: Azure Active Directory OAuth2 Flow.
       flows:
         implicit:
           scopes:
             user_impersonation: impersonate your user account
           authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

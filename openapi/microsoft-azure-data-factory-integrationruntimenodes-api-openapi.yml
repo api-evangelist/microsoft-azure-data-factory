@@ -1,34 +1,23 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Azure Data Factory REST integrationRuntimeNodes API
-  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
-    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
-    managed private endpoints and change data capture resources through Azure Resource Manager.
+  title: DataFactoryManagementClient Integration Runtime Nodes API
   version: '2018-06-01'
-  contact:
-    name: Microsoft Azure
-    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
-  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
-  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
-externalDocs:
-  description: Azure Data Factory REST API reference
-  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
 servers:
 - url: https://management.azure.com
-  description: Azure Resource Manager
 security:
 - azure_auth:
   - user_impersonation
 tags:
 - name: integrationRuntimeNodes
-  description: integrationRuntimeNodes operations
 paths:
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}
   : get:
       operationId: IntegrationRuntimeNodes_Get
-      description: Gets a self-hosted integration runtime node.
       tags:
       - integrationRuntimeNodes
+      description: Gets a self-hosted integration runtime node.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -51,8 +40,8 @@ paths:
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
       - name: nodeName
         in: path
-        required: true
         description: The integration runtime node name.
+        required: true
         schema:
           type: string
           maxLength: 150
@@ -73,12 +62,14 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         IntegrationRuntimeNodes_Get:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Get.json
+          $ref: ./examples/IntegrationRuntimeNodes_Get.json
+      summary: Integration runtime nodes get
+      x-summary-source: derived
     patch:
       operationId: IntegrationRuntimeNodes_Update
-      description: Updates a self-hosted integration runtime node.
       tags:
       - integrationRuntimeNodes
+      description: Updates a self-hosted integration runtime node.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -101,20 +92,13 @@ paths:
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
       - name: nodeName
         in: path
-        required: true
         description: The integration runtime node name.
+        required: true
         schema:
           type: string
           maxLength: 150
           minLength: 1
           pattern: ^[a-z0-9A-Z][a-z0-9A-Z_-]{0,149}$
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateIntegrationRuntimeNodeRequest'
-        description: The parameters for updating an integration runtime node.
       responses:
         '200':
           description: Azure operation completed successfully.
@@ -130,12 +114,21 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         IntegrationRuntimeNodes_Update:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Update.json
+          $ref: ./examples/IntegrationRuntimeNodes_Update.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationRuntimeNodeRequest'
+        description: The parameters for updating an integration runtime node.
+        required: true
+      summary: Integration runtime nodes update
+      x-summary-source: derived
     delete:
       operationId: IntegrationRuntimeNodes_Delete
-      description: Deletes a self-hosted integration runtime node.
       tags:
       - integrationRuntimeNodes
+      description: Deletes a self-hosted integration runtime node.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -158,8 +151,8 @@ paths:
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
       - name: nodeName
         in: path
-        required: true
         description: The integration runtime node name.
+        required: true
         schema:
           type: string
           maxLength: 150
@@ -178,13 +171,15 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         IntegrationRuntimesNodes_Delete:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Delete.json
+          $ref: ./examples/IntegrationRuntimeNodes_Delete.json
+      summary: Integration runtime nodes delete
+      x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}/ipAddress
   : post:
       operationId: IntegrationRuntimeNodes_GetIpAddress
-      description: Get the IP address of self-hosted integration runtime node.
       tags:
       - integrationRuntimeNodes
+      description: Get the IP address of self-hosted integration runtime node.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -207,8 +202,8 @@ paths:
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
       - name: nodeName
         in: path
-        required: true
         description: The integration runtime node name.
+        required: true
         schema:
           type: string
           maxLength: 150
@@ -229,20 +224,11 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         IntegrationRuntimeNodes_GetIpAddress:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_GetIpAddress.json
+          $ref: ./examples/IntegrationRuntimeNodes_GetIpAddress.json
+      summary: Integration runtime nodes get ip address
+      x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -266,14 +252,42 @@ components:
       - code
       - message
       x-ms-external: true
-    IntegrationRuntimeNodeIpAddress:
-      type: object
-      description: The IP address of self-hosted integration runtime node.
-      properties:
-        ipAddress:
-          type: string
-          description: The IP address of self-hosted integration runtime node.
-          readOnly: true
+    SelfHostedIntegrationRuntimeNodeStatus:
+      type: string
+      description: Status of the integration runtime node.
+      enum:
+      - NeedRegistration
+      - Online
+      - Limited
+      - Offline
+      - Upgrading
+      - Initializing
+      - InitializeFailed
+      x-ms-enum:
+        name: SelfHostedIntegrationRuntimeNodeStatus
+        modelAsString: true
+        values:
+        - name: NeedRegistration
+          value: NeedRegistration
+          description: NeedRegistration
+        - name: Online
+          value: Online
+          description: Online
+        - name: Limited
+          value: Limited
+          description: Limited
+        - name: Offline
+          value: Offline
+          description: Offline
+        - name: Upgrading
+          value: Upgrading
+          description: Upgrading
+        - name: Initializing
+          value: Initializing
+          description: Initializing
+        - name: InitializeFailed
+          value: InitializeFailed
+          description: InitializeFailed
     IntegrationRuntimeUpdateResult:
       type: string
       description: The result of the last integration runtime node update.
@@ -294,6 +308,23 @@ components:
         - name: Fail
           value: Fail
           description: Fail
+    IntegrationRuntimeNodeIpAddress:
+      type: object
+      description: The IP address of self-hosted integration runtime node.
+      properties:
+        ipAddress:
+          type: string
+          description: The IP address of self-hosted integration runtime node.
+          readOnly: true
+    UpdateIntegrationRuntimeNodeRequest:
+      type: object
+      description: Update integration runtime node request.
+      properties:
+        concurrentJobsLimit:
+          type: integer
+          format: int32
+          description: The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed.
+          minimum: 1
     SelfHostedIntegrationRuntimeNode:
       type: object
       description: Properties of Self-hosted integration runtime node.
@@ -382,58 +413,23 @@ components:
           description: The maximum concurrent jobs in this integration runtime.
           readOnly: true
       additionalProperties: {}
-    SelfHostedIntegrationRuntimeNodeStatus:
-      type: string
-      description: Status of the integration runtime node.
-      enum:
-      - NeedRegistration
-      - Online
-      - Limited
-      - Offline
-      - Upgrading
-      - Initializing
-      - InitializeFailed
-      x-ms-enum:
-        name: SelfHostedIntegrationRuntimeNodeStatus
-        modelAsString: true
-        values:
-        - name: NeedRegistration
-          value: NeedRegistration
-          description: NeedRegistration
-        - name: Online
-          value: Online
-          description: Online
-        - name: Limited
-          value: Limited
-          description: Limited
-        - name: Offline
-          value: Offline
-          description: Offline
-        - name: Upgrading
-          value: Upgrading
-          description: Upgrading
-        - name: Initializing
-          value: Initializing
-          description: Initializing
-        - name: InitializeFailed
-          value: InitializeFailed
-          description: InitializeFailed
-    UpdateIntegrationRuntimeNodeRequest:
+    CloudError:
       type: object
-      description: Update integration runtime node request.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        concurrentJobsLimit:
-          type: integer
-          format: int32
-          description: The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and
-            maxConcurrentJobs(inclusive) are allowed.
-          minimum: 1
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2
-      description: Azure Active Directory OAuth2 Flow.
       flows:
         implicit:
           scopes:
             user_impersonation: impersonate your user account
           authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

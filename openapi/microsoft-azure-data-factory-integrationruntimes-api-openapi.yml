@@ -1,0 +1,1256 @@
+openapi: 3.2.0
+info:
+  title: DataFactoryManagementClient Integration Runtimes API
+  version: '2018-06-01'
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: integrationRuntimes
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes
+  : get:
+      operationId: IntegrationRuntimes_ListByFactory
+      tags:
+      - integrationRuntimes
+      description: Lists integration runtimes.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_ListByFactory:
+          $ref: ./examples/IntegrationRuntimes_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Integration runtimes list by factory
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}
+  : get:
+      operationId: IntegrationRuntimes_Get
+      tags:
+      - integrationRuntimes
+      description: Gets an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: if-none-match
+        in: header
+        description: ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+        required: false
+        x-ms-client-name: If-None-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeResource'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Get:
+          $ref: ./examples/IntegrationRuntimes_Get.json
+      summary: Integration runtimes get
+      x-summary-source: derived
+    put:
+      operationId: IntegrationRuntimes_CreateOrUpdate
+      tags:
+      - integrationRuntimes
+      description: Creates or updates an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: if-match
+        in: header
+        description: ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+        required: false
+        x-ms-client-name: If-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource 'IntegrationRuntimeResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Create:
+          $ref: ./examples/IntegrationRuntimes_Create.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationRuntimeResource'
+        description: Integration runtime resource definition.
+        required: true
+      summary: Integration runtimes create or update
+      x-summary-source: derived
+    patch:
+      operationId: IntegrationRuntimes_Update
+      tags:
+      - integrationRuntimes
+      description: Updates an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Update:
+          $ref: ./examples/IntegrationRuntimes_Update.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationRuntimeRequest'
+        description: The parameters for updating an integration runtime.
+        required: true
+      summary: Integration runtimes update
+      x-summary-source: derived
+    delete:
+      operationId: IntegrationRuntimes_Delete
+      tags:
+      - integrationRuntimes
+      description: Deletes an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Delete:
+          $ref: ./examples/IntegrationRuntimes_Delete.json
+      summary: Integration runtimes delete
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getConnectionInfo
+  : post:
+      operationId: IntegrationRuntimes_GetConnectionInfo
+      tags:
+      - integrationRuntimes
+      description: Gets the on-premises integration runtime connection information for encrypting the on-premises data source credentials.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeConnectionInfo'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_GetConnectionInfo:
+          $ref: ./examples/IntegrationRuntimes_GetConnectionInfo.json
+      summary: Integration runtimes get connection info
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getStatus
+  : post:
+      operationId: IntegrationRuntimes_GetStatus
+      tags:
+      - integrationRuntimes
+      description: Gets detailed status information for an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeStatusResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_GetStatus:
+          $ref: ./examples/IntegrationRuntimes_GetStatus.json
+      summary: Integration runtimes get status
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/linkedIntegrationRuntime
+  : post:
+      operationId: IntegrationRuntimes_CreateLinkedIntegrationRuntime
+      tags:
+      - integrationRuntimes
+      description: Create a linked integration runtime entry in a shared integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeStatusResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_CreateLinkedIntegrationRuntime:
+          $ref: ./examples/IntegrationRuntimes_CreateLinkedIntegrationRuntime.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLinkedIntegrationRuntimeRequest'
+        description: The linked integration runtime properties.
+        required: true
+      summary: Integration runtimes create linked integration runtime
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/listAuthKeys
+  : post:
+      operationId: IntegrationRuntimes_ListAuthKeys
+      tags:
+      - integrationRuntimes
+      description: Retrieves the authentication keys for an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeAuthKeys'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_ListAuthKeys:
+          $ref: ./examples/IntegrationRuntimes_ListAuthKeys.json
+      summary: Integration runtimes list auth keys
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/monitoringData
+  : post:
+      operationId: IntegrationRuntimes_GetMonitoringData
+      tags:
+      - integrationRuntimes
+      description: Get the integration runtime monitoring data, which includes the monitor data for all the nodes under this integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeMonitoringData'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_GetMonitoringData:
+          $ref: ./examples/IntegrationRuntimes_GetMonitoringData.json
+      summary: Integration runtimes get monitoring data
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/outboundNetworkDependenciesEndpoints
+  : get:
+      operationId: IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints
+      tags:
+      - integrationRuntimes
+      description: Gets the list of outbound network dependencies for a given Azure-SSIS integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_OutboundNetworkDependenciesEndpoints:
+          $ref: ./examples/IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints.json
+      summary: Integration runtimes list outbound network dependencies endpoints
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/regenerateAuthKey
+  : post:
+      operationId: IntegrationRuntimes_RegenerateAuthKey
+      tags:
+      - integrationRuntimes
+      description: Regenerates the authentication key for an integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeAuthKeys'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_RegenerateAuthKey:
+          $ref: ./examples/IntegrationRuntimes_RegenerateAuthKey.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationRuntimeRegenerateKeyParameters'
+        description: The parameters for regenerating integration runtime authentication key.
+        required: true
+      summary: Integration runtimes regenerate auth key
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/removeLinks
+  : post:
+      operationId: IntegrationRuntimes_RemoveLinks
+      tags:
+      - integrationRuntimes
+      description: Remove all linked integration runtimes under specific data factory in a self-hosted integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: The request has succeeded.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Upgrade:
+          $ref: ./examples/IntegrationRuntimes_RemoveLinks.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkedIntegrationRuntimeRequest'
+        description: The data factory name for the linked integration runtime.
+        required: true
+      summary: Integration runtimes remove links
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/start
+  : post:
+      operationId: IntegrationRuntimes_Start
+      tags:
+      - integrationRuntimes
+      description: Starts a ManagedReserved type integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeStatusResponse'
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Start:
+          $ref: ./examples/IntegrationRuntimes_Start.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+        final-state-schema: '#/definitions/IntegrationRuntimeStatusResponse'
+      x-ms-long-running-operation: true
+      summary: Integration runtimes start
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/stop
+  : post:
+      operationId: IntegrationRuntimes_Stop
+      tags:
+      - integrationRuntimes
+      description: Stops a ManagedReserved type integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Stop:
+          $ref: ./examples/IntegrationRuntimes_Stop.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+      x-ms-long-running-operation: true
+      summary: Integration runtimes stop
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/syncCredentials
+  : post:
+      operationId: IntegrationRuntimes_SyncCredentials
+      tags:
+      - integrationRuntimes
+      description: Force the integration runtime to synchronize credentials across integration runtime nodes, and this will override the credentials across all worker nodes with those available on the dispatcher node. If you already have the latest credential backup file, you should manually import it (preferred) on any self-hosted integration runtime node than using this API directly.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: The request has succeeded.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_SyncCredentials:
+          $ref: ./examples/IntegrationRuntimes_SyncCredentials.json
+      summary: Integration runtimes sync credentials
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/upgrade
+  : post:
+      operationId: IntegrationRuntimes_Upgrade
+      tags:
+      - integrationRuntimes
+      description: Upgrade self-hosted integration runtime to latest version if availability.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: The request has succeeded.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        IntegrationRuntimes_Upgrade:
+          $ref: ./examples/IntegrationRuntimes_Upgrade.json
+      summary: Integration runtimes upgrade
+      x-summary-source: derived
+components:
+  schemas:
+    IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse:
+      type: object
+      description: Azure-SSIS integration runtime outbound network dependency endpoints.
+      properties:
+        value:
+          type: array
+          description: The list of outbound network dependency endpoints.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint'
+          x-ms-identifiers:
+          - category
+    IntegrationRuntimeStatusResponse:
+      type: object
+      description: Integration runtime status response.
+      properties:
+        name:
+          type: string
+          description: The integration runtime name.
+          readOnly: true
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntimeStatus'
+          description: Integration runtime properties.
+      required:
+      - properties
+    IntegrationRuntimeAutoUpdate:
+      type: string
+      description: The state of integration runtime auto update.
+      enum:
+      - 'On'
+      - 'Off'
+      x-ms-enum:
+        name: IntegrationRuntimeAutoUpdate
+        modelAsString: true
+        values:
+        - name: 'On'
+          value: 'On'
+          description: 'On'
+        - name: 'Off'
+          value: 'Off'
+          description: 'Off'
+    IntegrationRuntimeState:
+      type: string
+      description: The state of integration runtime.
+      enum:
+      - Initial
+      - Stopped
+      - Started
+      - Starting
+      - Stopping
+      - NeedRegistration
+      - Online
+      - Limited
+      - Offline
+      - AccessDenied
+      x-ms-enum:
+        name: IntegrationRuntimeState
+        modelAsString: true
+        values:
+        - name: Initial
+          value: Initial
+          description: Initial
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Started
+          value: Started
+          description: Started
+        - name: Starting
+          value: Starting
+          description: Starting
+        - name: Stopping
+          value: Stopping
+          description: Stopping
+        - name: NeedRegistration
+          value: NeedRegistration
+          description: NeedRegistration
+        - name: Online
+          value: Online
+          description: Online
+        - name: Limited
+          value: Limited
+          description: Limited
+        - name: Offline
+          value: Offline
+          description: Offline
+        - name: AccessDenied
+          value: AccessDenied
+          description: AccessDenied
+    IntegrationRuntimeResource:
+      type: object
+      description: Integration runtime resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntime'
+          description: Integration runtime properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+    IntegrationRuntimeMonitoringData:
+      type: object
+      description: Get monitoring data response.
+      properties:
+        name:
+          type: string
+          description: Integration runtime name.
+        nodes:
+          type: array
+          description: Integration runtime node monitoring data.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeNodeMonitoringData'
+          x-ms-identifiers:
+          - nodeName
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
+    IntegrationRuntimeListResponse:
+      type: object
+      description: A list of integration runtime resources.
+      properties:
+        value:
+          type: array
+          description: The IntegrationRuntimeResource items on this page
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails:
+      type: object
+      description: The details of Azure-SSIS integration runtime outbound network dependency endpoint.
+      properties:
+        port:
+          type: integer
+          format: int32
+          description: The port of endpoint.
+    IntegrationRuntimeRegenerateKeyParameters:
+      type: object
+      description: Parameters to regenerate the authentication key.
+      properties:
+        keyName:
+          $ref: '#/components/schemas/IntegrationRuntimeAuthKeyName'
+          description: The name of the authentication key to regenerate.
+    IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint:
+      type: object
+      description: Azure-SSIS integration runtime outbound network dependency endpoints for one category.
+      properties:
+        category:
+          type: string
+          description: The category of outbound network dependency.
+        endpoints:
+          type: array
+          description: The endpoints for outbound network dependency.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpoint'
+          x-ms-identifiers:
+          - domainName
+    IntegrationRuntimeOutboundNetworkDependenciesEndpoint:
+      type: object
+      description: The endpoint for Azure-SSIS integration runtime outbound network dependency.
+      properties:
+        domainName:
+          type: string
+          description: The domain name of endpoint.
+        endpointDetails:
+          type: array
+          description: The details of endpoint.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails'
+          x-ms-identifiers:
+          - port
+    CreateLinkedIntegrationRuntimeRequest:
+      type: object
+      description: The linked integration runtime information.
+      properties:
+        name:
+          type: string
+          description: The name of the linked integration runtime.
+        subscriptionId:
+          type: string
+          description: The ID of the subscription that the linked integration runtime belongs to.
+        dataFactoryName:
+          type: string
+          description: The name of the data factory that the linked integration runtime belongs to.
+        dataFactoryLocation:
+          type: string
+          description: The location of the data factory that the linked integration runtime belongs to.
+    IntegrationRuntimeAuthKeys:
+      type: object
+      description: The integration runtime authentication keys.
+      properties:
+        authKey1:
+          type: string
+          description: The primary integration runtime authentication key.
+        authKey2:
+          type: string
+          description: The secondary integration runtime authentication key.
+    IntegrationRuntimeAuthKeyName:
+      type: string
+      description: The name of the authentication key to regenerate.
+      enum:
+      - authKey1
+      - authKey2
+      x-ms-enum:
+        name: IntegrationRuntimeAuthKeyName
+        modelAsString: true
+        values:
+        - name: authKey1
+          value: authKey1
+          description: authKey1
+        - name: authKey2
+          value: authKey2
+          description: authKey2
+    LinkedIntegrationRuntimeRequest:
+      type: object
+      description: Data factory name for linked integration runtime request.
+      properties:
+        factoryName:
+          type: string
+          description: The data factory name for linked integration runtime.
+          x-ms-client-name: linkedFactoryName
+      required:
+      - factoryName
+    UpdateIntegrationRuntimeRequest:
+      type: object
+      description: Update integration runtime request.
+      properties:
+        autoUpdate:
+          $ref: '#/components/schemas/IntegrationRuntimeAutoUpdate'
+          description: Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
+        updateDelayOffset:
+          type: string
+          description: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
+    IntegrationRuntimeConnectionInfo:
+      type: object
+      description: Connection information for encrypting the on-premises data source credentials.
+      properties:
+        serviceToken:
+          type: string
+          description: The token generated in service. Callers use this token to authenticate to integration runtime.
+          readOnly: true
+        identityCertThumbprint:
+          type: string
+          description: The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
+          readOnly: true
+        hostServiceUri:
+          type: string
+          description: The on-premises integration runtime host URL.
+          readOnly: true
+        version:
+          type: string
+          description: The integration runtime version.
+          readOnly: true
+        publicKey:
+          type: string
+          description: The public key for encrypting a credential when transferring the credential to the integration runtime.
+          readOnly: true
+        isIdentityCertExprired:
+          type: boolean
+          description: Whether the identity certificate is expired.
+          readOnly: true
+      additionalProperties: {}
+    IntegrationRuntimeNodeMonitoringData:
+      type: object
+      description: Monitoring data for integration runtime node.
+      properties:
+        nodeName:
+          type: string
+          description: Name of the integration runtime node.
+          readOnly: true
+        availableMemoryInMB:
+          type: integer
+          format: int32
+          description: Available memory (MB) on the integration runtime node.
+          readOnly: true
+        cpuUtilization:
+          type: integer
+          format: int32
+          description: CPU percentage on the integration runtime node.
+          readOnly: true
+        concurrentJobsLimit:
+          type: integer
+          format: int32
+          description: Maximum concurrent jobs on the integration runtime node.
+          readOnly: true
+        concurrentJobsRunning:
+          type: integer
+          format: int32
+          description: The number of jobs currently running on the integration runtime node.
+          readOnly: true
+        maxConcurrentJobs:
+          type: integer
+          format: int32
+          description: The maximum concurrent jobs in this integration runtime.
+          readOnly: true
+        sentBytes:
+          type: number
+          format: float
+          description: Sent bytes on the integration runtime node.
+          readOnly: true
+        receivedBytes:
+          type: number
+          format: float
+          description: Received bytes on the integration runtime node.
+          readOnly: true
+      additionalProperties: {}
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    IntegrationRuntimeStatus:
+      type: object
+      description: Integration runtime status.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        dataFactoryName:
+          type: string
+          description: The data factory name which the integration runtime belong to.
+          readOnly: true
+        state:
+          $ref: '#/components/schemas/IntegrationRuntimeState'
+          description: The state of integration runtime.
+          readOnly: true
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

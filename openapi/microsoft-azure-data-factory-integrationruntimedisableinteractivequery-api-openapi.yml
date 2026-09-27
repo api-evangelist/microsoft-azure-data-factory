@@ -1,0 +1,138 @@
+openapi: 3.2.0
+info:
+  title: DataFactoryManagementClient Integration Runtime Disable…
+  version: '2018-06-01'
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: integrationRuntimeDisableInteractiveQuery
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/disableInteractiveQuery
+  : post:
+      operationId: IntegrationRuntime_DisableInteractiveQuery
+      tags:
+      - integrationRuntimeDisableInteractiveQuery
+      description: Disable interactive authoring of Managed Virtual Network integration runtime.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: integrationRuntimeName
+        in: path
+        description: The integration runtime name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationRuntimeResource'
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Azure-AsyncOperation:
+              description: A link to the status monitor
+              schema:
+                type: string
+                format: uri
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ErrorResponse
+      x-ms-examples:
+        IntegrationRuntime_DisableInteractiveQuery:
+          $ref: ./examples/IntegrationRuntimes_DisableInteractiveQuery.json
+      x-ms-long-running-operation-options:
+        final-state-via: azure-async-operation
+        final-state-schema: '#/definitions/IntegrationRuntimeResource'
+      x-ms-long-running-operation: true
+      summary: Integration runtime disable interactive query
+      x-summary-source: derived
+components:
+  schemas:
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
+    IntegrationRuntimeResource:
+      type: object
+      description: Integration runtime resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntime'
+          description: Integration runtime properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

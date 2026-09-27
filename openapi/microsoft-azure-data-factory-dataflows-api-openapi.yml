@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: DataFactoryManagementClient Credentials API
+  title: DataFactoryManagementClient Data Flows API
   version: '2018-06-01'
   x-typespec-generated:
   - emitter: '@azure-tools/typespec-autorest'
@@ -10,14 +10,14 @@ security:
 - azure_auth:
   - user_impersonation
 tags:
-- name: Credentials
+- name: dataFlows
 paths:
-  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows
   : get:
-      operationId: CredentialOperations_ListByFactory
+      operationId: DataFlows_ListByFactory
       tags:
-      - Credentials
-      description: List credentials.
+      - dataFlows
+      description: Lists data flows.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -37,7 +37,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialListResponse'
+                $ref: '#/components/schemas/DataFlowListResponse'
         default:
           description: An unexpected error response.
           content:
@@ -45,18 +45,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
-        Credentials_ListByFactory:
-          $ref: ./examples/Credentials_ListByFactory.json
+        DataFlows_ListByFactory:
+          $ref: ./examples/DataFlows_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
-      summary: Credential operations list by factory
+      summary: Data flows list by factory
       x-summary-source: derived
-  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows/{dataFlowName}
   : get:
-      operationId: CredentialOperations_Get
+      operationId: DataFlows_Get
       tags:
-      - Credentials
-      description: Gets a credential.
+      - dataFlows
+      description: Gets a data flow.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -70,18 +70,18 @@ paths:
           maxLength: 63
           minLength: 3
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
-      - name: credentialName
+      - name: dataFlowName
         in: path
-        description: Credential name
+        description: The data flow name.
         required: true
         schema:
           type: string
-          maxLength: 127
+          maxLength: 260
           minLength: 1
-          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
       - name: if-none-match
         in: header
-        description: ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+        description: ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
         required: false
         x-ms-client-name: If-None-Match
         schema:
@@ -92,9 +92,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialResource'
-        '304':
-          description: The client has made a conditional request and the resource has not been modified.
+                $ref: '#/components/schemas/DataFlowResource'
         default:
           description: An unexpected error response.
           content:
@@ -102,15 +100,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
-        Credentials_Get:
-          $ref: ./examples/Credentials_Get.json
-      summary: Credential operations get
+        DataFlows_Get:
+          $ref: ./examples/DataFlows_Get.json
+      summary: Data flows get
       x-summary-source: derived
     put:
-      operationId: CredentialOperations_CreateOrUpdate
+      operationId: DataFlows_CreateOrUpdate
       tags:
-      - Credentials
-      description: Creates or updates a credential.
+      - dataFlows
+      description: Creates or updates a data flow.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -124,29 +122,29 @@ paths:
           maxLength: 63
           minLength: 3
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
-      - name: credentialName
+      - name: dataFlowName
         in: path
-        description: Credential name
+        description: The data flow name.
         required: true
         schema:
           type: string
-          maxLength: 127
+          maxLength: 260
           minLength: 1
-          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
       - name: if-match
         in: header
-        description: ETag of the credential entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+        description: ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
         required: false
         x-ms-client-name: If-Match
         schema:
           type: string
       responses:
         '200':
-          description: Resource 'CredentialResource' update operation succeeded
+          description: Resource 'DataFlowResource' update operation succeeded
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CredentialResource'
+                $ref: '#/components/schemas/DataFlowResource'
         default:
           description: An unexpected error response.
           content:
@@ -154,22 +152,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
-        Credentials_Create:
-          $ref: ./examples/Credentials_Create.json
+        DataFlows_Create:
+          $ref: ./examples/DataFlows_Create.json
+        DataFlows_Update:
+          $ref: ./examples/DataFlows_Update.json
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CredentialResource'
-        description: Credential resource definition.
+              $ref: '#/components/schemas/DataFlowResource'
+        description: Data flow resource definition.
         required: true
-      summary: Credential operations create or update
+      summary: Data flows create or update
       x-summary-source: derived
     delete:
-      operationId: CredentialOperations_Delete
+      operationId: DataFlows_Delete
       tags:
-      - Credentials
-      description: Deletes a credential.
+      - dataFlows
+      description: Deletes a data flow.
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
@@ -183,15 +183,15 @@ paths:
           maxLength: 63
           minLength: 3
           pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
-      - name: credentialName
+      - name: dataFlowName
         in: path
-        description: Credential name
+        description: The data flow name.
         required: true
         schema:
           type: string
-          maxLength: 127
+          maxLength: 260
           minLength: 1
-          pattern: ^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
       responses:
         '200':
           description: Resource deleted successfully.
@@ -204,27 +204,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
-        Credentials_Delete:
-          $ref: ./examples/Credentials_Delete.json
-      summary: Credential operations delete
+        DataFlows_Delete:
+          $ref: ./examples/DataFlows_Delete.json
+      summary: Data flows delete
       x-summary-source: derived
 components:
   schemas:
-    CredentialResource:
-      type: object
-      description: Credential resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/Credential'
-          description: Properties of credentials.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -248,25 +233,49 @@ components:
       - code
       - message
       x-ms-external: true
-    Credential:
+    DataFlowFolder:
       type: object
-      description: The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
+      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this data flow is in.
+    DataFlowListResponse:
+      type: object
+      description: A list of data flow resources.
+      properties:
+        value:
+          type: array
+          description: The DataFlowResource items on this page
+          items:
+            $ref: '#/components/schemas/DataFlowResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    DataFlow:
+      type: object
+      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
       properties:
         type:
           type: string
-          description: Type of credential.
+          description: Type of data flow.
         description:
           type: string
-          description: Credential description.
+          description: The description of the data flow.
         annotations:
           type: array
-          description: List of tags that can be used for describing the Credential.
+          description: List of tags that can be used for describing the data flow.
           items: {}
+        folder:
+          $ref: '#/components/schemas/DataFlowFolder'
+          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
       discriminator:
         propertyName: type
       required:
       - type
-      additionalProperties: {}
     CloudError:
       type: object
       description: The object that defines the structure of an Azure Data Factory error response.
@@ -278,21 +287,21 @@ components:
       required:
       - error
       x-ms-external: true
-    CredentialListResponse:
+    DataFlowResource:
       type: object
-      description: A list of credential resources.
+      description: Data flow resource type.
       properties:
-        value:
-          type: array
-          description: The CredentialResource items on this page
-          items:
-            $ref: '#/components/schemas/CredentialResource'
-        nextLink:
+        properties:
+          $ref: '#/components/schemas/DataFlow'
+          description: Data flow properties.
+        etag:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
       required:
-      - value
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
   securitySchemes:
     azure_auth:
       type: oauth2

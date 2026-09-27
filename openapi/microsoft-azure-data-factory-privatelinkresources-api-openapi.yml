@@ -1,42 +1,31 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Azure Data Factory REST privateLinkResources API
-  description: Azure Data Factory is a cloud-based data integration service. The Microsoft.DataFactory resource-provider REST
-    API manages factories, pipelines, datasets, linked services, data flows, triggers, integration runtimes, credentials,
-    managed private endpoints and change data capture resources through Azure Resource Manager.
+  title: DataFactoryManagementClient Private Link Resources API
   version: '2018-06-01'
-  contact:
-    name: Microsoft Azure
-    url: https://learn.microsoft.com/en-us/rest/api/datafactory/
-  x-source: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
-  x-source-format: Swagger 2.0 (converted verbatim to OpenAPI 3.0.3; original retained at openapi/_original/)
-externalDocs:
-  description: Azure Data Factory REST API reference
-  url: https://learn.microsoft.com/en-us/rest/api/datafactory/
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
 servers:
 - url: https://management.azure.com
-  description: Azure Resource Manager
 security:
 - azure_auth:
   - user_impersonation
 tags:
 - name: privateLinkResources
-  description: privateLinkResources operations
 paths:
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateLinkResources
   : get:
       operationId: privateLinkResources_Get
-      description: Gets the private link resources
       tags:
       - privateLinkResources
+      description: Gets the private link resources
       parameters:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
       - name: factoryName
         in: path
-        required: true
         description: The factory name.
+        required: true
         schema:
           type: string
           maxLength: 63
@@ -57,20 +46,31 @@ paths:
                 $ref: '#/components/schemas/CloudError'
       x-ms-examples:
         Get private link resources of a site:
-          $ref: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/GetPrivateLinkResources.json
+          $ref: ./examples/GetPrivateLinkResources.json
+      summary: Private link resources get
+      x-summary-source: derived
 components:
   schemas:
-    CloudError:
+    SubResource:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Azure Data Factory nested resource, which belongs to a factory.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -94,15 +94,6 @@ components:
       - code
       - message
       x-ms-external: true
-    PrivateLinkResource:
-      type: object
-      description: A private link resource
-      properties:
-        properties:
-          $ref: '#/components/schemas/PrivateLinkResourceProperties'
-          description: Core resource properties
-      allOf:
-      - $ref: '#/components/schemas/SubResource'
     PrivateLinkResourceProperties:
       type: object
       description: Properties of a private link resource
@@ -133,32 +124,32 @@ components:
             $ref: '#/components/schemas/PrivateLinkResource'
       required:
       - value
-    SubResource:
+    CloudError:
       type: object
-      description: Azure Data Factory nested resource, which belongs to a factory.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        id:
-          type: string
-          description: The resource identifier.
-          readOnly: true
-        name:
-          type: string
-          description: The resource name.
-          readOnly: true
-        type:
-          type: string
-          description: The resource type.
-          readOnly: true
-        etag:
-          type: string
-          description: Etag identifies change in the resource.
-          readOnly: true
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    PrivateLinkResource:
+      type: object
+      description: A private link resource
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
   securitySchemes:
     azure_auth:
       type: oauth2
-      description: Azure Active Directory OAuth2 Flow.
       flows:
         implicit:
           scopes:
             user_impersonation: impersonate your user account
           authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.
