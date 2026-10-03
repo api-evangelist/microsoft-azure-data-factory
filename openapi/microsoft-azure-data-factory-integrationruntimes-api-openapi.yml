@@ -850,17 +850,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse:
-      type: object
-      description: Azure-SSIS integration runtime outbound network dependency endpoints.
-      properties:
-        value:
-          type: array
-          description: The list of outbound network dependency endpoints.
-          items:
-            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint'
-          x-ms-identifiers:
-          - category
     IntegrationRuntimeStatusResponse:
       type: object
       description: Integration runtime status response.
@@ -874,6 +863,59 @@ components:
           description: Integration runtime properties.
       required:
       - properties
+    IntegrationRuntimeRegenerateKeyParameters:
+      type: object
+      description: Parameters to regenerate the authentication key.
+      properties:
+        keyName:
+          $ref: '#/components/schemas/IntegrationRuntimeAuthKeyName'
+          description: The name of the authentication key to regenerate.
+    UpdateIntegrationRuntimeRequest:
+      type: object
+      description: Update integration runtime request.
+      properties:
+        autoUpdate:
+          $ref: '#/components/schemas/IntegrationRuntimeAutoUpdate'
+          description: Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
+        updateDelayOffset:
+          type: string
+          description: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
+    IntegrationRuntimeStatus:
+      type: object
+      description: Integration runtime status.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        dataFactoryName:
+          type: string
+          description: The data factory name which the integration runtime belong to.
+          readOnly: true
+        state:
+          $ref: '#/components/schemas/IntegrationRuntimeState'
+          description: The state of integration runtime.
+          readOnly: true
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
     IntegrationRuntimeAutoUpdate:
       type: string
       description: The state of integration runtime auto update.
@@ -890,6 +932,172 @@ components:
         - name: 'Off'
           value: 'Off'
           description: 'Off'
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    IntegrationRuntimeConnectionInfo:
+      type: object
+      description: Connection information for encrypting the on-premises data source credentials.
+      properties:
+        serviceToken:
+          type: string
+          description: The token generated in service. Callers use this token to authenticate to integration runtime.
+          readOnly: true
+        identityCertThumbprint:
+          type: string
+          description: The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
+          readOnly: true
+        hostServiceUri:
+          type: string
+          description: The on-premises integration runtime host URL.
+          readOnly: true
+        version:
+          type: string
+          description: The integration runtime version.
+          readOnly: true
+        publicKey:
+          type: string
+          description: The public key for encrypting a credential when transferring the credential to the integration runtime.
+          readOnly: true
+        isIdentityCertExprired:
+          type: boolean
+          description: Whether the identity certificate is expired.
+          readOnly: true
+      additionalProperties: {}
+    IntegrationRuntimeOutboundNetworkDependenciesEndpoint:
+      type: object
+      description: The endpoint for Azure-SSIS integration runtime outbound network dependency.
+      properties:
+        domainName:
+          type: string
+          description: The domain name of endpoint.
+        endpointDetails:
+          type: array
+          description: The details of endpoint.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails'
+          x-ms-identifiers:
+          - port
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+    IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails:
+      type: object
+      description: The details of Azure-SSIS integration runtime outbound network dependency endpoint.
+      properties:
+        port:
+          type: integer
+          format: int32
+          description: The port of endpoint.
+    IntegrationRuntimeAuthKeyName:
+      type: string
+      description: The name of the authentication key to regenerate.
+      enum:
+      - authKey1
+      - authKey2
+      x-ms-enum:
+        name: IntegrationRuntimeAuthKeyName
+        modelAsString: true
+        values:
+        - name: authKey1
+          value: authKey1
+          description: authKey1
+        - name: authKey2
+          value: authKey2
+          description: authKey2
+    CreateLinkedIntegrationRuntimeRequest:
+      type: object
+      description: The linked integration runtime information.
+      properties:
+        name:
+          type: string
+          description: The name of the linked integration runtime.
+        subscriptionId:
+          type: string
+          description: The ID of the subscription that the linked integration runtime belongs to.
+        dataFactoryName:
+          type: string
+          description: The name of the data factory that the linked integration runtime belongs to.
+        dataFactoryLocation:
+          type: string
+          description: The location of the data factory that the linked integration runtime belongs to.
+    IntegrationRuntimeMonitoringData:
+      type: object
+      description: Get monitoring data response.
+      properties:
+        name:
+          type: string
+          description: Integration runtime name.
+        nodes:
+          type: array
+          description: Integration runtime node monitoring data.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeNodeMonitoringData'
+          x-ms-identifiers:
+          - nodeName
+    LinkedIntegrationRuntimeRequest:
+      type: object
+      description: Data factory name for linked integration runtime request.
+      properties:
+        factoryName:
+          type: string
+          description: The data factory name for linked integration runtime.
+          x-ms-client-name: linkedFactoryName
+      required:
+      - factoryName
+    IntegrationRuntimeAuthKeys:
+      type: object
+      description: The integration runtime authentication keys.
+      properties:
+        authKey1:
+          type: string
+          description: The primary integration runtime authentication key.
+        authKey2:
+          type: string
+          description: The secondary integration runtime authentication key.
     IntegrationRuntimeState:
       type: string
       description: The state of integration runtime.
@@ -953,51 +1161,17 @@ components:
       - properties
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    IntegrationRuntime:
+    IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse:
       type: object
-      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      description: Azure-SSIS integration runtime outbound network dependency endpoints.
       properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        description:
-          type: string
-          description: Integration runtime description.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      additionalProperties: {}
-    IntegrationRuntimeMonitoringData:
-      type: object
-      description: Get monitoring data response.
-      properties:
-        name:
-          type: string
-          description: Integration runtime name.
-        nodes:
+        value:
           type: array
-          description: Integration runtime node monitoring data.
+          description: The list of outbound network dependency endpoints.
           items:
-            $ref: '#/components/schemas/IntegrationRuntimeNodeMonitoringData'
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint'
           x-ms-identifiers:
-          - nodeName
-    IntegrationRuntimeType:
-      type: string
-      description: The type of integration runtime.
-      enum:
-      - Managed
-      - SelfHosted
-      x-ms-enum:
-        name: IntegrationRuntimeType
-        modelAsString: true
-        values:
-        - name: Managed
-          value: Managed
-          description: Managed
-        - name: SelfHosted
-          value: SelfHosted
-          description: SelfHosted
+          - category
     IntegrationRuntimeListResponse:
       type: object
       description: A list of integration runtime resources.
@@ -1013,44 +1187,6 @@ components:
           description: The link to the next page of items
       required:
       - value
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
-    IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails:
-      type: object
-      description: The details of Azure-SSIS integration runtime outbound network dependency endpoint.
-      properties:
-        port:
-          type: integer
-          format: int32
-          description: The port of endpoint.
-    IntegrationRuntimeRegenerateKeyParameters:
-      type: object
-      description: Parameters to regenerate the authentication key.
-      properties:
-        keyName:
-          $ref: '#/components/schemas/IntegrationRuntimeAuthKeyName'
-          description: The name of the authentication key to regenerate.
     IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint:
       type: object
       description: Azure-SSIS integration runtime outbound network dependency endpoints for one category.
@@ -1065,111 +1201,6 @@ components:
             $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpoint'
           x-ms-identifiers:
           - domainName
-    IntegrationRuntimeOutboundNetworkDependenciesEndpoint:
-      type: object
-      description: The endpoint for Azure-SSIS integration runtime outbound network dependency.
-      properties:
-        domainName:
-          type: string
-          description: The domain name of endpoint.
-        endpointDetails:
-          type: array
-          description: The details of endpoint.
-          items:
-            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails'
-          x-ms-identifiers:
-          - port
-    CreateLinkedIntegrationRuntimeRequest:
-      type: object
-      description: The linked integration runtime information.
-      properties:
-        name:
-          type: string
-          description: The name of the linked integration runtime.
-        subscriptionId:
-          type: string
-          description: The ID of the subscription that the linked integration runtime belongs to.
-        dataFactoryName:
-          type: string
-          description: The name of the data factory that the linked integration runtime belongs to.
-        dataFactoryLocation:
-          type: string
-          description: The location of the data factory that the linked integration runtime belongs to.
-    IntegrationRuntimeAuthKeys:
-      type: object
-      description: The integration runtime authentication keys.
-      properties:
-        authKey1:
-          type: string
-          description: The primary integration runtime authentication key.
-        authKey2:
-          type: string
-          description: The secondary integration runtime authentication key.
-    IntegrationRuntimeAuthKeyName:
-      type: string
-      description: The name of the authentication key to regenerate.
-      enum:
-      - authKey1
-      - authKey2
-      x-ms-enum:
-        name: IntegrationRuntimeAuthKeyName
-        modelAsString: true
-        values:
-        - name: authKey1
-          value: authKey1
-          description: authKey1
-        - name: authKey2
-          value: authKey2
-          description: authKey2
-    LinkedIntegrationRuntimeRequest:
-      type: object
-      description: Data factory name for linked integration runtime request.
-      properties:
-        factoryName:
-          type: string
-          description: The data factory name for linked integration runtime.
-          x-ms-client-name: linkedFactoryName
-      required:
-      - factoryName
-    UpdateIntegrationRuntimeRequest:
-      type: object
-      description: Update integration runtime request.
-      properties:
-        autoUpdate:
-          $ref: '#/components/schemas/IntegrationRuntimeAutoUpdate'
-          description: Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        updateDelayOffset:
-          type: string
-          description: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
-    IntegrationRuntimeConnectionInfo:
-      type: object
-      description: Connection information for encrypting the on-premises data source credentials.
-      properties:
-        serviceToken:
-          type: string
-          description: The token generated in service. Callers use this token to authenticate to integration runtime.
-          readOnly: true
-        identityCertThumbprint:
-          type: string
-          description: The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
-          readOnly: true
-        hostServiceUri:
-          type: string
-          description: The on-premises integration runtime host URL.
-          readOnly: true
-        version:
-          type: string
-          description: The integration runtime version.
-          readOnly: true
-        publicKey:
-          type: string
-          description: The public key for encrypting a credential when transferring the credential to the integration runtime.
-          readOnly: true
-        isIdentityCertExprired:
-          type: boolean
-          description: Whether the identity certificate is expired.
-          readOnly: true
-      additionalProperties: {}
     IntegrationRuntimeNodeMonitoringData:
       type: object
       description: Monitoring data for integration runtime node.
@@ -1213,37 +1244,6 @@ components:
           format: float
           description: Received bytes on the integration runtime node.
           readOnly: true
-      additionalProperties: {}
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    IntegrationRuntimeStatus:
-      type: object
-      description: Integration runtime status.
-      properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        dataFactoryName:
-          type: string
-          description: The data factory name which the integration runtime belong to.
-          readOnly: true
-        state:
-          $ref: '#/components/schemas/IntegrationRuntimeState'
-          description: The state of integration runtime.
-          readOnly: true
-      discriminator:
-        propertyName: type
-      required:
-      - type
       additionalProperties: {}
   securitySchemes:
     azure_auth:

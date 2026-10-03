@@ -210,36 +210,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudErrorBody:
+    CloudError:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - code
-      - message
+      - error
       x-ms-external: true
-    DataFlowFolder:
-      type: object
-      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      properties:
-        name:
-          type: string
-          description: The name of the folder that this data flow is in.
     DataFlowListResponse:
       type: object
       description: A list of data flow resources.
@@ -276,16 +257,28 @@ components:
         propertyName: type
       required:
       - type
-    CloudError:
+    CloudErrorBody:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: The object that defines the structure of an Azure Data Factory error.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
       required:
-      - error
+      - code
+      - message
       x-ms-external: true
     DataFlowResource:
       type: object
@@ -302,6 +295,13 @@ components:
       - properties
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    DataFlowFolder:
+      type: object
+      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this data flow is in.
   securitySchemes:
     azure_auth:
       type: oauth2

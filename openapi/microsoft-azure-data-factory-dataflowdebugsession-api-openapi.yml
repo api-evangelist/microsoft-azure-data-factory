@@ -257,6 +257,85 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    IntegrationRuntimeReference:
+      type: object
+      description: Integration runtime reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
+          description: Type of integration runtime.
+        referenceName:
+          type: string
+          description: Reference integration runtime name.
+        parameters:
+          type: object
+          description: Arguments for integration runtime.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    Type:
+      type: string
+      description: Linked service reference type.
+      enum:
+      - LinkedServiceReference
+      x-ms-enum:
+        name: Type
+        modelAsString: true
+        values:
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+    DataFlow:
+      type: object
+      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
+      properties:
+        type:
+          type: string
+          description: Type of data flow.
+        description:
+          type: string
+          description: The description of the data flow.
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the data flow.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DataFlowFolder'
+          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+    DataFlowDebugCommandResponse:
+      type: object
+      description: Response body structure of data flow result for data preview, statistics or expression preview.
+      properties:
+        status:
+          type: string
+          description: The run status of data preview, statistics or expression preview.
+        data:
+          type: string
+          description: The result data of data preview, statistics or expression preview.
+    CreateDataFlowDebugSessionResponse:
+      type: object
+      description: Response body structure for creating data flow debug session.
+      properties:
+        status:
+          type: string
+          description: The state of the debug session.
+        sessionId:
+          type: string
+          description: The ID of data flow debug session.
+    DataFlowStagingInfo:
+      type: object
+      description: Staging info for execute data flow activity.
+      properties:
+        linkedService:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Staging linked service reference.
+        folderPath:
+          description: 'Folder path for staging blob. Type: string (or Expression with resultType string)'
     DataFlowDebugCommandRequest:
       type: object
       description: Request body structure for data flow debug command.
@@ -270,21 +349,51 @@ components:
         commandPayload:
           $ref: '#/components/schemas/DataFlowDebugCommandPayload'
           description: The command payload object.
-    IntegrationRuntime:
+    IntegrationRuntimeReferenceType:
+      type: string
+      description: Type of integration runtime.
+      enum:
+      - IntegrationRuntimeReference
+      x-ms-enum:
+        name: IntegrationRuntimeReferenceType
+        modelAsString: true
+        values:
+        - name: IntegrationRuntimeReference
+          value: IntegrationRuntimeReference
+          description: IntegrationRuntimeReference
+    LinkedServiceReference:
       type: object
-      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      description: Linked service reference type.
       properties:
         type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        description:
+          $ref: '#/components/schemas/Type'
+          description: Linked service reference type.
+        referenceName:
           type: string
-          description: Integration runtime description.
-      discriminator:
-        propertyName: type
+          description: Reference LinkedService name.
+        parameters:
+          type: object
+          description: Arguments for LinkedService.
+          additionalProperties: {}
       required:
       - type
-      additionalProperties: {}
+      - referenceName
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
     CreateDataFlowDebugSessionRequest:
       type: object
       description: Request body structure for creating data flow debug session.
@@ -303,87 +412,81 @@ components:
         integrationRuntime:
           $ref: '#/components/schemas/IntegrationRuntimeDebugResource'
           description: Set to use integration runtime setting for data flow debug session.
-    DeleteDataFlowDebugSessionRequest:
+    CloudErrorBody:
       type: object
-      description: Request body structure for deleting data flow debug session.
+      description: The object that defines the structure of an Azure Data Factory error.
       properties:
-        sessionId:
+        code:
           type: string
-          description: The ID of data flow debug session.
-    DataFlowFolder:
-      type: object
-      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      properties:
-        name:
+          description: Error code.
+        message:
           type: string
-          description: The name of the folder that this data flow is in.
-    DataFlowDebugCommandResponse:
-      type: object
-      description: Response body structure of data flow result for data preview, statistics or expression preview.
-      properties:
-        status:
+          description: Error message.
+        target:
           type: string
-          description: The run status of data preview, statistics or expression preview.
-        data:
-          type: string
-          description: The result data of data preview, statistics or expression preview.
-    IntegrationRuntimeReferenceType:
-      type: string
-      description: Type of integration runtime.
-      enum:
-      - IntegrationRuntimeReference
-      x-ms-enum:
-        name: IntegrationRuntimeReferenceType
-        modelAsString: true
-        values:
-        - name: IntegrationRuntimeReference
-          value: IntegrationRuntimeReference
-          description: IntegrationRuntimeReference
-    DataFlowDebugResource:
-      type: object
-      description: Data flow debug resource.
-      properties:
-        properties:
-          $ref: '#/components/schemas/DataFlow'
-          description: Data flow properties.
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
       required:
-      - properties
-      allOf:
-      - $ref: '#/components/schemas/SubResourceDebugResource'
-    DataFlowDebugSessionInfo:
+      - code
+      - message
+      x-ms-external: true
+    ParameterSpecification:
       type: object
-      description: Data flow debug session info.
+      description: Definition of a single parameter for an entity.
       properties:
-        dataFlowName:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    LinkedService:
+      type: object
+      description: The nested object which contains the information and credential which can be used to connect with related store or compute resource.
+      properties:
+        type:
           type: string
-          description: The name of the data flow.
-        computeType:
+          description: Type of linked service.
+        version:
           type: string
-          description: Compute type of the cluster.
-        coreCount:
+          description: Version of the linked service.
+        connectVia:
+          $ref: '#/components/schemas/IntegrationRuntimeReference'
+          description: The integration runtime reference.
+        description:
+          type: string
+          description: Linked service description.
+        parameters:
+          type: object
+          description: Parameters for linked service.
+          additionalProperties:
+            $ref: '#/components/schemas/ParameterSpecification'
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the linked service.
+          items: {}
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+    DataFlowSourceSetting:
+      type: object
+      description: Definition of data flow source setting for debug.
+      properties:
+        sourceName:
+          type: string
+          description: The data flow source name.
+        rowLimit:
           type: integer
           format: int32
-          description: Core count of the cluster.
-        nodeCount:
-          type: integer
-          format: int32
-          description: Node count of the cluster. (deprecated property)
-        integrationRuntimeName:
-          type: string
-          description: Attached integration runtime name of data flow debug session.
-        sessionId:
-          type: string
-          description: The ID of data flow debug session.
-        startTime:
-          type: string
-          description: Start time of data flow debug session.
-        timeToLiveInMinutes:
-          type: integer
-          format: int32
-          description: Compute type of the cluster.
-        lastActivityTime:
-          type: string
-          description: Last activity time of data flow debug session.
+          description: Defines the row limit of data flow source in debug.
       additionalProperties: {}
     DataFlowDebugPackage:
       type: object
@@ -423,268 +526,6 @@ components:
           $ref: '#/components/schemas/DataFlowDebugPackageDebugSettings'
           description: Data flow debug settings.
       additionalProperties: {}
-    IntegrationRuntimeType:
-      type: string
-      description: The type of integration runtime.
-      enum:
-      - Managed
-      - SelfHosted
-      x-ms-enum:
-        name: IntegrationRuntimeType
-        modelAsString: true
-        values:
-        - name: Managed
-          value: Managed
-          description: Managed
-        - name: SelfHosted
-          value: SelfHosted
-          description: SelfHosted
-    ParameterSpecification:
-      type: object
-      description: Definition of a single parameter for an entity.
-      properties:
-        type:
-          $ref: '#/components/schemas/ParameterType'
-          description: Parameter type.
-        defaultValue:
-          description: Default value of parameter.
-      required:
-      - type
-    Dataset:
-      type: object
-      description: The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
-      properties:
-        type:
-          type: string
-          description: Type of dataset.
-        description:
-          type: string
-          description: Dataset description.
-        structure:
-          description: 'Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.'
-        schema:
-          description: 'Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.'
-        linkedServiceName:
-          $ref: '#/components/schemas/LinkedServiceReference'
-          description: Linked service reference.
-        parameters:
-          type: object
-          description: Parameters for dataset.
-          additionalProperties:
-            $ref: '#/components/schemas/ParameterSpecification'
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the Dataset.
-          items: {}
-        folder:
-          $ref: '#/components/schemas/DatasetFolder'
-          description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      - linkedServiceName
-      additionalProperties: {}
-    DatasetDebugResource:
-      type: object
-      description: Dataset debug resource.
-      properties:
-        properties:
-          $ref: '#/components/schemas/Dataset'
-          description: Dataset properties.
-      required:
-      - properties
-      allOf:
-      - $ref: '#/components/schemas/SubResourceDebugResource'
-    DataFlowSourceSetting:
-      type: object
-      description: Definition of data flow source setting for debug.
-      properties:
-        sourceName:
-          type: string
-          description: The data flow source name.
-        rowLimit:
-          type: integer
-          format: int32
-          description: Defines the row limit of data flow source in debug.
-      additionalProperties: {}
-    DataFlowDebugCommandPayload:
-      type: object
-      description: Structure of command payload.
-      properties:
-        streamName:
-          type: string
-          description: The stream name which is used for preview.
-        rowLimits:
-          type: integer
-          format: int32
-          description: Row limits for preview response.
-        columns:
-          type: array
-          description: Array of column names.
-          items:
-            type: string
-        expression:
-          type: string
-          description: The expression which is used for preview.
-      required:
-      - streamName
-    DataFlowDebugCommandType:
-      type: string
-      description: The command type.
-      enum:
-      - executePreviewQuery
-      - executeStatisticsQuery
-      - executeExpressionQuery
-      x-ms-enum:
-        name: DataFlowDebugCommandType
-        modelAsString: true
-        values:
-        - name: executePreviewQuery
-          value: executePreviewQuery
-          description: executePreviewQuery
-        - name: executeStatisticsQuery
-          value: executeStatisticsQuery
-          description: executeStatisticsQuery
-        - name: executeExpressionQuery
-          value: executeExpressionQuery
-          description: executeExpressionQuery
-    Type:
-      type: string
-      description: Linked service reference type.
-      enum:
-      - LinkedServiceReference
-      x-ms-enum:
-        name: Type
-        modelAsString: true
-        values:
-        - name: LinkedServiceReference
-          value: LinkedServiceReference
-          description: LinkedServiceReference
-    IntegrationRuntimeReference:
-      type: object
-      description: Integration runtime reference type.
-      properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
-          description: Type of integration runtime.
-        referenceName:
-          type: string
-          description: Reference integration runtime name.
-        parameters:
-          type: object
-          description: Arguments for integration runtime.
-          additionalProperties: {}
-      required:
-      - type
-      - referenceName
-    DataFlowDebugPackageDebugSettings:
-      type: object
-      description: Data flow debug settings.
-      properties:
-        sourceSettings:
-          type: array
-          description: Source setting for data flow debug.
-          items:
-            $ref: '#/components/schemas/DataFlowSourceSetting'
-          x-ms-identifiers:
-          - sourceName
-        parameters:
-          type: object
-          description: Data flow parameters.
-          additionalProperties: {}
-        datasetParameters:
-          description: Parameters for dataset.
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
-    DataFlow:
-      type: object
-      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
-      properties:
-        type:
-          type: string
-          description: Type of data flow.
-        description:
-          type: string
-          description: The description of the data flow.
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the data flow.
-          items: {}
-        folder:
-          $ref: '#/components/schemas/DataFlowFolder'
-          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-    DataFlowStagingInfo:
-      type: object
-      description: Staging info for execute data flow activity.
-      properties:
-        linkedService:
-          $ref: '#/components/schemas/LinkedServiceReference'
-          description: Staging linked service reference.
-        folderPath:
-          description: 'Folder path for staging blob. Type: string (or Expression with resultType string)'
-    LinkedService:
-      type: object
-      description: The nested object which contains the information and credential which can be used to connect with related store or compute resource.
-      properties:
-        type:
-          type: string
-          description: Type of linked service.
-        version:
-          type: string
-          description: Version of the linked service.
-        connectVia:
-          $ref: '#/components/schemas/IntegrationRuntimeReference'
-          description: The integration runtime reference.
-        description:
-          type: string
-          description: Linked service description.
-        parameters:
-          type: object
-          description: Parameters for linked service.
-          additionalProperties:
-            $ref: '#/components/schemas/ParameterSpecification'
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the linked service.
-          items: {}
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      additionalProperties: {}
-    AddDataFlowToDebugSessionResponse:
-      type: object
-      description: Response body structure for starting data flow debug session.
-      properties:
-        jobVersion:
-          type: string
-          description: The ID of data flow debug job version.
     SubResourceDebugResource:
       type: object
       description: Azure Data Factory nested debug resource.
@@ -692,24 +533,24 @@ components:
         name:
           type: string
           description: The resource name.
-    QueryDataFlowDebugSessionsResponse:
+    DatasetFolder:
       type: object
-      description: Paged collection of DataFlowDebugSessionInfo items
+      description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
       properties:
-        value:
-          type: array
-          description: The DataFlowDebugSessionInfo items on this page
-          items:
-            $ref: '#/components/schemas/DataFlowDebugSessionInfo'
-          x-ms-identifiers:
-          - dataFlowName
-          - sessionId
-        nextLink:
+        name:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: The name of the folder that this Dataset is in.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - value
+      - error
+      x-ms-external: true
     ParameterType:
       type: string
       description: Parameter type.
@@ -746,24 +587,41 @@ components:
         - name: SecureString
           value: SecureString
           description: SecureString
-    LinkedServiceDebugResource:
+    Dataset:
       type: object
-      description: Linked service debug resource.
+      description: The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
       properties:
-        properties:
-          $ref: '#/components/schemas/LinkedService'
-          description: Properties of linked service.
-      required:
-      - properties
-      allOf:
-      - $ref: '#/components/schemas/SubResourceDebugResource'
-    DatasetFolder:
-      type: object
-      description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-      properties:
-        name:
+        type:
           type: string
-          description: The name of the folder that this Dataset is in.
+          description: Type of dataset.
+        description:
+          type: string
+          description: Dataset description.
+        structure:
+          description: 'Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.'
+        schema:
+          description: 'Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.'
+        linkedServiceName:
+          $ref: '#/components/schemas/LinkedServiceReference'
+          description: Linked service reference.
+        parameters:
+          type: object
+          description: Parameters for dataset.
+          additionalProperties:
+            $ref: '#/components/schemas/ParameterSpecification'
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the Dataset.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DatasetFolder'
+          description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      - linkedServiceName
+      additionalProperties: {}
     IntegrationRuntimeDebugResource:
       type: object
       description: Integration runtime debug resource.
@@ -775,44 +633,186 @@ components:
       - properties
       allOf:
       - $ref: '#/components/schemas/SubResourceDebugResource'
-    LinkedServiceReference:
+    DataFlowDebugResource:
       type: object
-      description: Linked service reference type.
+      description: Data flow debug resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/DataFlow'
+          description: Data flow properties.
+      required:
+      - properties
+      allOf:
+      - $ref: '#/components/schemas/SubResourceDebugResource'
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
       properties:
         type:
-          $ref: '#/components/schemas/Type'
-          description: Linked service reference type.
-        referenceName:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
           type: string
-          description: Reference LinkedService name.
-        parameters:
-          type: object
-          description: Arguments for LinkedService.
-          additionalProperties: {}
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
       required:
       - type
-      - referenceName
-    CloudError:
+      additionalProperties: {}
+    DataFlowDebugPackageDebugSettings:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Data flow debug settings.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    CreateDataFlowDebugSessionResponse:
+        sourceSettings:
+          type: array
+          description: Source setting for data flow debug.
+          items:
+            $ref: '#/components/schemas/DataFlowSourceSetting'
+          x-ms-identifiers:
+          - sourceName
+        parameters:
+          type: object
+          description: Data flow parameters.
+          additionalProperties: {}
+        datasetParameters:
+          description: Parameters for dataset.
+    DataFlowFolder:
       type: object
-      description: Response body structure for creating data flow debug session.
+      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
       properties:
-        status:
+        name:
           type: string
-          description: The state of the debug session.
+          description: The name of the folder that this data flow is in.
+    DatasetDebugResource:
+      type: object
+      description: Dataset debug resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Dataset'
+          description: Dataset properties.
+      required:
+      - properties
+      allOf:
+      - $ref: '#/components/schemas/SubResourceDebugResource'
+    AddDataFlowToDebugSessionResponse:
+      type: object
+      description: Response body structure for starting data flow debug session.
+      properties:
+        jobVersion:
+          type: string
+          description: The ID of data flow debug job version.
+    DeleteDataFlowDebugSessionRequest:
+      type: object
+      description: Request body structure for deleting data flow debug session.
+      properties:
         sessionId:
           type: string
           description: The ID of data flow debug session.
+    DataFlowDebugCommandPayload:
+      type: object
+      description: Structure of command payload.
+      properties:
+        streamName:
+          type: string
+          description: The stream name which is used for preview.
+        rowLimits:
+          type: integer
+          format: int32
+          description: Row limits for preview response.
+        columns:
+          type: array
+          description: Array of column names.
+          items:
+            type: string
+        expression:
+          type: string
+          description: The expression which is used for preview.
+      required:
+      - streamName
+    LinkedServiceDebugResource:
+      type: object
+      description: Linked service debug resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/LinkedService'
+          description: Properties of linked service.
+      required:
+      - properties
+      allOf:
+      - $ref: '#/components/schemas/SubResourceDebugResource'
+    QueryDataFlowDebugSessionsResponse:
+      type: object
+      description: Paged collection of DataFlowDebugSessionInfo items
+      properties:
+        value:
+          type: array
+          description: The DataFlowDebugSessionInfo items on this page
+          items:
+            $ref: '#/components/schemas/DataFlowDebugSessionInfo'
+          x-ms-identifiers:
+          - dataFlowName
+          - sessionId
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    DataFlowDebugSessionInfo:
+      type: object
+      description: Data flow debug session info.
+      properties:
+        dataFlowName:
+          type: string
+          description: The name of the data flow.
+        computeType:
+          type: string
+          description: Compute type of the cluster.
+        coreCount:
+          type: integer
+          format: int32
+          description: Core count of the cluster.
+        nodeCount:
+          type: integer
+          format: int32
+          description: Node count of the cluster. (deprecated property)
+        integrationRuntimeName:
+          type: string
+          description: Attached integration runtime name of data flow debug session.
+        sessionId:
+          type: string
+          description: The ID of data flow debug session.
+        startTime:
+          type: string
+          description: Start time of data flow debug session.
+        timeToLiveInMinutes:
+          type: integer
+          format: int32
+          description: Compute type of the cluster.
+        lastActivityTime:
+          type: string
+          description: Last activity time of data flow debug session.
+      additionalProperties: {}
+    DataFlowDebugCommandType:
+      type: string
+      description: The command type.
+      enum:
+      - executePreviewQuery
+      - executeStatisticsQuery
+      - executeExpressionQuery
+      x-ms-enum:
+        name: DataFlowDebugCommandType
+        modelAsString: true
+        values:
+        - name: executePreviewQuery
+          value: executePreviewQuery
+          description: executePreviewQuery
+        - name: executeStatisticsQuery
+          value: executeStatisticsQuery
+          description: executeStatisticsQuery
+        - name: executeExpressionQuery
+          value: executeExpressionQuery
+          description: executeExpressionQuery
   securitySchemes:
     azure_auth:
       type: oauth2

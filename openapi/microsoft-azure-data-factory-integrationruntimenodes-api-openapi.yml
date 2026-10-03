@@ -229,28 +229,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudErrorBody:
+    CloudError:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - code
-      - message
+      - error
       x-ms-external: true
     SelfHostedIntegrationRuntimeNodeStatus:
       type: string
@@ -288,26 +276,6 @@ components:
         - name: InitializeFailed
           value: InitializeFailed
           description: InitializeFailed
-    IntegrationRuntimeUpdateResult:
-      type: string
-      description: The result of the last integration runtime node update.
-      enum:
-      - None
-      - Succeed
-      - Fail
-      x-ms-enum:
-        name: IntegrationRuntimeUpdateResult
-        modelAsString: true
-        values:
-        - name: None
-          value: None
-          description: None
-        - name: Succeed
-          value: Succeed
-          description: Succeed
-        - name: Fail
-          value: Fail
-          description: Fail
     IntegrationRuntimeNodeIpAddress:
       type: object
       description: The IP address of self-hosted integration runtime node.
@@ -316,15 +284,6 @@ components:
           type: string
           description: The IP address of self-hosted integration runtime node.
           readOnly: true
-    UpdateIntegrationRuntimeNodeRequest:
-      type: object
-      description: Update integration runtime node request.
-      properties:
-        concurrentJobsLimit:
-          type: integer
-          format: int32
-          description: The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed.
-          minimum: 1
     SelfHostedIntegrationRuntimeNode:
       type: object
       description: Properties of Self-hosted integration runtime node.
@@ -413,17 +372,58 @@ components:
           description: The maximum concurrent jobs in this integration runtime.
           readOnly: true
       additionalProperties: {}
-    CloudError:
+    CloudErrorBody:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: The object that defines the structure of an Azure Data Factory error.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
       required:
-      - error
+      - code
+      - message
       x-ms-external: true
+    IntegrationRuntimeUpdateResult:
+      type: string
+      description: The result of the last integration runtime node update.
+      enum:
+      - None
+      - Succeed
+      - Fail
+      x-ms-enum:
+        name: IntegrationRuntimeUpdateResult
+        modelAsString: true
+        values:
+        - name: None
+          value: None
+          description: None
+        - name: Succeed
+          value: Succeed
+          description: Succeed
+        - name: Fail
+          value: Fail
+          description: Fail
+    UpdateIntegrationRuntimeNodeRequest:
+      type: object
+      description: Update integration runtime node request.
+      properties:
+        concurrentJobsLimit:
+          type: integer
+          format: int32
+          description: The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed.
+          minimum: 1
   securitySchemes:
     azure_auth:
       type: oauth2

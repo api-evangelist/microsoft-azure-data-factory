@@ -69,29 +69,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Trigger:
+    CloudError:
       type: object
-      description: Azure data factory nested object which contains information about creating pipeline run
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        type:
-          type: string
-          description: Trigger type.
-        description:
-          type: string
-          description: Trigger description.
-        runtimeState:
-          $ref: '#/components/schemas/TriggerRuntimeState'
-          description: Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
-          readOnly: true
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the trigger.
-          items: {}
-      discriminator:
-        propertyName: type
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - type
-      additionalProperties: {}
+      - error
+      x-ms-external: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -115,17 +103,44 @@ components:
       - code
       - message
       x-ms-external: true
-    CloudError:
+    Trigger:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Azure data factory nested object which contains information about creating pipeline run
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        type:
+          type: string
+          description: Trigger type.
+        description:
+          type: string
+          description: Trigger description.
+        runtimeState:
+          $ref: '#/components/schemas/TriggerRuntimeState'
+          description: Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+          readOnly: true
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the trigger.
+          items: {}
+      discriminator:
+        propertyName: type
       required:
-      - error
-      x-ms-external: true
+      - type
+      additionalProperties: {}
+    TriggerResource:
+      type: object
+      description: Trigger resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Trigger'
+          description: Properties of the trigger.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     TriggerRuntimeState:
       type: string
       description: Enumerates possible state of Triggers.
@@ -146,21 +161,6 @@ components:
         - name: Disabled
           value: Disabled
           description: Disabled
-    TriggerResource:
-      type: object
-      description: Trigger resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/Trigger'
-          description: Properties of the trigger.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
   securitySchemes:
     azure_auth:
       type: oauth2

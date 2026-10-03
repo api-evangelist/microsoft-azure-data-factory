@@ -212,60 +212,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntimeReference:
+    LinkedServiceResource:
       type: object
-      description: Integration runtime reference type.
+      description: Linked service resource type.
       properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
-          description: Type of integration runtime.
-        referenceName:
+        properties:
+          $ref: '#/components/schemas/LinkedService'
+          description: Properties of linked service.
+        etag:
           type: string
-          description: Reference integration runtime name.
-        parameters:
-          type: object
-          description: Arguments for integration runtime.
-          additionalProperties: {}
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
       required:
-      - type
-      - referenceName
-    LinkedServiceListResponse:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    CloudError:
       type: object
-      description: A list of linked service resources.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        value:
-          type: array
-          description: The LinkedServiceResource items on this page
-          items:
-            $ref: '#/components/schemas/LinkedServiceResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - value
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
+      - error
       x-ms-external: true
     ParameterType:
       type: string
@@ -303,6 +274,23 @@ components:
         - name: SecureString
           value: SecureString
           description: SecureString
+    IntegrationRuntimeReference:
+      type: object
+      description: Integration runtime reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
+          description: Type of integration runtime.
+        referenceName:
+          type: string
+          description: Reference integration runtime name.
+        parameters:
+          type: object
+          description: Arguments for integration runtime.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
     IntegrationRuntimeReferenceType:
       type: string
       description: Type of integration runtime.
@@ -315,6 +303,40 @@ components:
         - name: IntegrationRuntimeReference
           value: IntegrationRuntimeReference
           description: IntegrationRuntimeReference
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
     LinkedService:
       type: object
       description: The nested object which contains the information and credential which can be used to connect with related store or compute resource.
@@ -345,43 +367,21 @@ components:
       required:
       - type
       additionalProperties: {}
-    LinkedServiceResource:
+    LinkedServiceListResponse:
       type: object
-      description: Linked service resource type.
+      description: A list of linked service resources.
       properties:
-        properties:
-          $ref: '#/components/schemas/LinkedService'
-          description: Properties of linked service.
-        etag:
+        value:
+          type: array
+          description: The LinkedServiceResource items on this page
+          items:
+            $ref: '#/components/schemas/LinkedServiceResource'
+        nextLink:
           type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
+          format: uri
+          description: The link to the next page of items
       required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    ParameterSpecification:
-      type: object
-      description: Definition of a single parameter for an entity.
-      properties:
-        type:
-          $ref: '#/components/schemas/ParameterType'
-          description: Parameter type.
-        defaultValue:
-          description: Default value of parameter.
-      required:
-      - type
+      - value
   securitySchemes:
     azure_auth:
       type: oauth2

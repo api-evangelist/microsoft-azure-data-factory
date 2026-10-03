@@ -88,30 +88,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntimeType:
-      type: string
-      description: The type of integration runtime.
-      enum:
-      - Managed
-      - SelfHosted
-      x-ms-enum:
-        name: IntegrationRuntimeType
-        modelAsString: true
-        values:
-        - name: Managed
-          value: Managed
-          description: Managed
-        - name: SelfHosted
-          value: SelfHosted
-          description: SelfHosted
-    EnableInteractiveQueryRequest:
-      type: object
-      description: The enable the interactive authoring information.
-      properties:
-        autoTerminationMinutes:
-          type: integer
-          format: int32
-          description: The allowed idle time for interactive authoring.
     IntegrationRuntimeResource:
       type: object
       description: Integration runtime resource type.
@@ -142,6 +118,30 @@ components:
       required:
       - type
       additionalProperties: {}
+    EnableInteractiveQueryRequest:
+      type: object
+      description: The enable the interactive authoring information.
+      properties:
+        autoTerminationMinutes:
+          type: integer
+          format: int32
+          description: The allowed idle time for interactive authoring.
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
   securitySchemes:
     azure_auth:
       type: oauth2
