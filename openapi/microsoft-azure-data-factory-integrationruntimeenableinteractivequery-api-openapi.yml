@@ -88,21 +88,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntimeResource:
-      type: object
-      description: Integration runtime resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/IntegrationRuntime'
-          description: Integration runtime properties.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     IntegrationRuntime:
       type: object
       description: Azure Data Factory nested object which serves as a compute resource for activities.
@@ -118,14 +103,6 @@ components:
       required:
       - type
       additionalProperties: {}
-    EnableInteractiveQueryRequest:
-      type: object
-      description: The enable the interactive authoring information.
-      properties:
-        autoTerminationMinutes:
-          type: integer
-          format: int32
-          description: The allowed idle time for interactive authoring.
     IntegrationRuntimeType:
       type: string
       description: The type of integration runtime.
@@ -142,6 +119,29 @@ components:
         - name: SelfHosted
           value: SelfHosted
           description: SelfHosted
+    EnableInteractiveQueryRequest:
+      type: object
+      description: The enable the interactive authoring information.
+      properties:
+        autoTerminationMinutes:
+          type: integer
+          format: int32
+          description: The allowed idle time for interactive authoring.
+    IntegrationRuntimeResource:
+      type: object
+      description: Integration runtime resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntime'
+          description: Integration runtime properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
   securitySchemes:
     azure_auth:
       type: oauth2

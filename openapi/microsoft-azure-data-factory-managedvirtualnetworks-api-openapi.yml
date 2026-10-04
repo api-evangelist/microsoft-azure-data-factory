@@ -165,17 +165,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     ManagedVirtualNetwork:
       type: object
       description: A managed Virtual Network associated with the Azure Data Factory
@@ -189,21 +178,21 @@ components:
           description: Managed Virtual Network alias.
           readOnly: true
       additionalProperties: {}
-    ManagedVirtualNetworkListResponse:
+    ManagedVirtualNetworkResource:
       type: object
-      description: A list of managed Virtual Network resources.
+      description: Managed Virtual Network resource type.
       properties:
-        value:
-          type: array
-          description: The ManagedVirtualNetworkResource items on this page
-          items:
-            $ref: '#/components/schemas/ManagedVirtualNetworkResource'
-        nextLink:
+        properties:
+          $ref: '#/components/schemas/ManagedVirtualNetwork'
+          description: Managed Virtual Network properties.
+        etag:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
       required:
-      - value
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -227,21 +216,32 @@ components:
       - code
       - message
       x-ms-external: true
-    ManagedVirtualNetworkResource:
+    ManagedVirtualNetworkListResponse:
       type: object
-      description: Managed Virtual Network resource type.
+      description: A list of managed Virtual Network resources.
       properties:
-        properties:
-          $ref: '#/components/schemas/ManagedVirtualNetwork'
-          description: Managed Virtual Network properties.
-        etag:
+        value:
+          type: array
+          description: The ManagedVirtualNetworkResource items on this page
+          items:
+            $ref: '#/components/schemas/ManagedVirtualNetworkResource'
+        nextLink:
           type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
+          format: uri
+          description: The link to the next page of items
       required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+      - value
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

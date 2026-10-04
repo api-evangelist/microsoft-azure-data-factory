@@ -198,6 +198,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ArmIdWrapper:
+      type: object
+      description: A wrapper for an ARM resource id
+      properties:
+        id:
+          type: string
+          readOnly: true
     RemotePrivateEndpointConnection:
       type: object
       description: A remote private endpoint connection
@@ -211,45 +218,6 @@ components:
         privateLinkServiceConnectionState:
           $ref: '#/components/schemas/PrivateLinkConnectionState'
           description: The state of a private link connection
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    PrivateEndpointConnectionListResponse:
-      type: object
-      description: A list of linked service resources.
-      properties:
-        value:
-          type: array
-          description: The PrivateEndpointConnectionResource items on this page
-          items:
-            $ref: '#/components/schemas/PrivateEndpointConnectionResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    PrivateLinkConnectionState:
-      type: object
-      description: The state of a private link connection
-      properties:
-        status:
-          type: string
-          description: Status of a private link connection
-        description:
-          type: string
-          description: Description of a private link connection
-        actionsRequired:
-          type: string
-          description: ActionsRequired for a private link connection
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -273,6 +241,34 @@ components:
       - code
       - message
       x-ms-external: true
+    PrivateLinkConnectionState:
+      type: object
+      description: The state of a private link connection
+      properties:
+        status:
+          type: string
+          description: Status of a private link connection
+        description:
+          type: string
+          description: Description of a private link connection
+        actionsRequired:
+          type: string
+          description: ActionsRequired for a private link connection
+    PrivateEndpointConnectionListResponse:
+      type: object
+      description: A list of linked service resources.
+      properties:
+        value:
+          type: array
+          description: The PrivateEndpointConnectionResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateEndpointConnectionResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     PrivateEndpointConnectionResource:
       type: object
       description: Private Endpoint Connection ARM resource.
@@ -286,13 +282,17 @@ components:
           readOnly: true
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    ArmIdWrapper:
+    CloudError:
       type: object
-      description: A wrapper for an ARM resource id
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        id:
-          type: string
-          readOnly: true
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     PrivateLinkConnectionApprovalRequest:
       type: object
       description: A request to approve or reject a private endpoint connection

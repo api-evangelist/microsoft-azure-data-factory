@@ -212,60 +212,33 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DatasetFolder:
-      type: object
-      description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-      properties:
-        name:
-          type: string
-          description: The name of the folder that this Dataset is in.
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    ParameterType:
+    Type:
       type: string
-      description: Parameter type.
+      description: Linked service reference type.
       enum:
-      - Object
-      - String
-      - Int
-      - Float
-      - Bool
-      - Array
-      - SecureString
+      - LinkedServiceReference
       x-ms-enum:
-        name: ParameterType
+        name: Type
         modelAsString: true
         values:
-        - name: Object
-          value: Object
-          description: Object
-        - name: String
-          value: String
-          description: String
-        - name: Int
-          value: Int
-          description: Int
-        - name: Float
-          value: Float
-          description: Float
-        - name: Bool
-          value: Bool
-          description: Bool
-        - name: Array
-          value: Array
-          description: Array
-        - name: SecureString
-          value: SecureString
-          description: SecureString
+        - name: LinkedServiceReference
+          value: LinkedServiceReference
+          description: LinkedServiceReference
+    DatasetResource:
+      type: object
+      description: Dataset resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Dataset'
+          description: Dataset properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     Dataset:
       type: object
       description: The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
@@ -318,18 +291,6 @@ components:
       required:
       - type
       - referenceName
-    Type:
-      type: string
-      description: Linked service reference type.
-      enum:
-      - LinkedServiceReference
-      x-ms-enum:
-        name: Type
-        modelAsString: true
-        values:
-        - name: LinkedServiceReference
-          value: LinkedServiceReference
-          description: LinkedServiceReference
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -364,21 +325,60 @@ components:
           description: Default value of parameter.
       required:
       - type
-    DatasetResource:
+    ParameterType:
+      type: string
+      description: Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      - SecureString
+      x-ms-enum:
+        name: ParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+        - name: SecureString
+          value: SecureString
+          description: SecureString
+    CloudError:
       type: object
-      description: Dataset resource type.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        properties:
-          $ref: '#/components/schemas/Dataset'
-          description: Dataset properties.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+      - error
+      x-ms-external: true
+    DatasetFolder:
+      type: object
+      description: The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this Dataset is in.
     DatasetListResponse:
       type: object
       description: A list of dataset resources.

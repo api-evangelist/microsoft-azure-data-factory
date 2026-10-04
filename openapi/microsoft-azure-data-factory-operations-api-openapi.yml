@@ -45,49 +45,39 @@ paths:
     - url: https://management.azure.com
 components:
   schemas:
-    CloudError:
+    OperationDisplay:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Metadata associated with the operation.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    OperationServiceSpecification:
-      type: object
-      description: Details about a service operation.
-      properties:
-        logSpecifications:
-          type: array
-          description: Details about operations related to logs.
-          items:
-            $ref: '#/components/schemas/OperationLogSpecification'
-          x-ms-identifiers:
-          - name
-        metricSpecifications:
-          type: array
-          description: Details about operations related to metrics.
-          items:
-            $ref: '#/components/schemas/OperationMetricSpecification'
-          x-ms-identifiers:
-          - name
-    OperationListResponse:
-      type: object
-      description: A list of operations that can be performed by the Data Factory service.
-      properties:
-        value:
-          type: array
-          description: List of Data Factory operations supported by the Data Factory resource provider.
-          items:
-            $ref: '#/components/schemas/Operation'
-          x-ms-identifiers:
-          - name
-        nextLink:
+        description:
           type: string
-          description: The link to the next page of results, if any remaining results exist.
+          description: The description of the operation.
+        provider:
+          type: string
+          description: The name of the provider.
+        resource:
+          type: string
+          description: The name of the resource type on which the operation is performed.
+        operation:
+          type: string
+          description: 'The type of operation: get, read, delete, etc.'
+    Operation:
+      type: object
+      description: Azure Data Factory API operation definition.
+      properties:
+        name:
+          type: string
+          description: 'Operation name: {provider}/{resource}/{operation}'
+        origin:
+          type: string
+          description: The intended executor of the operation.
+        display:
+          $ref: '#/components/schemas/OperationDisplay'
+          description: Metadata associated with the operation.
+        properties:
+          $ref: '#/components/schemas/OperationProperties'
+          description: Additional details about the operation.
+          x-ms-client-flatten: true
     OperationMetricSpecification:
       type: object
       description: Details about an operation related to metrics.
@@ -129,69 +119,51 @@ components:
             $ref: '#/components/schemas/OperationMetricDimension'
           x-ms-identifiers:
           - name
-    OperationLogSpecification:
+    OperationListResponse:
       type: object
-      description: Details about an operation related to logs.
+      description: A list of operations that can be performed by the Data Factory service.
+      properties:
+        value:
+          type: array
+          description: List of Data Factory operations supported by the Data Factory resource provider.
+          items:
+            $ref: '#/components/schemas/Operation'
+          x-ms-identifiers:
+          - name
+        nextLink:
+          type: string
+          description: The link to the next page of results, if any remaining results exist.
+    OperationMetricDimension:
+      type: object
+      description: Defines the metric dimension.
       properties:
         name:
           type: string
-          description: The name of the log category.
+          description: The name of the dimension for the metric.
         displayName:
           type: string
-          description: Localized display name.
-        blobDuration:
-          type: string
-          description: Blobs created in the customer storage account, per hour.
-    OperationMetricAvailability:
+          description: The display name of the metric dimension.
+        toBeExportedForShoebox:
+          type: boolean
+          description: Whether the dimension should be exported to Azure Monitor.
+    OperationServiceSpecification:
       type: object
-      description: Defines how often data for a metric becomes available.
+      description: Details about a service operation.
       properties:
-        timeGrain:
-          type: string
-          description: The granularity for the metric.
-        blobDuration:
-          type: string
-          description: Blob created in the customer storage account, per hour.
-    Operation:
-      type: object
-      description: Azure Data Factory API operation definition.
-      properties:
-        name:
-          type: string
-          description: 'Operation name: {provider}/{resource}/{operation}'
-        origin:
-          type: string
-          description: The intended executor of the operation.
-        display:
-          $ref: '#/components/schemas/OperationDisplay'
-          description: Metadata associated with the operation.
-        properties:
-          $ref: '#/components/schemas/OperationProperties'
-          description: Additional details about the operation.
-          x-ms-client-flatten: true
-    OperationDisplay:
-      type: object
-      description: Metadata associated with the operation.
-      properties:
-        description:
-          type: string
-          description: The description of the operation.
-        provider:
-          type: string
-          description: The name of the provider.
-        resource:
-          type: string
-          description: The name of the resource type on which the operation is performed.
-        operation:
-          type: string
-          description: 'The type of operation: get, read, delete, etc.'
-    OperationProperties:
-      type: object
-      description: Additional details about an operation.
-      properties:
-        serviceSpecification:
-          $ref: '#/components/schemas/OperationServiceSpecification'
-          description: Details about a service operation.
+        logSpecifications:
+          type: array
+          description: Details about operations related to logs.
+          items:
+            $ref: '#/components/schemas/OperationLogSpecification'
+          x-ms-identifiers:
+          - name
+        metricSpecifications:
+          type: array
+          description: Details about operations related to metrics.
+          items:
+            $ref: '#/components/schemas/OperationMetricSpecification'
+          x-ms-identifiers:
+          - name
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -215,19 +187,47 @@ components:
       - code
       - message
       x-ms-external: true
-    OperationMetricDimension:
+    OperationMetricAvailability:
       type: object
-      description: Defines the metric dimension.
+      description: Defines how often data for a metric becomes available.
+      properties:
+        timeGrain:
+          type: string
+          description: The granularity for the metric.
+        blobDuration:
+          type: string
+          description: Blob created in the customer storage account, per hour.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    OperationLogSpecification:
+      type: object
+      description: Details about an operation related to logs.
       properties:
         name:
           type: string
-          description: The name of the dimension for the metric.
+          description: The name of the log category.
         displayName:
           type: string
-          description: The display name of the metric dimension.
-        toBeExportedForShoebox:
-          type: boolean
-          description: Whether the dimension should be exported to Azure Monitor.
+          description: Localized display name.
+        blobDuration:
+          type: string
+          description: Blobs created in the customer storage account, per hour.
+    OperationProperties:
+      type: object
+      description: Additional details about an operation.
+      properties:
+        serviceSpecification:
+          $ref: '#/components/schemas/OperationServiceSpecification'
+          description: Details about a service operation.
     Operation_2:
       type: object
       properties:
@@ -246,6 +246,15 @@ components:
               type: string
         isDataAction:
           type: boolean
+    OperationList:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation_2'
+        nextLink:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -258,15 +267,6 @@ components:
               type: string
             target:
               type: string
-    OperationList:
-      type: object
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation_2'
-        nextLink:
-          type: string
   parameters:
     apiVersion:
       name: api-version

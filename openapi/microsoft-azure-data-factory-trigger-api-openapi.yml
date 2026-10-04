@@ -69,17 +69,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -103,6 +92,26 @@ components:
       - code
       - message
       x-ms-external: true
+    TriggerRuntimeState:
+      type: string
+      description: Enumerates possible state of Triggers.
+      enum:
+      - Started
+      - Stopped
+      - Disabled
+      x-ms-enum:
+        name: TriggerRuntimeState
+        modelAsString: true
+        values:
+        - name: Started
+          value: Started
+          description: Started
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Disabled
+          value: Disabled
+          description: Disabled
     Trigger:
       type: object
       description: Azure data factory nested object which contains information about creating pipeline run
@@ -126,6 +135,17 @@ components:
       required:
       - type
       additionalProperties: {}
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     TriggerResource:
       type: object
       description: Trigger resource type.
@@ -141,26 +161,6 @@ components:
       - properties
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    TriggerRuntimeState:
-      type: string
-      description: Enumerates possible state of Triggers.
-      enum:
-      - Started
-      - Stopped
-      - Disabled
-      x-ms-enum:
-        name: TriggerRuntimeState
-        modelAsString: true
-        values:
-        - name: Started
-          value: Started
-          description: Started
-        - name: Stopped
-          value: Stopped
-          description: Stopped
-        - name: Disabled
-          value: Disabled
-          description: Disabled
   securitySchemes:
     azure_auth:
       type: oauth2

@@ -210,17 +210,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     DataFlowListResponse:
       type: object
       description: A list of data flow resources.
@@ -236,27 +225,6 @@ components:
           description: The link to the next page of items
       required:
       - value
-    DataFlow:
-      type: object
-      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
-      properties:
-        type:
-          type: string
-          description: Type of data flow.
-        description:
-          type: string
-          description: The description of the data flow.
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the data flow.
-          items: {}
-        folder:
-          $ref: '#/components/schemas/DataFlowFolder'
-          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      discriminator:
-        propertyName: type
-      required:
-      - type
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -295,6 +263,38 @@ components:
       - properties
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    DataFlow:
+      type: object
+      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
+      properties:
+        type:
+          type: string
+          description: Type of data flow.
+        description:
+          type: string
+          description: The description of the data flow.
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the data flow.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DataFlowFolder'
+          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     DataFlowFolder:
       type: object
       description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.

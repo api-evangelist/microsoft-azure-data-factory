@@ -51,17 +51,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     PrivateLinkResource:
       type: object
       description: A private link resource
@@ -71,26 +60,6 @@ components:
           description: Core resource properties
       allOf:
       - $ref: '#/components/schemas/SubResource'
-    SubResource:
-      type: object
-      description: Azure Data Factory nested resource, which belongs to a factory.
-      properties:
-        id:
-          type: string
-          description: The resource identifier.
-          readOnly: true
-        name:
-          type: string
-          description: The resource name.
-          readOnly: true
-        type:
-          type: string
-          description: The resource type.
-          readOnly: true
-        etag:
-          type: string
-          description: Etag identifies change in the resource.
-          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -114,6 +83,47 @@ components:
       - code
       - message
       x-ms-external: true
+    PrivateLinkResourcesWrapper:
+      type: object
+      description: Wrapper for a collection of private link resources
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateLinkResource'
+      required:
+      - value
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    SubResource:
+      type: object
+      description: Azure Data Factory nested resource, which belongs to a factory.
+      properties:
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
     PrivateLinkResourceProperties:
       type: object
       description: Properties of a private link resource
@@ -134,16 +144,6 @@ components:
           items:
             type: string
           readOnly: true
-    PrivateLinkResourcesWrapper:
-      type: object
-      description: Wrapper for a collection of private link resources
-      properties:
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateLinkResource'
-      required:
-      - value
   securitySchemes:
     azure_auth:
       type: oauth2

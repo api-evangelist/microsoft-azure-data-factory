@@ -142,30 +142,29 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
+    ExposureControlRequest:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: The exposure control request.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    ExposureControlBatchResponse:
+        featureName:
+          type: string
+          description: The feature name.
+        featureType:
+          type: string
+          description: The feature type.
+    ExposureControlBatchRequest:
       type: object
-      description: A list of exposure control feature values.
+      description: A list of exposure control features.
       properties:
-        exposureControlResponses:
+        exposureControlRequests:
           type: array
-          description: List of exposure control feature values.
+          description: List of exposure control features.
           items:
-            $ref: '#/components/schemas/ExposureControlResponse'
+            $ref: '#/components/schemas/ExposureControlRequest'
           x-ms-identifiers:
           - featureName
       required:
-      - exposureControlResponses
+      - exposureControlRequests
     ExposureControlResponse:
       type: object
       description: The exposure control response.
@@ -178,16 +177,6 @@ components:
           type: string
           description: The feature value.
           readOnly: true
-    ExposureControlRequest:
-      type: object
-      description: The exposure control request.
-      properties:
-        featureName:
-          type: string
-          description: The feature name.
-        featureType:
-          type: string
-          description: The feature type.
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -211,19 +200,30 @@ components:
       - code
       - message
       x-ms-external: true
-    ExposureControlBatchRequest:
+    ExposureControlBatchResponse:
       type: object
-      description: A list of exposure control features.
+      description: A list of exposure control feature values.
       properties:
-        exposureControlRequests:
+        exposureControlResponses:
           type: array
-          description: List of exposure control features.
+          description: List of exposure control feature values.
           items:
-            $ref: '#/components/schemas/ExposureControlRequest'
+            $ref: '#/components/schemas/ExposureControlResponse'
           x-ms-identifiers:
           - featureName
       required:
-      - exposureControlRequests
+      - exposureControlResponses
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

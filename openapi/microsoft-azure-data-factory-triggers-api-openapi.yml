@@ -472,17 +472,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     EventSubscriptionStatus:
       type: string
       description: Event Subscription Status.
@@ -511,33 +500,6 @@ components:
         - name: Unknown
           value: Unknown
           description: Unknown
-    TriggerListResponse:
-      type: object
-      description: A list of trigger resources.
-      properties:
-        value:
-          type: array
-          description: The TriggerResource items on this page
-          items:
-            $ref: '#/components/schemas/TriggerResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    TriggerSubscriptionOperationStatus:
-      type: object
-      description: Defines the response of a trigger subscription operation.
-      properties:
-        triggerName:
-          type: string
-          description: Trigger name.
-          readOnly: true
-        status:
-          $ref: '#/components/schemas/EventSubscriptionStatus'
-          description: Event Subscription Status.
-          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -561,6 +523,41 @@ components:
       - code
       - message
       x-ms-external: true
+    TriggerRuntimeState:
+      type: string
+      description: Enumerates possible state of Triggers.
+      enum:
+      - Started
+      - Stopped
+      - Disabled
+      x-ms-enum:
+        name: TriggerRuntimeState
+        modelAsString: true
+        values:
+        - name: Started
+          value: Started
+          description: Started
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    TriggerListResponse:
+      type: object
+      description: A list of trigger resources.
+      properties:
+        value:
+          type: array
+          description: The TriggerResource items on this page
+          items:
+            $ref: '#/components/schemas/TriggerResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     Trigger:
       type: object
       description: Azure data factory nested object which contains information about creating pipeline run
@@ -584,6 +581,39 @@ components:
       required:
       - type
       additionalProperties: {}
+    TriggerSubscriptionOperationStatus:
+      type: object
+      description: Defines the response of a trigger subscription operation.
+      properties:
+        triggerName:
+          type: string
+          description: Trigger name.
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/EventSubscriptionStatus'
+          description: Event Subscription Status.
+          readOnly: true
+    TriggerFilterParameters:
+      type: object
+      description: Query parameters for triggers.
+      properties:
+        continuationToken:
+          type: string
+          description: The continuation token for getting the next page of results. Null for first page.
+        parentTriggerName:
+          type: string
+          description: The name of the parent TumblingWindowTrigger to get the child rerun triggers
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     TriggerQueryResponse:
       type: object
       description: A query of triggers.
@@ -598,16 +628,6 @@ components:
           description: The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
       required:
       - value
-    TriggerFilterParameters:
-      type: object
-      description: Query parameters for triggers.
-      properties:
-        continuationToken:
-          type: string
-          description: The continuation token for getting the next page of results. Null for first page.
-        parentTriggerName:
-          type: string
-          description: The name of the parent TumblingWindowTrigger to get the child rerun triggers
     TriggerResource:
       type: object
       description: Trigger resource type.
@@ -623,26 +643,6 @@ components:
       - properties
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    TriggerRuntimeState:
-      type: string
-      description: Enumerates possible state of Triggers.
-      enum:
-      - Started
-      - Stopped
-      - Disabled
-      x-ms-enum:
-        name: TriggerRuntimeState
-        modelAsString: true
-        values:
-        - name: Started
-          value: Started
-          description: Started
-        - name: Stopped
-          value: Stopped
-          description: Stopped
-        - name: Disabled
-          value: Disabled
-          description: Disabled
   securitySchemes:
     azure_auth:
       type: oauth2

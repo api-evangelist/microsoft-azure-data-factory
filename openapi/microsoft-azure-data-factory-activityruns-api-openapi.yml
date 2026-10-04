@@ -63,19 +63,41 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RunQueryOrderBy:
+    RunQueryFilterOperator:
+      type: string
+      description: Operator to be used for filter.
+      enum:
+      - Equals
+      - NotEquals
+      - In
+      - NotIn
+      x-ms-enum:
+        name: RunQueryFilterOperator
+        modelAsString: true
+        values:
+        - name: Equals
+          value: Equals
+          description: Equals
+        - name: NotEquals
+          value: NotEquals
+          description: NotEquals
+        - name: In
+          value: In
+          description: In
+        - name: NotIn
+          value: NotIn
+          description: NotIn
+    CloudError:
       type: object
-      description: An object to provide order by options for listing runs.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        orderBy:
-          $ref: '#/components/schemas/RunQueryOrderByField'
-          description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        order:
-          $ref: '#/components/schemas/RunQueryOrder'
-          description: Sorting order of the parameter.
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - orderBy
-      - order
+      - error
+      x-ms-external: true
     ActivityRun:
       type: object
       description: Information about an activity run in a pipeline.
@@ -133,60 +155,6 @@ components:
           description: The error if any from the activity run.
           readOnly: true
       additionalProperties: {}
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    RunQueryFilterOperator:
-      type: string
-      description: Operator to be used for filter.
-      enum:
-      - Equals
-      - NotEquals
-      - In
-      - NotIn
-      x-ms-enum:
-        name: RunQueryFilterOperator
-        modelAsString: true
-        values:
-        - name: Equals
-          value: Equals
-          description: Equals
-        - name: NotEquals
-          value: NotEquals
-          description: NotEquals
-        - name: In
-          value: In
-          description: In
-        - name: NotIn
-          value: NotIn
-          description: NotIn
-    RunQueryFilter:
-      type: object
-      description: Query filter option for listing runs.
-      properties:
-        operand:
-          $ref: '#/components/schemas/RunQueryFilterOperand'
-          description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        operator:
-          $ref: '#/components/schemas/RunQueryFilterOperator'
-          description: Operator to be used for filter.
-        values:
-          type: array
-          description: List of filter values.
-          items:
-            type: string
-      required:
-      - operand
-      - operator
-      - values
     RunQueryFilterOperand:
       type: string
       description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
@@ -266,6 +234,70 @@ components:
       - code
       - message
       x-ms-external: true
+    RunQueryFilter:
+      type: object
+      description: Query filter option for listing runs.
+      properties:
+        operand:
+          $ref: '#/components/schemas/RunQueryFilterOperand'
+          description: Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        operator:
+          $ref: '#/components/schemas/RunQueryFilterOperator'
+          description: Operator to be used for filter.
+        values:
+          type: array
+          description: List of filter values.
+          items:
+            type: string
+      required:
+      - operand
+      - operator
+      - values
+    RunQueryOrder:
+      type: string
+      description: Sorting order of the parameter.
+      enum:
+      - ASC
+      - DESC
+      x-ms-enum:
+        name: RunQueryOrder
+        modelAsString: true
+        values:
+        - name: ASC
+          value: ASC
+          description: ASC
+        - name: DESC
+          value: DESC
+          description: DESC
+    RunQueryOrderBy:
+      type: object
+      description: An object to provide order by options for listing runs.
+      properties:
+        orderBy:
+          $ref: '#/components/schemas/RunQueryOrderByField'
+          description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        order:
+          $ref: '#/components/schemas/RunQueryOrder'
+          description: Sorting order of the parameter.
+      required:
+      - orderBy
+      - order
+    ActivityRunsQueryResponse:
+      type: object
+      description: A list activity runs.
+      properties:
+        value:
+          type: array
+          description: List of activity runs.
+          items:
+            $ref: '#/components/schemas/ActivityRun'
+          x-ms-identifiers:
+          - pipelineRunId
+        continuationToken:
+          type: string
+          description: The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+      required:
+      - value
     RunQueryOrderByField:
       type: string
       description: Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
@@ -310,22 +342,6 @@ components:
         - name: TriggerRunTimestamp
           value: TriggerRunTimestamp
           description: TriggerRunTimestamp
-    ActivityRunsQueryResponse:
-      type: object
-      description: A list activity runs.
-      properties:
-        value:
-          type: array
-          description: List of activity runs.
-          items:
-            $ref: '#/components/schemas/ActivityRun'
-          x-ms-identifiers:
-          - pipelineRunId
-        continuationToken:
-          type: string
-          description: The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-      required:
-      - value
     RunFilterParameters:
       type: object
       description: Query parameters for listing runs.
@@ -356,22 +372,6 @@ components:
       required:
       - lastUpdatedAfter
       - lastUpdatedBefore
-    RunQueryOrder:
-      type: string
-      description: Sorting order of the parameter.
-      enum:
-      - ASC
-      - DESC
-      x-ms-enum:
-        name: RunQueryOrder
-        modelAsString: true
-        values:
-        - name: ASC
-          value: ASC
-          description: ASC
-        - name: DESC
-          value: DESC
-          description: DESC
   securitySchemes:
     azure_auth:
       type: oauth2
