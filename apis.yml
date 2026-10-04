@@ -320,6 +320,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - Change Data Capture
+  tags_raw:
   - changeDataCapture
   properties:
   - type: OpenAPI
@@ -335,6 +337,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - Data Flow Debug Session
+  tags_raw:
   - dataFlowDebugSession
   properties:
   - type: OpenAPI
@@ -349,6 +353,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - Dataflows
+  tags_raw:
   - dataFlows
   properties:
   - type: OpenAPI
@@ -363,6 +369,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - Exposure Control
+  tags_raw:
   - exposureControl
   properties:
   - type: OpenAPI
@@ -376,7 +384,8 @@ apis:
   description: The globalParameters API from Azure Data Factory — 2 operation(s) for globalparameters.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - globalParameters
   properties:
   - type: OpenAPI
@@ -392,7 +401,8 @@ apis:
     The integrationRuntimeDisableInteractiveQuery API from Azure Data Factory — 1 operation(s) for integrationruntimedisableinteractivequery.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - integrationRuntimeDisableInteractiveQuery
   properties:
   - type: OpenAPI
@@ -409,7 +419,8 @@ apis:
     The integrationRuntimeEnableInteractiveQuery API from Azure Data Factory — 1 operation(s) for integrationruntimeenableinteractivequery.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - integrationRuntimeEnableInteractiveQuery
   properties:
   - type: OpenAPI
@@ -425,7 +436,8 @@ apis:
     The integrationRuntimeNodes API from Azure Data Factory — 2 operation(s) for integrationruntimenodes.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - integrationRuntimeNodes
   properties:
   - type: OpenAPI
@@ -441,7 +453,8 @@ apis:
     The integrationRuntimeObjectMetadata API from Azure Data Factory — 2 operation(s) for integrationruntimeobjectmetadata.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - integrationRuntimeObjectMetadata
   properties:
   - type: OpenAPI
@@ -457,6 +470,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - IntegrationRuntimes
+  tags_raw:
   - integrationRuntimes
   properties:
   - type: OpenAPI
@@ -470,7 +485,8 @@ apis:
   description: The linkedServices API from Azure Data Factory — 2 operation(s) for linkedservices.
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - linkedServices
   properties:
   - type: OpenAPI
@@ -486,6 +502,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - ManagedPrivateEndpoints
+  tags_raw:
   - managedPrivateEndpoints
   properties:
   - type: OpenAPI
@@ -501,6 +519,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - Managed Virtual Networks
+  tags_raw:
   - managedVirtualNetworks
   properties:
   - type: OpenAPI
@@ -516,6 +536,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - PrivateEndpointConnections
+  tags_raw:
   - privateEndPointConnections
   properties:
   - type: OpenAPI
@@ -531,6 +553,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/datafactory/
   baseURL: https://management.azure.com
   tags:
+  - PrivateLinkResources
+  tags_raw:
   - privateLinkResources
   properties:
   - type: OpenAPI
@@ -540,6 +564,9 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/rest/api/datafactory/
 common:
+- type: CapabilityMap
+  url: capabilities/microsoft-azure-data-factory-capability-edges.yml
+  name: Azure Data Factory Business Capability Map
 - type: Overlay
   url: overlays/microsoft-azure-data-factory-change-data-capture-api-overlay.yaml
 - type: Overlay
