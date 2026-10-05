@@ -1,0 +1,59 @@
+slug: microsoft-azure-data-factory
+provider: Azure Data Factory
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: dataFlows
+  spec_file: microsoft-azure-data-factory-dataflows-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.75
+  evidence: PUT .../factories/{factoryName}/dataflows/{dataFlowName}  DataFlows_CreateOrUpdate; schemas
+    DataFlow, DataFlowResource
+  reason: Data flows are the declarative transformation definitions at the heart of ADF's ETL/ELT service,
+    squarely Information & Data Management; the candidate L2s do not have a data-pipeline/integration
+    entry, so L1 only.
+- tag: Pipelines
+  spec_file: microsoft-azure-data-factory-pipelines-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: 'POST .../factories/{factoryName}/pipelines/{pipelineName}/createRun  Pipelines_CreateRun;
+    vendor: ''orchestrating and automating the movement and transformation of data across ETL and ELT
+    workloads'''
+  reason: Authoring and executing data-integration pipelines (activities, dependencies, runs) for ETL/ELT
+    — squarely Information & Data Management. No listed L2 specifically covers data integration/ETL orchestration,
+    so L1 only.
+- tag: changeDataCapture
+  spec_file: microsoft-azure-data-factory-changedatacapture-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: ChangeDataCapture_CreateOrUpdate, ChangeDataCapture_Start; schemas DataMapperMapping, MapperAttributeMapping,
+    MapperSourceConnectionsInfo
+  reason: Change-data-capture resources with source/target connection and attribute mapping definitions
+    are core data integration/replication artefacts, i.e. Information & Data Management; no single L2
+    cleanly covers CDC pipelines.
+- tag: integrationRuntimeNodes
+  spec_file: microsoft-azure-data-factory-integrationruntimenodes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: IntegrationRuntimeNodes_GetIpAddress  Integration runtime nodes get ip address; schemas SelfHostedIntegrationRuntimeNode,
+    SelfHostedIntegrationRuntimeNodeStatus
+  reason: Operations manage individual self-hosted compute nodes (status, update, delete, IP address)
+    of the integration runtime — classic compute/infrastructure management under IT Infrastructure Management.
