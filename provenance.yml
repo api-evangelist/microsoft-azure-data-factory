@@ -7,7 +7,13 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   authentication/microsoft-azure-data-factory-authentication.yml:
-    method: derived
+    method: searched
+    evidence: declared in the artifact
+  changelog/microsoft-azure-data-factory-changelog.yml:
+    method: searched
+    evidence: declared in the artifact
+  cli/microsoft-azure-data-factory-cli.yml:
+    method: searched
     evidence: declared in the artifact
   collections/microsoft-azure-data-factory-factories-api.opencollection.json:
     method: derived
@@ -27,58 +33,364 @@ artifacts:
   collections/microsoft-azure-data-factory.postman_collection.json:
     method: derived
     evidence: openapi/microsoft-azure-data-factory
+  conformance/microsoft-azure-data-factory-conformance.yml:
+    method: searched
+    evidence: declared in the artifact
+  conventions/microsoft-azure-data-factory-conventions.yml:
+    method: searched
+    evidence: declared in the artifact
+  data-model/microsoft-azure-data-factory-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/microsoft-azure-data-factory-problem-types.yml:
+    method: derived
+    evidence: declared in the artifact
+  examples/_index.yml:
+    method: searched
+    evidence: declared in the artifact
+  examples/microsoft-azure-data-factory-ActivityRuns_QueryByPipelineRun.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ApproveRejectPrivateEndpointConnection.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Start.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Status.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Stop.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ChangeDataCapture_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Credentials_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Credentials_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Credentials_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Credentials_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlowDebugSession_AddDataFlow.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlowDebugSession_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlowDebugSession_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlowDebugSession_ExecuteCommand.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlowDebugSession_QueryByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlows_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlows_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlows_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlows_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DataFlows_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Datasets_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Datasets_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Datasets_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Datasets_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Datasets_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-DeletePrivateEndpointConnection.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ExposureControl_GetFeatureValue.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ExposureControl_GetFeatureValueByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ExposureControl_QueryFeatureValuesByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_ConfigureFactoryRepo.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_CreateOrUpdate.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_GetDataPlaneAccess.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_GetGitHubAccessToken.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_List.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_ListByResourceGroup.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Factories_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GetPrivateEndpointConnection.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GetPrivateLinkResources.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GlobalParameters_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GlobalParameters_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GlobalParameters_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GlobalParameters_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-GlobalParameters_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeNodes_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeNodes_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeNodes_GetIpAddress.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeNodes_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeObjectMetadata_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimeObjectMetadata_Refresh.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_CreateLinkedIntegrationRuntime.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_DisableInteractiveQuery.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_EnableInteractiveQuery.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_GetConnectionInfo.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_GetMonitoringData.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_GetStatus.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_ListAuthKeys.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_RegenerateAuthKey.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_RemoveLinks.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Start.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Stop.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_SyncCredentials.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-IntegrationRuntimes_Upgrade.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-LinkedServices_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-LinkedServices_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-LinkedServices_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-LinkedServices_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-LinkedServices_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedPrivateEndpoints_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedPrivateEndpoints_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedPrivateEndpoints_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedPrivateEndpoints_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedVirtualNetworks_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedVirtualNetworks_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-ManagedVirtualNetworks_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-NetezzaLinkedService_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Operations_List.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-PipelineRuns_Cancel.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-PipelineRuns_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-PipelineRuns_QueryByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_CreateRun.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Pipelines_Update.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-PrivateEndPointConnections_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-TriggerRuns_Cancel.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-TriggerRuns_QueryByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-TriggerRuns_Rerun.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Create.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Delete.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Get.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_GetEventSubscriptionStatus.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_ListByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_QueryByFactory.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Start.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Stop.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_SubscribeToEvents.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_UnsubscribeFromEvents.json:
+    method: unknown
+    evidence: no authorship recorded
+  examples/microsoft-azure-data-factory-Triggers_Update.json:
+    method: unknown
+    evidence: no authorship recorded
   finops/microsoft-azure-data-factory-finops.yml:
     method: generated
     evidence: declared in the artifact
-  kin/checks-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-06T210741.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-07T135032.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T093022.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T111628.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -165,24 +477,334 @@ artifacts:
   kin/score-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T144739.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T195450.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T211839.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T011047.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T224210.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T200636.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T213054.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T214843.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T232836.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T204815.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T222408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/microsoft-azure-data-factory-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
   llms/microsoft-azure-data-factory-llms-probe.yml:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
-  openapi/microsoft-azure-data-factory-factories-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/microsoft-azure-data-factory-operations-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  plans/microsoft-azure-data-factory-plans-pricing.yml:
+  llms/microsoft-azure-data-factory-llms.txt:
     method: generated
-    evidence: declared in the artifact
-  rate-limits/microsoft-azure-data-factory-rate-limits.yml:
-    method: generated
-    evidence: declared in the artifact
-  scopes/microsoft-azure-data-factory-scopes.yml:
+    evidence: carries an API Evangelist house phrase
+  mcp/microsoft-azure-data-factory-mcp.yml:
     method: derived
     evidence: declared in the artifact
+  openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json:
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
+  openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-credentials-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-datasets-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-factories-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-integration-runtime-object-metadata-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-integration-runtimes-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-linked-services-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-managed-private-endpoints-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-operations-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-pipelineruns-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-pipelines-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-private-endpoint-connections-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-private-link-resources-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-trigger-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-triggerruns-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/microsoft-azure-data-factory-triggers-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/microsoft-azure-data-factory-activityruns-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-change-data-capture-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-credentials-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-data-flow-debug-session-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-data-flows-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-datasets-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-exposure-control-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-factories-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-global-parameters-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integration-runtime-nodes-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integration-runtime-object-metadata-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integration-runtimes-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-linked-services-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-managed-private-endpoints-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-managed-virtual-networks-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-operations-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-pipelineruns-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-pipelines-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-private-endpoint-connections-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-private-link-resources-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-trigger-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-triggerruns-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-triggers-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  packages/microsoft-azure-data-factory-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  plans/microsoft-azure-data-factory-plans-pricing.yml:
+    method: unknown
+    evidence: no authorship recorded
+  rate-limits/microsoft-azure-data-factory-rate-limits.yml:
+    method: searched
+    evidence: declared in the artifact
+  sandbox/microsoft-azure-data-factory-sandbox.yml:
+    method: searched
+    evidence: declared in the artifact
+  scopes/microsoft-azure-data-factory-scopes.yml:
+    method: searched
+    evidence: declared in the artifact
   security/microsoft-azure-data-factory-domain-security.yml:
+    method: unknown
+    evidence: no authorship recorded
+  security/microsoft-azure-data-factory-trust-center.yml:
+    method: searched
+    evidence: declared in the artifact
+  security/microsoft-azure-data-factory-vulnerability-disclosure.yml:
+    method: searched
+    evidence: declared in the artifact
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/microsoft-azure-data-factory-manage-factory-resources.md:
+    method: unknown
+    evidence: no authorship recorded
+  skills/microsoft-azure-data-factory-manage-integration-runtimes.md:
+    method: unknown
+    evidence: no authorship recorded
+  skills/microsoft-azure-data-factory-manage-triggers.md:
+    method: unknown
+    evidence: no authorship recorded
+  skills/microsoft-azure-data-factory-run-a-pipeline.md:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/microsoft-azure-data-factory-openid-configuration.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/microsoft-azure-data-factory-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/microsoft-azure-data-factory-well-known.yml:
     method: unknown
     evidence: no authorship recorded

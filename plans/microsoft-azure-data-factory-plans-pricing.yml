@@ -233,3 +233,57 @@ summary:
   free_plan: false
   enterprise_only: false
   machine_readable_pricing_endpoint: https://prices.azure.com/api/retail/prices
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units:
+  - compute
+  plans:
+  - name: Azure Integration Runtime (cloud)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    - other
+    periods: []
+  - name: Self-Hosted Integration Runtime
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    - other
+    periods: []
+  - name: Azure Managed VNET Integration Runtime
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
+  - name: Mapping Data Flow execution
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
+  - name: Wrangling Data Flow execution
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
+  - name: Managed Airflow
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
+  - name: Inactive Pipeline
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
