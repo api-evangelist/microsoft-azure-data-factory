@@ -92,26 +92,21 @@ components:
       - code
       - message
       x-ms-external: true
-    TriggerRuntimeState:
-      type: string
-      description: Enumerates possible state of Triggers.
-      enum:
-      - Started
-      - Stopped
-      - Disabled
-      x-ms-enum:
-        name: TriggerRuntimeState
-        modelAsString: true
-        values:
-        - name: Started
-          value: Started
-          description: Started
-        - name: Stopped
-          value: Stopped
-          description: Stopped
-        - name: Disabled
-          value: Disabled
-          description: Disabled
+    TriggerResource:
+      type: object
+      description: Trigger resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Trigger'
+          description: Properties of the trigger.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     Trigger:
       type: object
       description: Azure data factory nested object which contains information about creating pipeline run
@@ -135,6 +130,26 @@ components:
       required:
       - type
       additionalProperties: {}
+    TriggerRuntimeState:
+      type: string
+      description: Enumerates possible state of Triggers.
+      enum:
+      - Started
+      - Stopped
+      - Disabled
+      x-ms-enum:
+        name: TriggerRuntimeState
+        modelAsString: true
+        values:
+        - name: Started
+          value: Started
+          description: Started
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Disabled
+          value: Disabled
+          description: Disabled
     CloudError:
       type: object
       description: The object that defines the structure of an Azure Data Factory error response.
@@ -146,21 +161,6 @@ components:
       required:
       - error
       x-ms-external: true
-    TriggerResource:
-      type: object
-      description: Trigger resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/Trigger'
-          description: Properties of the trigger.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
   securitySchemes:
     azure_auth:
       type: oauth2

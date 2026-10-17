@@ -212,21 +212,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LinkedServiceListResponse:
-      type: object
-      description: A list of linked service resources.
-      properties:
-        value:
-          type: array
-          description: The LinkedServiceResource items on this page
-          items:
-            $ref: '#/components/schemas/LinkedServiceResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -250,6 +235,61 @@ components:
       - code
       - message
       x-ms-external: true
+    IntegrationRuntimeReference:
+      type: object
+      description: Integration runtime reference type.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
+          description: Type of integration runtime.
+        referenceName:
+          type: string
+          description: Reference integration runtime name.
+        parameters:
+          type: object
+          description: Arguments for integration runtime.
+          additionalProperties: {}
+      required:
+      - type
+      - referenceName
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    IntegrationRuntimeReferenceType:
+      type: string
+      description: Type of integration runtime.
+      enum:
+      - IntegrationRuntimeReference
+      x-ms-enum:
+        name: IntegrationRuntimeReferenceType
+        modelAsString: true
+        values:
+        - name: IntegrationRuntimeReference
+          value: IntegrationRuntimeReference
+          description: IntegrationRuntimeReference
+    LinkedServiceResource:
+      type: object
+      description: Linked service resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/LinkedService'
+          description: Properties of linked service.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     LinkedService:
       type: object
       description: The nested object which contains the information and credential which can be used to connect with related store or compute resource.
@@ -280,34 +320,6 @@ components:
       required:
       - type
       additionalProperties: {}
-    ParameterSpecification:
-      type: object
-      description: Definition of a single parameter for an entity.
-      properties:
-        type:
-          $ref: '#/components/schemas/ParameterType'
-          description: Parameter type.
-        defaultValue:
-          description: Default value of parameter.
-      required:
-      - type
-    IntegrationRuntimeReference:
-      type: object
-      description: Integration runtime reference type.
-      properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeReferenceType'
-          description: Type of integration runtime.
-        referenceName:
-          type: string
-          description: Reference integration runtime name.
-        parameters:
-          type: object
-          description: Arguments for integration runtime.
-          additionalProperties: {}
-      required:
-      - type
-      - referenceName
     ParameterType:
       type: string
       description: Parameter type.
@@ -344,6 +356,21 @@ components:
         - name: SecureString
           value: SecureString
           description: SecureString
+    LinkedServiceListResponse:
+      type: object
+      description: A list of linked service resources.
+      properties:
+        value:
+          type: array
+          description: The LinkedServiceResource items on this page
+          items:
+            $ref: '#/components/schemas/LinkedServiceResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     CloudError:
       type: object
       description: The object that defines the structure of an Azure Data Factory error response.
@@ -355,33 +382,6 @@ components:
       required:
       - error
       x-ms-external: true
-    LinkedServiceResource:
-      type: object
-      description: Linked service resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/LinkedService'
-          description: Properties of linked service.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    IntegrationRuntimeReferenceType:
-      type: string
-      description: Type of integration runtime.
-      enum:
-      - IntegrationRuntimeReference
-      x-ms-enum:
-        name: IntegrationRuntimeReferenceType
-        modelAsString: true
-        values:
-        - name: IntegrationRuntimeReference
-          value: IntegrationRuntimeReference
-          description: IntegrationRuntimeReference
   securitySchemes:
     azure_auth:
       type: oauth2

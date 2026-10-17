@@ -51,15 +51,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PrivateLinkResource:
+    PrivateLinkResourceProperties:
       type: object
-      description: A private link resource
+      description: Properties of a private link resource
       properties:
-        properties:
-          $ref: '#/components/schemas/PrivateLinkResourceProperties'
-          description: Core resource properties
-      allOf:
-      - $ref: '#/components/schemas/SubResource'
+        groupId:
+          type: string
+          description: GroupId of a private link resource
+          readOnly: true
+        requiredMembers:
+          type: array
+          description: RequiredMembers of a private link resource
+          items:
+            type: string
+          readOnly: true
+        requiredZoneNames:
+          type: array
+          description: RequiredZoneNames of a private link resource
+          items:
+            type: string
+          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -83,6 +94,35 @@ components:
       - code
       - message
       x-ms-external: true
+    PrivateLinkResource:
+      type: object
+      description: A private link resource
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
+    SubResource:
+      type: object
+      description: Azure Data Factory nested resource, which belongs to a factory.
+      properties:
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
     PrivateLinkResourcesWrapper:
       type: object
       description: Wrapper for a collection of private link resources
@@ -104,46 +144,6 @@ components:
       required:
       - error
       x-ms-external: true
-    SubResource:
-      type: object
-      description: Azure Data Factory nested resource, which belongs to a factory.
-      properties:
-        id:
-          type: string
-          description: The resource identifier.
-          readOnly: true
-        name:
-          type: string
-          description: The resource name.
-          readOnly: true
-        type:
-          type: string
-          description: The resource type.
-          readOnly: true
-        etag:
-          type: string
-          description: Etag identifies change in the resource.
-          readOnly: true
-    PrivateLinkResourceProperties:
-      type: object
-      description: Properties of a private link resource
-      properties:
-        groupId:
-          type: string
-          description: GroupId of a private link resource
-          readOnly: true
-        requiredMembers:
-          type: array
-          description: RequiredMembers of a private link resource
-          items:
-            type: string
-          readOnly: true
-        requiredZoneNames:
-          type: array
-          description: RequiredZoneNames of a private link resource
-          items:
-            type: string
-          readOnly: true
   securitySchemes:
     azure_auth:
       type: oauth2

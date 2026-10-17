@@ -81,21 +81,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntime:
-      type: object
-      description: Azure Data Factory nested object which serves as a compute resource for activities.
-      properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        description:
-          type: string
-          description: Integration runtime description.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      additionalProperties: {}
     IntegrationRuntimeType:
       type: string
       description: The type of integration runtime.
@@ -112,6 +97,21 @@ components:
         - name: SelfHosted
           value: SelfHosted
           description: SelfHosted
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
     IntegrationRuntimeResource:
       type: object
       description: Integration runtime resource type.

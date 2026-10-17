@@ -196,69 +196,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GlobalParameterSpecification:
-      type: object
-      description: Definition of a single parameter for an entity.
-      properties:
-        type:
-          $ref: '#/components/schemas/GlobalParameterType'
-          description: Global Parameter type.
-        value:
-          description: Value of parameter.
-      required:
-      - type
-      - value
-    GlobalParameterResource:
-      type: object
-      description: Global parameters resource type.
-      properties:
-        properties:
-          type: object
-          description: Properties of the global parameter.
-          additionalProperties:
-            $ref: '#/components/schemas/GlobalParameterSpecification'
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     GlobalParameterType:
       type: string
       description: Global Parameter type.
@@ -291,6 +228,58 @@ components:
         - name: Array
           value: Array
           description: Array
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    GlobalParameterResource:
+      type: object
+      description: Global parameters resource type.
+      properties:
+        properties:
+          type: object
+          description: Properties of the global parameter.
+          additionalProperties:
+            $ref: '#/components/schemas/GlobalParameterSpecification'
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    GlobalParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/GlobalParameterType'
+          description: Global Parameter type.
+        value:
+          description: Value of parameter.
+      required:
+      - type
+      - value
     GlobalParameterListResponse:
       type: object
       description: A list of Global parameters.
@@ -306,6 +295,17 @@ components:
           description: The link to the next page of items
       required:
       - value
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

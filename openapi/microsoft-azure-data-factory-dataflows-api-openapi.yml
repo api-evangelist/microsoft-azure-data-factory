@@ -210,21 +210,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DataFlowListResponse:
-      type: object
-      description: A list of data flow resources.
-      properties:
-        value:
-          type: array
-          description: The DataFlowResource items on this page
-          items:
-            $ref: '#/components/schemas/DataFlowResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -248,21 +233,6 @@ components:
       - code
       - message
       x-ms-external: true
-    DataFlowResource:
-      type: object
-      description: Data flow resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/DataFlow'
-          description: Data flow properties.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     DataFlow:
       type: object
       description: Azure Data Factory nested object which contains a flow with data movements and transformations.
@@ -284,6 +254,43 @@ components:
         propertyName: type
       required:
       - type
+    DataFlowListResponse:
+      type: object
+      description: A list of data flow resources.
+      properties:
+        value:
+          type: array
+          description: The DataFlowResource items on this page
+          items:
+            $ref: '#/components/schemas/DataFlowResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    DataFlowResource:
+      type: object
+      description: Data flow resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/DataFlow'
+          description: Data flow properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    DataFlowFolder:
+      type: object
+      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this data flow is in.
     CloudError:
       type: object
       description: The object that defines the structure of an Azure Data Factory error response.
@@ -295,13 +302,6 @@ components:
       required:
       - error
       x-ms-external: true
-    DataFlowFolder:
-      type: object
-      description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      properties:
-        name:
-          type: string
-          description: The name of the folder that this data flow is in.
   securitySchemes:
     azure_auth:
       type: oauth2

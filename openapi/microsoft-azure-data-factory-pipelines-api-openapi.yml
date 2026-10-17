@@ -289,26 +289,65 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ActivityOnInactiveMarkAs:
+    ActivityState:
       type: string
-      description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+      description: Activity state. This is an optional property and if not provided, the state will be Active by default.
       enum:
-      - Succeeded
-      - Failed
-      - Skipped
+      - Active
+      - Inactive
       x-ms-enum:
-        name: ActivityOnInactiveMarkAs
+        name: ActivityState
         modelAsString: true
         values:
-        - name: Succeeded
-          value: Succeeded
-          description: Succeeded
-        - name: Failed
-          value: Failed
-          description: Failed
-        - name: Skipped
-          value: Skipped
-          description: Skipped
+        - name: Active
+          value: Active
+          description: Active
+        - name: Inactive
+          value: Inactive
+          description: Inactive
+    PipelineFolder:
+      type: object
+      description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this Pipeline is in.
+    ParameterType:
+      type: string
+      description: Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      - SecureString
+      x-ms-enum:
+        name: ParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+        - name: SecureString
+          value: SecureString
+          description: SecureString
     PipelineResource:
       type: object
       description: Pipeline resource type.
@@ -326,25 +365,83 @@ components:
       additionalProperties: {}
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    UserProperty:
+    VariableSpecification:
       type: object
-      description: User property.
+      description: Definition of a single variable for a Pipeline.
       properties:
-        name:
-          type: string
-          description: User property name.
-        value:
-          description: 'User property value. Type: string (or Expression with resultType string).'
+        type:
+          $ref: '#/components/schemas/VariableType'
+          description: Variable type.
+        defaultValue:
+          description: Default value of variable.
       required:
-      - name
-      - value
-    PipelineFolder:
+      - type
+    CloudErrorBody:
       type: object
-      description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+      description: The object that defines the structure of an Azure Data Factory error.
       properties:
-        name:
+        code:
           type: string
-          description: The name of the folder that this Pipeline is in.
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    DependencyCondition:
+      type: string
+      enum:
+      - Succeeded
+      - Failed
+      - Skipped
+      - Completed
+      x-ms-enum:
+        name: DependencyCondition
+        modelAsString: true
+        values:
+        - name: Succeeded
+          value: Succeeded
+          description: Succeeded
+        - name: Failed
+          value: Failed
+          description: Failed
+        - name: Skipped
+          value: Skipped
+          description: Skipped
+        - name: Completed
+          value: Completed
+          description: Completed
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    CreateRunResponse:
+      type: object
+      description: Response body with a run identifier.
+      properties:
+        runId:
+          type: string
+          description: Identifier of a run.
+      required:
+      - runId
     Activity:
       type: object
       description: A pipeline activity.
@@ -383,68 +480,45 @@ components:
       - name
       - type
       additionalProperties: {}
-    ParameterType:
+    ActivityOnInactiveMarkAs:
       type: string
-      description: Parameter type.
+      description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
       enum:
-      - Object
-      - String
-      - Int
-      - Float
-      - Bool
-      - Array
-      - SecureString
+      - Succeeded
+      - Failed
+      - Skipped
       x-ms-enum:
-        name: ParameterType
+        name: ActivityOnInactiveMarkAs
         modelAsString: true
         values:
-        - name: Object
-          value: Object
-          description: Object
-        - name: String
-          value: String
-          description: String
-        - name: Int
-          value: Int
-          description: Int
-        - name: Float
-          value: Float
-          description: Float
-        - name: Bool
-          value: Bool
-          description: Bool
-        - name: Array
-          value: Array
-          description: Array
-        - name: SecureString
-          value: SecureString
-          description: SecureString
-    PipelineListResponse:
+        - name: Succeeded
+          value: Succeeded
+          description: Succeeded
+        - name: Failed
+          value: Failed
+          description: Failed
+        - name: Skipped
+          value: Skipped
+          description: Skipped
+    UserProperty:
       type: object
-      description: A list of pipeline resources.
+      description: User property.
       properties:
-        value:
-          type: array
-          description: The PipelineResource items on this page
-          items:
-            $ref: '#/components/schemas/PipelineResource'
-        nextLink:
+        name:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: User property name.
+        value:
+          description: 'User property value. Type: string (or Expression with resultType string).'
       required:
+      - name
       - value
-    VariableSpecification:
+    PipelinePolicy:
       type: object
-      description: Definition of a single variable for a Pipeline.
+      description: Pipeline Policy.
       properties:
-        type:
-          $ref: '#/components/schemas/VariableType'
-          description: Variable type.
-        defaultValue:
-          description: Default value of variable.
-      required:
-      - type
+        elapsedTimeMetric:
+          $ref: '#/components/schemas/PipelineElapsedTimeMetricPolicy'
+          description: Pipeline ElapsedTime Metric Policy.
     Pipeline:
       type: object
       description: A data factory pipeline.
@@ -488,47 +562,32 @@ components:
         policy:
           $ref: '#/components/schemas/PipelinePolicy'
           description: Pipeline Policy.
-    ParameterSpecification:
+    PipelineListResponse:
       type: object
-      description: Definition of a single parameter for an entity.
+      description: A list of pipeline resources.
       properties:
-        type:
-          $ref: '#/components/schemas/ParameterType'
-          description: Parameter type.
-        defaultValue:
-          description: Default value of parameter.
+        value:
+          type: array
+          description: The PipelineResource items on this page
+          items:
+            $ref: '#/components/schemas/PipelineResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
       required:
-      - type
-    PipelinePolicy:
+      - value
+    CloudError:
       type: object
-      description: Pipeline Policy.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        elapsedTimeMetric:
-          $ref: '#/components/schemas/PipelineElapsedTimeMetricPolicy'
-          description: Pipeline ElapsedTime Metric Policy.
-    DependencyCondition:
-      type: string
-      enum:
-      - Succeeded
-      - Failed
-      - Skipped
-      - Completed
-      x-ms-enum:
-        name: DependencyCondition
-        modelAsString: true
-        values:
-        - name: Succeeded
-          value: Succeeded
-          description: Succeeded
-        - name: Failed
-          value: Failed
-          description: Failed
-        - name: Skipped
-          value: Skipped
-          description: Skipped
-        - name: Completed
-          value: Completed
-          description: Completed
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     VariableType:
       type: string
       description: Variable type.
@@ -549,54 +608,6 @@ components:
         - name: Array
           value: Array
           description: Array
-    ActivityState:
-      type: string
-      description: Activity state. This is an optional property and if not provided, the state will be Active by default.
-      enum:
-      - Active
-      - Inactive
-      x-ms-enum:
-        name: ActivityState
-        modelAsString: true
-        values:
-        - name: Active
-          value: Active
-          description: Active
-        - name: Inactive
-          value: Inactive
-          description: Inactive
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
-    CreateRunResponse:
-      type: object
-      description: Response body with a run identifier.
-      properties:
-        runId:
-          type: string
-          description: Identifier of a run.
-      required:
-      - runId
     ActivityDependency:
       type: object
       description: Activity dependency information.
@@ -613,17 +624,6 @@ components:
       - activity
       - dependencyConditions
       additionalProperties: {}
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     PipelineElapsedTimeMetricPolicy:
       type: object
       description: Pipeline ElapsedTime Metric Policy.

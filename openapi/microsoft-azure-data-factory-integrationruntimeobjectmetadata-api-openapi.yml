@@ -128,42 +128,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SsisObjectMetadataListResponse:
-      type: object
-      description: A list of SSIS object metadata.
-      properties:
-        value:
-          type: array
-          description: The SsisObjectMetadata items on this page
-          items:
-            $ref: '#/components/schemas/SsisObjectMetadata'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    SsisObjectMetadata:
-      type: object
-      description: SSIS object metadata.
-      properties:
-        type:
-          $ref: '#/components/schemas/SsisObjectMetadataType'
-          description: Type of metadata.
-        id:
-          type: integer
-          format: int64
-          description: Metadata id.
-        name:
-          type: string
-          description: Metadata name.
-        description:
-          type: string
-          description: Metadata description.
-      discriminator:
-        propertyName: type
-      required:
-      - type
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -187,13 +151,6 @@ components:
       - code
       - message
       x-ms-external: true
-    GetSsisObjectMetadataRequest:
-      type: object
-      description: The request payload of get SSIS object metadata.
-      properties:
-        metadataPath:
-          type: string
-          description: Metadata path.
     SsisObjectMetadataType:
       type: string
       description: The type of SSIS object metadata.
@@ -218,17 +175,49 @@ components:
         - name: Environment
           value: Environment
           description: Environment
-    CloudError:
+    SsisObjectMetadata:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: SSIS object metadata.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        type:
+          $ref: '#/components/schemas/SsisObjectMetadataType'
+          description: Type of metadata.
+        id:
+          type: integer
+          format: int64
+          description: Metadata id.
+        name:
+          type: string
+          description: Metadata name.
+        description:
+          type: string
+          description: Metadata description.
+      discriminator:
+        propertyName: type
       required:
-      - error
-      x-ms-external: true
+      - type
+    GetSsisObjectMetadataRequest:
+      type: object
+      description: The request payload of get SSIS object metadata.
+      properties:
+        metadataPath:
+          type: string
+          description: Metadata path.
+    SsisObjectMetadataListResponse:
+      type: object
+      description: A list of SSIS object metadata.
+      properties:
+        value:
+          type: array
+          description: The SsisObjectMetadata items on this page
+          items:
+            $ref: '#/components/schemas/SsisObjectMetadata'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     SsisObjectMetadataStatusResponse:
       type: object
       description: The status of the operation.
@@ -245,6 +234,17 @@ components:
         error:
           type: string
           description: The operation error message.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

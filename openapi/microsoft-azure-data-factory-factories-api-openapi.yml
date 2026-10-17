@@ -498,101 +498,32 @@ paths:
       description: Azure Resource Manager
 components:
   schemas:
-    FactoryIdentityType:
-      type: string
-      description: The identity type.
-      enum:
-      - SystemAssigned
-      - UserAssigned
-      - SystemAssigned,UserAssigned
-      x-ms-enum:
-        name: FactoryIdentityType
-        modelAsString: true
-        values:
-        - name: SystemAssigned
-          value: SystemAssigned
-          description: SystemAssigned
-        - name: UserAssigned
-          value: UserAssigned
-          description: UserAssigned
-        - name: SystemAssigned,UserAssigned
-          value: SystemAssigned,UserAssigned
-          description: SystemAssigned,UserAssigned
-    Azure.Core.uuid:
-      type: string
-      format: uuid
-      description: Universally Unique Identifier
-    GlobalParameterSpecification:
+    GitHubClientSecret:
       type: object
-      description: Definition of a single parameter for an entity.
+      description: Client secret information for factory's bring your own app repository configuration.
       properties:
-        type:
-          $ref: '#/components/schemas/GlobalParameterType'
-          description: Global Parameter type.
-        value:
-          description: Value of parameter.
-      required:
-      - type
-      - value
-    PurviewConfiguration:
+        byoaSecretAkvUrl:
+          type: string
+          description: Bring your own app client secret AKV URL.
+        byoaSecretName:
+          type: string
+          description: Bring your own app client secret name in AKV.
+    FactoryUpdateParameters:
       type: object
-      description: Purview configuration.
+      description: Parameters for updating a factory resource.
       properties:
-        purviewResourceId:
-          type: string
-          description: Purview resource id.
-    FactoryRepoConfiguration:
-      type: object
-      description: Factory's git repo information.
-      properties:
-        type:
-          type: string
-          description: Type of repo configuration.
-        accountName:
-          type: string
-          description: Account name.
-        repositoryName:
-          type: string
-          description: Repository name.
-        collaborationBranch:
-          type: string
-          description: Collaboration branch.
-        rootFolder:
-          type: string
-          description: Root folder.
-        lastCommitId:
-          type: string
-          description: Last commit id.
-        disablePublish:
-          type: boolean
-          description: Disable manual publish operation in ADF studio to favor automated publish.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      - accountName
-      - repositoryName
-      - collaborationBranch
-      - rootFolder
-    GitHubAccessTokenRequest:
-      type: object
-      description: Get GitHub access token request definition.
-      properties:
-        gitHubAccessCode:
-          type: string
-          description: GitHub access code.
-        gitHubClientId:
-          type: string
-          description: GitHub application client ID.
-        gitHubClientSecret:
-          $ref: '#/components/schemas/GitHubClientSecret'
-          description: GitHub bring your own app client secret information.
-        gitHubAccessTokenBaseUrl:
-          type: string
-          description: GitHub access token base URL.
-      required:
-      - gitHubAccessCode
-      - gitHubAccessTokenBaseUrl
+        tags:
+          type: object
+          description: The resource tags.
+          additionalProperties:
+            type: string
+        identity:
+          $ref: '#/components/schemas/FactoryIdentity'
+          description: Managed service identity of the factory.
+        properties:
+          $ref: '#/components/schemas/FactoryUpdateProperties'
+          description: Properties of update the factory.
+          x-ms-client-flatten: true
     UserAccessPolicy:
       type: object
       description: Get Data Plane read only token request definition.
@@ -612,97 +543,6 @@ components:
         expireTime:
           type: string
           description: Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.
-    FactoryListResponse:
-      type: object
-      description: A list of factory resources.
-      properties:
-        value:
-          type: array
-          description: The Factory items on this page
-          items:
-            $ref: '#/components/schemas/Factory'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    EncryptionConfiguration:
-      type: object
-      description: Definition of CMK for the factory.
-      properties:
-        keyName:
-          type: string
-          description: The name of the key in Azure Key Vault to use as Customer Managed Key.
-        vaultBaseUrl:
-          type: string
-          description: The url of the Azure Key Vault used for CMK.
-        keyVersion:
-          type: string
-          description: The version of the key used for CMK. If not provided, latest version will be used.
-        identity:
-          $ref: '#/components/schemas/CMKIdentityDefinition'
-          description: User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used.
-      required:
-      - keyName
-      - vaultBaseUrl
-    CMKIdentityDefinition:
-      type: object
-      description: Managed Identity used for CMK.
-      properties:
-        userAssignedIdentity:
-          type: string
-          description: The resource id of the user assigned identity to authenticate to customer's key vault.
-    Factory:
-      type: object
-      description: Factory resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/FactoryProperties'
-          description: Properties of the factory.
-          x-ms-client-flatten: true
-        identity:
-          $ref: '#/components/schemas/FactoryIdentity'
-          description: Managed service identity of the factory.
-        location:
-          type: string
-          description: The resource location.
-          x-ms-mutability:
-          - read
-          - create
-        tags:
-          type: object
-          description: The resource tags.
-          additionalProperties:
-            type: string
-        eTag:
-          type: string
-          description: If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
-          readOnly: true
-      additionalProperties: {}
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    FactoryIdentity:
-      type: object
-      description: Identity properties of the factory resource.
-      properties:
-        type:
-          $ref: '#/components/schemas/FactoryIdentityType'
-          description: The identity type.
-        principalId:
-          $ref: '#/components/schemas/Azure.Core.uuid'
-          description: The principal id of the identity.
-          readOnly: true
-        tenantId:
-          $ref: '#/components/schemas/Azure.Core.uuid'
-          description: The client tenant id of the identity.
-          readOnly: true
-        userAssignedIdentities:
-          type: object
-          description: List of user assigned identities for the factory.
-          additionalProperties: {}
-      required:
-      - type
     GitHubAccessTokenResponse:
       type: object
       description: Get GitHub access token response definition.
@@ -710,13 +550,16 @@ components:
         gitHubAccessToken:
           type: string
           description: GitHub access token.
-    FactoryUpdateProperties:
+    FactoryRepoUpdate:
       type: object
-      description: Factory update resource properties.
+      description: Factory's git repo information.
       properties:
-        publicNetworkAccess:
-          $ref: '#/components/schemas/PublicNetworkAccess'
-          description: Whether or not public network access is allowed for the data factory.
+        factoryResourceId:
+          type: string
+          description: The factory resource id.
+        repoConfiguration:
+          $ref: '#/components/schemas/FactoryRepoConfiguration'
+          description: Git repo information of the factory.
     AccessPolicyResponse:
       type: object
       description: Get Data Plane read only token response definition.
@@ -730,124 +573,6 @@ components:
         dataPlaneUrl:
           type: string
           description: Data Plane service base URL.
-    PublicNetworkAccess:
-      type: string
-      description: Whether or not public network access is allowed for the data factory.
-      enum:
-      - Enabled
-      - Disabled
-      x-ms-enum:
-        name: PublicNetworkAccess
-        modelAsString: true
-        values:
-        - name: Enabled
-          value: Enabled
-          description: Enabled
-        - name: Disabled
-          value: Disabled
-          description: Disabled
-    GlobalParameterType:
-      type: string
-      description: Global Parameter type.
-      enum:
-      - Object
-      - String
-      - Int
-      - Float
-      - Bool
-      - Array
-      x-ms-enum:
-        name: GlobalParameterType
-        modelAsString: true
-        values:
-        - name: Object
-          value: Object
-          description: Object
-        - name: String
-          value: String
-          description: String
-        - name: Int
-          value: Int
-          description: Int
-        - name: Float
-          value: Float
-          description: Float
-        - name: Bool
-          value: Bool
-          description: Bool
-        - name: Array
-          value: Array
-          description: Array
-    FactoryUpdateParameters:
-      type: object
-      description: Parameters for updating a factory resource.
-      properties:
-        tags:
-          type: object
-          description: The resource tags.
-          additionalProperties:
-            type: string
-        identity:
-          $ref: '#/components/schemas/FactoryIdentity'
-          description: Managed service identity of the factory.
-        properties:
-          $ref: '#/components/schemas/FactoryUpdateProperties'
-          description: Properties of update the factory.
-          x-ms-client-flatten: true
-    GitHubClientSecret:
-      type: object
-      description: Client secret information for factory's bring your own app repository configuration.
-      properties:
-        byoaSecretAkvUrl:
-          type: string
-          description: Bring your own app client secret AKV URL.
-        byoaSecretName:
-          type: string
-          description: Bring your own app client secret name in AKV.
-    CloudErrorBody:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error.
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
-        target:
-          type: string
-          description: Property name/path in request associated with error.
-        details:
-          type: array
-          description: Array with additional error details.
-          items:
-            $ref: '#/components/schemas/CloudError'
-          x-ms-identifiers: []
-      required:
-      - code
-      - message
-      x-ms-external: true
-    FactoryRepoUpdate:
-      type: object
-      description: Factory's git repo information.
-      properties:
-        factoryResourceId:
-          type: string
-          description: The factory resource id.
-        repoConfiguration:
-          $ref: '#/components/schemas/FactoryRepoConfiguration'
-          description: Git repo information of the factory.
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     FactoryProperties:
       type: object
       description: Factory resource properties.
@@ -882,28 +607,281 @@ components:
         publicNetworkAccess:
           $ref: '#/components/schemas/PublicNetworkAccess'
           description: Whether or not public network access is allowed for the data factory.
-    Resource:
+    Factory:
       type: object
+      description: Factory resource type.
       properties:
-        id:
-          type: string
-          description: Resource ID.
-        name:
-          type: string
-          description: Resource name.
-        type:
-          type: string
-          description: Resource type.
+        properties:
+          $ref: '#/components/schemas/FactoryProperties'
+          description: Properties of the factory.
+          x-ms-client-flatten: true
+        identity:
+          $ref: '#/components/schemas/FactoryIdentity'
+          description: Managed service identity of the factory.
         location:
           type: string
-          description: Resource location.
+          description: The resource location.
+          x-ms-mutability:
+          - read
+          - create
         tags:
           type: object
+          description: The resource tags.
           additionalProperties:
             type: string
-        properties:
+        eTag:
+          type: string
+          description: If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
+          readOnly: true
+      additionalProperties: {}
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    CMKIdentityDefinition:
+      type: object
+      description: Managed Identity used for CMK.
+      properties:
+        userAssignedIdentity:
+          type: string
+          description: The resource id of the user assigned identity to authenticate to customer's key vault.
+    FactoryIdentityType:
+      type: string
+      description: The identity type.
+      enum:
+      - SystemAssigned
+      - UserAssigned
+      - SystemAssigned,UserAssigned
+      x-ms-enum:
+        name: FactoryIdentityType
+        modelAsString: true
+        values:
+        - name: SystemAssigned
+          value: SystemAssigned
+          description: SystemAssigned
+        - name: UserAssigned
+          value: UserAssigned
+          description: UserAssigned
+        - name: SystemAssigned,UserAssigned
+          value: SystemAssigned,UserAssigned
+          description: SystemAssigned,UserAssigned
+    PurviewConfiguration:
+      type: object
+      description: Purview configuration.
+      properties:
+        purviewResourceId:
+          type: string
+          description: Purview resource id.
+    EncryptionConfiguration:
+      type: object
+      description: Definition of CMK for the factory.
+      properties:
+        keyName:
+          type: string
+          description: The name of the key in Azure Key Vault to use as Customer Managed Key.
+        vaultBaseUrl:
+          type: string
+          description: The url of the Azure Key Vault used for CMK.
+        keyVersion:
+          type: string
+          description: The version of the key used for CMK. If not provided, latest version will be used.
+        identity:
+          $ref: '#/components/schemas/CMKIdentityDefinition'
+          description: User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used.
+      required:
+      - keyName
+      - vaultBaseUrl
+    FactoryUpdateProperties:
+      type: object
+      description: Factory update resource properties.
+      properties:
+        publicNetworkAccess:
+          $ref: '#/components/schemas/PublicNetworkAccess'
+          description: Whether or not public network access is allowed for the data factory.
+    PublicNetworkAccess:
+      type: string
+      description: Whether or not public network access is allowed for the data factory.
+      enum:
+      - Enabled
+      - Disabled
+      x-ms-enum:
+        name: PublicNetworkAccess
+        modelAsString: true
+        values:
+        - name: Enabled
+          value: Enabled
+          description: Enabled
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    Azure.Core.uuid:
+      type: string
+      format: uuid
+      description: Universally Unique Identifier
+    GitHubAccessTokenRequest:
+      type: object
+      description: Get GitHub access token request definition.
+      properties:
+        gitHubAccessCode:
+          type: string
+          description: GitHub access code.
+        gitHubClientId:
+          type: string
+          description: GitHub application client ID.
+        gitHubClientSecret:
+          $ref: '#/components/schemas/GitHubClientSecret'
+          description: GitHub bring your own app client secret information.
+        gitHubAccessTokenBaseUrl:
+          type: string
+          description: GitHub access token base URL.
+      required:
+      - gitHubAccessCode
+      - gitHubAccessTokenBaseUrl
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    GlobalParameterType:
+      type: string
+      description: Global Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      x-ms-enum:
+        name: GlobalParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+    FactoryIdentity:
+      type: object
+      description: Identity properties of the factory resource.
+      properties:
+        type:
+          $ref: '#/components/schemas/FactoryIdentityType'
+          description: The identity type.
+        principalId:
+          $ref: '#/components/schemas/Azure.Core.uuid'
+          description: The principal id of the identity.
+          readOnly: true
+        tenantId:
+          $ref: '#/components/schemas/Azure.Core.uuid'
+          description: The client tenant id of the identity.
+          readOnly: true
+        userAssignedIdentities:
           type: object
-          description: Resource-specific properties.
+          description: List of user assigned identities for the factory.
+          additionalProperties: {}
+      required:
+      - type
+    GlobalParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/GlobalParameterType'
+          description: Global Parameter type.
+        value:
+          description: Value of parameter.
+      required:
+      - type
+      - value
+    FactoryRepoConfiguration:
+      type: object
+      description: Factory's git repo information.
+      properties:
+        type:
+          type: string
+          description: Type of repo configuration.
+        accountName:
+          type: string
+          description: Account name.
+        repositoryName:
+          type: string
+          description: Repository name.
+        collaborationBranch:
+          type: string
+          description: Collaboration branch.
+        rootFolder:
+          type: string
+          description: Root folder.
+        lastCommitId:
+          type: string
+          description: Last commit id.
+        disablePublish:
+          type: boolean
+          description: Disable manual publish operation in ADF studio to favor automated publish.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      - accountName
+      - repositoryName
+      - collaborationBranch
+      - rootFolder
+    FactoryListResponse:
+      type: object
+      description: A list of factory resources.
+      properties:
+        value:
+          type: array
+          description: The Factory items on this page
+          items:
+            $ref: '#/components/schemas/Factory'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     ResourceList:
       type: object
       properties:
@@ -926,12 +904,34 @@ components:
               type: string
             target:
               type: string
+    Resource:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Resource ID.
+        name:
+          type: string
+          description: Resource name.
+        type:
+          type: string
+          description: Resource type.
+        location:
+          type: string
+          description: Resource location.
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        properties:
+          type: object
+          description: Resource-specific properties.
   parameters:
-    apiVersion:
-      name: api-version
-      in: query
+    subscriptionId:
+      name: subscriptionId
+      in: path
       required: true
-      description: The API version to use for this operation.
+      description: The ID of the target subscription.
       schema:
         type: string
     resourceGroupName:
@@ -941,11 +941,11 @@ components:
       description: The name of the resource group.
       schema:
         type: string
-    subscriptionId:
-      name: subscriptionId
-      in: path
+    apiVersion:
+      name: api-version
+      in: query
       required: true
-      description: The ID of the target subscription.
+      description: The API version to use for this operation.
       schema:
         type: string
   securitySchemes:

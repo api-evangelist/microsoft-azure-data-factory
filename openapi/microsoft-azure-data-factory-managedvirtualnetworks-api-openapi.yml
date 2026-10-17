@@ -165,34 +165,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ManagedVirtualNetwork:
-      type: object
-      description: A managed Virtual Network associated with the Azure Data Factory
-      properties:
-        vNetId:
-          type: string
-          description: Managed Virtual Network ID.
-          readOnly: true
-        alias:
-          type: string
-          description: Managed Virtual Network alias.
-          readOnly: true
-      additionalProperties: {}
-    ManagedVirtualNetworkResource:
-      type: object
-      description: Managed Virtual Network resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/ManagedVirtualNetwork'
-          description: Managed Virtual Network properties.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -216,6 +188,34 @@ components:
       - code
       - message
       x-ms-external: true
+    ManagedVirtualNetworkResource:
+      type: object
+      description: Managed Virtual Network resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/ManagedVirtualNetwork'
+          description: Managed Virtual Network properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    ManagedVirtualNetwork:
+      type: object
+      description: A managed Virtual Network associated with the Azure Data Factory
+      properties:
+        vNetId:
+          type: string
+          description: Managed Virtual Network ID.
+          readOnly: true
+        alias:
+          type: string
+          description: Managed Virtual Network alias.
+          readOnly: true
+      additionalProperties: {}
     ManagedVirtualNetworkListResponse:
       type: object
       description: A list of managed Virtual Network resources.
