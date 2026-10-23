@@ -290,3 +290,9 @@ externalDocs:
 x-refined-from:
 - microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json
 - microsoft-azure-data-factory-openapi.yml
+x-provenance:
+  method: harvested
+  publisher: Azure Data Factory
+  source: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
