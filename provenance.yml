@@ -9,6 +9,9 @@ artifacts:
   authentication/microsoft-azure-data-factory-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  capabilities/microsoft-azure-data-factory-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/microsoft-azure-data-factory-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -390,127 +393,7 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -594,6 +477,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/microsoft-azure-data-factory-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -608,57 +506,57 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/microsoft-azure-data-factory-datafactory-2018-06-01-swagger.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: byte-identical to https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+      (sha256 4909c6f99d7b, fetched 2026-10-04)
   openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-change-data-capture-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-changedatacapture-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-credentials-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-data-flow-debug-session-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-dataflowdebugsession-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-data-flows-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-dataflows-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-datasets-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-exposure-control-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-exposurecontrol-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-factories-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/microsoft-azure-data-factory-globalparameters-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-global-parameters-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-integrationruntimedisableinteractivequery-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-integrationruntimeenableinteractivequery-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-integrationruntimenodes-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-integration-runtime-nodes-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-integrationruntimeobjectmetadata-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-integration-runtime-object-metadata-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-integrationruntimes-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-integration-runtimes-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-linkedservices-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-linked-services-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-managedprivateendpoints-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-managed-private-endpoints-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-managed-virtual-networks-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-managedvirtualnetworks-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-operations-api-openapi.yml:
@@ -670,10 +568,10 @@ artifacts:
   openapi/microsoft-azure-data-factory-pipelines-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-private-endpoint-connections-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-privateendpointconnections-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/microsoft-azure-data-factory-private-link-resources-api-openapi.yml:
+  openapi/microsoft-azure-data-factory-privatelinkresources-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-trigger-api-openapi.yml:
@@ -686,78 +584,153 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/microsoft-azure-data-factory-activityruns-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-activityruns-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-change-data-capture-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-changedatacapture-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-credentials-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-credentials-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-data-flow-debug-session-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-data-flows-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-dataflowdebugsession-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/microsoft-azure-data-factory-data-flows-api-overlay.yaml:
+  overlays/microsoft-azure-data-factory-dataflows-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-datasets-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-datasets-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-exposure-control-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-exposurecontrol-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-factories-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-factories-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-global-parameters-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-globalparameters-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-integration-runtime-disable-interactive-query-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/microsoft-azure-data-factory-integration-runtime-enable-interactive-query-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/microsoft-azure-data-factory-integration-runtime-nodes-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/microsoft-azure-data-factory-integration-runtime-object-metadata-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-integration-runtimes-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-integrationruntimedisableinteractivequery-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/microsoft-azure-data-factory-integration-runtimes-api-overlay.yaml:
+  overlays/microsoft-azure-data-factory-integrationruntimeenableinteractivequery-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integrationruntimenodes-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integrationruntimeobjectmetadata-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/microsoft-azure-data-factory-integrationruntimes-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-linked-services-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-linkedservices-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-managed-private-endpoints-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-managed-virtual-networks-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-managedprivateendpoints-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/microsoft-azure-data-factory-managed-virtual-networks-api-overlay.yaml:
+  overlays/microsoft-azure-data-factory-managedvirtualnetworks-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-operations-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-operations-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-pipelineruns-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-pipelineruns-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-pipelines-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-pipelines-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-private-endpoint-connections-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-private-link-resources-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-privateendpointconnections-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/microsoft-azure-data-factory-private-link-resources-api-overlay.yaml:
+  overlays/microsoft-azure-data-factory-privatelinkresources-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-trigger-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-trigger-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-triggerruns-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-triggerruns-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/microsoft-azure-data-factory-triggers-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/microsoft-azure-data-factory-triggers-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/microsoft-azure-data-factory-packages.yml:
