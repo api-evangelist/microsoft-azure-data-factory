@@ -1,0 +1,290 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/
+sources:
+- https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T122340
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: 'Azure Data Factory data pipeline pricing; consumption-based rates by runs, hours, vCore-hours and
+  operations. Free trial: $200 credit for 30 days.'
+plan_count: 18
+currency: USD
+plans:
+- name: Orchestration (Azure Integration Runtime)
+  price_text: $1 per 1,000 runs
+  price: 1
+  currency: USD
+  period: per-use
+  unit: 1,000 runs
+- name: Orchestration (Self-Hosted Integration Runtime)
+  price_text: $1.50 per 1,000 runs
+  price: 1.5
+  currency: USD
+  period: per-use
+  unit: 1,000 runs
+- name: Data movement Activity (Azure IR)
+  price_text: $0.25/DIU-hour
+  price: 0.25
+  currency: USD
+  period: per-use
+  unit: DIU-hour
+- name: Data movement Activity (Self-Hosted IR)
+  price_text: $0.10/hour
+  price: 0.1
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Pipeline Activity (Azure IR)
+  price_text: $0.005/hour
+  price: 0.005
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Pipeline Activity (Managed VNET IR)
+  price_text: $1/hour (Up to 50 concurrent pipeline activities)
+  price: 1
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 50 concurrent pipeline activities
+- name: Pipeline Activity (Self-Hosted IR)
+  price_text: $0.002/hour
+  price: 0.002
+  currency: USD
+  period: per-use
+  unit: hour
+- name: External Pipeline Activity (Azure IR)
+  price_text: $0.00025/hour
+  price: 0.00025
+  currency: USD
+  period: per-use
+  unit: hour
+- name: External Pipeline Activity (Self-Hosted IR)
+  price_text: $0.0001/hour
+  price: 0.0001
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Data Flow General Purpose
+  price_text: $0.274 per vCore-hour
+  price: 0.274
+  currency: USD
+  period: per-use
+  unit: vCore-hour
+- name: Data Flow General Purpose - One Year Reserved
+  price_text: $0.205 per vCore-hour
+  price: 0.205
+  currency: USD
+  period: per-use
+  unit: vCore-hour
+- name: Data Flow General Purpose - Three Year Reserved
+  price_text: $0.178 per vCore-hour
+  price: 0.178
+  currency: USD
+  period: per-use
+  unit: vCore-hour
+- name: Workflow orchestration manager Small (D2 v4)
+  price_text: $0.49
+  price: 0.49
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 50 DAGs
+- name: Workflow orchestration manager Large (D4 v4)
+  price_text: $0.99
+  price: 0.99
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 1,000 DAGs
+- name: Additional node Small (D2 v4)
+  price_text: $0.056
+  price: 0.056
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Additional node Large (D4 v4)
+  price_text: $0.22
+  price: 0.22
+  currency: USD
+  period: per-use
+  unit: hour
+- name: Read/Write operations
+  price_text: $0.50 per 50,000 modified/referenced entities
+  price: 0.5
+  currency: USD
+  period: per-use
+  unit: 50,000 entities
+- name: Monitoring
+  price_text: $0.25 per 50,000 run records retrieved
+  price: 0.25
+  currency: USD
+  period: per-use
+  unit: 50,000 run records
+rate_limit_statements:
+- $1/hour (Up to 50 concurrent pipeline activities)
+- $1/hour (Up to 800 concurrent pipeline activities)
+- The minimum cluster size to run a Data Flow is 8 vCores
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - compute
+  plans:
+  - name: Orchestration (Azure Integration Runtime)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Orchestration (Self-Hosted Integration Runtime)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Data movement Activity (Azure IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Data movement Activity (Self-Hosted IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Pipeline Activity (Azure IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Pipeline Activity (Managed VNET IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Pipeline Activity (Self-Hosted IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: External Pipeline Activity (Azure IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: External Pipeline Activity (Self-Hosted IR)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Data Flow General Purpose
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Data Flow General Purpose - One Year Reserved
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Data Flow General Purpose - Three Year Reserved
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Workflow orchestration manager Small (D2 v4)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Workflow orchestration manager Large (D4 v4)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Additional node Small (D2 v4)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Additional node Large (D4 v4)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Read/Write operations
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Monitoring
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
