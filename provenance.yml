@@ -395,7 +395,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -450,6 +450,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/microsoft-azure-data-factory-lifecycle.yml:
@@ -696,6 +705,9 @@ artifacts:
   packages/microsoft-azure-data-factory-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/microsoft-azure-data-factory-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/microsoft-azure-data-factory-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -704,6 +716,9 @@ artifacts:
     evidence: no authorship recorded
   rate-limits/microsoft-azure-data-factory-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/microsoft-azure-data-factory-rules.yml:
+    method: generated
     evidence: declared in the artifact
   sandbox/microsoft-azure-data-factory-sandbox.yml:
     method: searched
@@ -735,6 +750,9 @@ artifacts:
   skills/microsoft-azure-data-factory-run-a-pipeline.md:
     method: unknown
     evidence: no authorship recorded
+  sla/microsoft-azure-data-factory-sla.yml:
+    method: generated
+    evidence: declared in the artifact
   well-known/microsoft-azure-data-factory-openid-configuration.json:
     method: unknown
     evidence: no authorship recorded

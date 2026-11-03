@@ -136,7 +136,7 @@ rate_limit_statements:
 - $1/hour (Up to 800 concurrent pipeline activities)
 - The minimum cluster size to run a Data Flow is 8 vCores
 x-canonical:
-  generated: '2026-11-01'
+  generated: '2026-11-02'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid
