@@ -392,6 +392,210 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/microsoft-azure-data-factory-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/microsoft-azure-data-factory-integration-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  json-ld/microsoft-azure-data-factory-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-access-policy-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-activity-runs-query-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-change-data-capture-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-change-data-capture-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-change-data-capture-status-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-create-data-flow-debug-session-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-create-data-flow-debug-session-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-create-linked-integration-runtime-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-create-run-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-credential-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-credential-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-data-flow-debug-command-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-data-flow-debug-command-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-data-flow-debug-package-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-data-flow-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-data-flow-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-dataset-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-dataset-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-enable-interactive-query-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-exposure-control-batch-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-exposure-control-batch-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-exposure-control-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-exposure-control-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-factory-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-factory-update-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-get-ssis-object-metadata-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-git-hub-access-token-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-global-parameter-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-global-parameter-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-integration-runtime-connection-info-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-integration-runtime-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-integration-runtime-node-ip-address-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-integration-runtime-outbound-network-dependencies-endpoints-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-integration-runtime-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-linked-service-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-linked-service-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-managed-private-endpoint-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-managed-private-endpoint-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-managed-virtual-network-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-managed-virtual-network-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-operation-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-pipeline-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-pipeline-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-pipeline-run-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-pipeline-runs-query-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-private-endpoint-connection-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-private-endpoint-connection-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-private-link-connection-approval-request-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-private-link-resources-wrapper-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-query-data-flow-debug-sessions-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-run-filter-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-self-hosted-integration-runtime-node-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-ssis-object-metadata-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-ssis-object-metadata-status-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-filter-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-query-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-runs-query-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-trigger-subscription-operation-status-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-update-integration-runtime-node-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-update-integration-runtime-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-data-factory-user-access-policy-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
@@ -467,9 +671,12 @@ artifacts:
   llms/microsoft-azure-data-factory-llms-probe.yml:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
+  llms/microsoft-azure-data-factory-llms-provenance.yml:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   llms/microsoft-azure-data-factory-llms.txt:
-    method: generated
-    evidence: carries an API Evangelist house phrase
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   mcp/microsoft-azure-data-factory-mcp.yml:
     method: derived
     evidence: declared in the artifact
@@ -752,6 +959,12 @@ artifacts:
     evidence: no authorship recorded
   sla/microsoft-azure-data-factory-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  vendors/microsoft-azure-data-factory-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/microsoft-azure-data-factory-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/microsoft-azure-data-factory-openid-configuration.json:
     method: unknown

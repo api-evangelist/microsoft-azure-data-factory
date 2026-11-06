@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: DataFactoryManagementClient Trigger API
+  version: '2018-06-01'
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Trigger
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}
+  : get:
+      operationId: Triggers_Get
+      tags:
+      - Trigger
+      description: Gets a trigger.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: triggerName
+        in: path
+        description: The trigger name.
+        required: true
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        description: ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+        required: false
+        x-ms-client-name: If-None-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResource'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Triggers_Get:
+          $ref: ./examples/Triggers_Get.json
+      summary: Triggers get
+      x-summary-source: derived
+components:
+  schemas:
+    TriggerResource:
+      type: object
+      description: Trigger resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Trigger'
+          description: Properties of the trigger.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    TriggerRuntimeState:
+      type: string
+      description: Enumerates possible state of Triggers.
+      enum:
+      - Started
+      - Stopped
+      - Disabled
+      x-ms-enum:
+        name: TriggerRuntimeState
+        modelAsString: true
+        values:
+        - name: Started
+          value: Started
+          description: Started
+        - name: Stopped
+          value: Stopped
+          description: Stopped
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    Trigger:
+      type: object
+      description: Azure data factory nested object which contains information about creating pipeline run
+      properties:
+        type:
+          type: string
+          description: Trigger type.
+        description:
+          type: string
+          description: Trigger description.
+        runtimeState:
+          $ref: '#/components/schemas/TriggerRuntimeState'
+          description: Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+          readOnly: true
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the trigger.
+          items: {}
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.
+x-provenance:
+  method: harvested
+  publisher: Azure Data Factory
+  source: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

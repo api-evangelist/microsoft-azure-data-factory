@@ -1,0 +1,647 @@
+openapi: 3.2.0
+info:
+  title: DataFactoryManagementClient Pipelines API
+  version: '2018-06-01'
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Pipelines
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines
+  : get:
+      operationId: Pipelines_ListByFactory
+      tags:
+      - Pipelines
+      description: Lists pipelines.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Pipelines_ListByFactory:
+          $ref: ./examples/Pipelines_ListByFactory.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Pipelines list by factory
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}
+  : get:
+      operationId: Pipelines_Get
+      tags:
+      - Pipelines
+      description: Gets a pipeline.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: pipelineName
+        in: path
+        description: The pipeline name.
+        required: true
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-none-match
+        in: header
+        description: ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+        required: false
+        x-ms-client-name: If-None-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineResource'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Pipelines_Get:
+          $ref: ./examples/Pipelines_Get.json
+      summary: Pipelines get
+      x-summary-source: derived
+    put:
+      operationId: Pipelines_CreateOrUpdate
+      tags:
+      - Pipelines
+      description: Creates or updates a pipeline.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: pipelineName
+        in: path
+        description: The pipeline name.
+        required: true
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: if-match
+        in: header
+        description: ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+        required: false
+        x-ms-client-name: If-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource 'PipelineResource' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Pipelines_Create:
+          $ref: ./examples/Pipelines_Create.json
+        Pipelines_Update:
+          $ref: ./examples/Pipelines_Update.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineResource'
+        description: Pipeline resource definition.
+        required: true
+      summary: Pipelines create or update
+      x-summary-source: derived
+    delete:
+      operationId: Pipelines_Delete
+      tags:
+      - Pipelines
+      description: Deletes a pipeline.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: pipelineName
+        in: path
+        description: The pipeline name.
+        required: true
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Pipelines_Delete:
+          $ref: ./examples/Pipelines_Delete.json
+      summary: Pipelines delete
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
+  : post:
+      operationId: Pipelines_CreateRun
+      tags:
+      - Pipelines
+      description: Creates a run of a pipeline.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: pipelineName
+        in: path
+        description: The pipeline name.
+        required: true
+        schema:
+          type: string
+          maxLength: 260
+          minLength: 1
+          pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+      - name: referencePipelineRunId
+        in: query
+        description: The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run.
+        required: false
+        schema:
+          type: string
+      - name: isRecovery
+        in: query
+        description: Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId.
+        required: false
+        schema:
+          type: boolean
+      - name: startActivityName
+        in: query
+        description: In recovery mode, the rerun will start from this activity. If not specified, all activities will run.
+        required: false
+        schema:
+          type: string
+      - name: startFromFailure
+        in: query
+        description: In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified.
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRunResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        Pipelines_CreateRun:
+          $ref: ./examples/Pipelines_CreateRun.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+        description: Parameters of the pipeline run. These parameters will be used only if the runId is not specified.
+      summary: Pipelines create run
+      x-summary-source: derived
+components:
+  schemas:
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    DependencyCondition:
+      type: string
+      enum:
+      - Succeeded
+      - Failed
+      - Skipped
+      - Completed
+      x-ms-enum:
+        name: DependencyCondition
+        modelAsString: true
+        values:
+        - name: Succeeded
+          value: Succeeded
+          description: Succeeded
+        - name: Failed
+          value: Failed
+          description: Failed
+        - name: Skipped
+          value: Skipped
+          description: Skipped
+        - name: Completed
+          value: Completed
+          description: Completed
+    ParameterType:
+      type: string
+      description: Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      - SecureString
+      x-ms-enum:
+        name: ParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+        - name: SecureString
+          value: SecureString
+          description: SecureString
+    Pipeline:
+      type: object
+      description: A data factory pipeline.
+      properties:
+        description:
+          type: string
+          description: The description of the pipeline.
+        activities:
+          type: array
+          description: List of activities in pipeline.
+          items:
+            $ref: '#/components/schemas/Activity'
+          x-ms-identifiers:
+          - name
+        parameters:
+          type: object
+          description: List of parameters for pipeline.
+          additionalProperties:
+            $ref: '#/components/schemas/ParameterSpecification'
+        variables:
+          type: object
+          description: List of variables for pipeline.
+          additionalProperties:
+            $ref: '#/components/schemas/VariableSpecification'
+        concurrency:
+          type: integer
+          format: int32
+          description: The max number of concurrent runs for the pipeline.
+          minimum: 1
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the Pipeline.
+          items: {}
+        runDimensions:
+          type: object
+          description: Dimensions emitted by Pipeline.
+          additionalProperties: {}
+        folder:
+          $ref: '#/components/schemas/PipelineFolder'
+          description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+        policy:
+          $ref: '#/components/schemas/PipelinePolicy'
+          description: Pipeline Policy.
+    PipelineElapsedTimeMetricPolicy:
+      type: object
+      description: Pipeline ElapsedTime Metric Policy.
+      properties:
+        duration:
+          description: TimeSpan value, after which an Azure Monitoring Metric is fired.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    PipelineResource:
+      type: object
+      description: Pipeline resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/Pipeline'
+          description: Properties of the pipeline.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      additionalProperties: {}
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+    VariableSpecification:
+      type: object
+      description: Definition of a single variable for a Pipeline.
+      properties:
+        type:
+          $ref: '#/components/schemas/VariableType'
+          description: Variable type.
+        defaultValue:
+          description: Default value of variable.
+      required:
+      - type
+    PipelinePolicy:
+      type: object
+      description: Pipeline Policy.
+      properties:
+        elapsedTimeMetric:
+          $ref: '#/components/schemas/PipelineElapsedTimeMetricPolicy'
+          description: Pipeline ElapsedTime Metric Policy.
+    Activity:
+      type: object
+      description: A pipeline activity.
+      properties:
+        name:
+          type: string
+          description: Activity name.
+        type:
+          type: string
+          description: Type of activity.
+        description:
+          type: string
+          description: Activity description.
+        state:
+          $ref: '#/components/schemas/ActivityState'
+          description: Activity state. This is an optional property and if not provided, the state will be Active by default.
+        onInactiveMarkAs:
+          $ref: '#/components/schemas/ActivityOnInactiveMarkAs'
+          description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+        dependsOn:
+          type: array
+          description: Activity depends on condition.
+          items:
+            $ref: '#/components/schemas/ActivityDependency'
+          x-ms-identifiers: []
+        userProperties:
+          type: array
+          description: Activity user properties.
+          items:
+            $ref: '#/components/schemas/UserProperty'
+          x-ms-identifiers:
+          - name
+      discriminator:
+        propertyName: type
+      required:
+      - name
+      - type
+      additionalProperties: {}
+    PipelineListResponse:
+      type: object
+      description: A list of pipeline resources.
+      properties:
+        value:
+          type: array
+          description: The PipelineResource items on this page
+          items:
+            $ref: '#/components/schemas/PipelineResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    ActivityDependency:
+      type: object
+      description: Activity dependency information.
+      properties:
+        activity:
+          type: string
+          description: Activity name.
+        dependencyConditions:
+          type: array
+          description: Match-Condition for the dependency.
+          items:
+            $ref: '#/components/schemas/DependencyCondition'
+      required:
+      - activity
+      - dependencyConditions
+      additionalProperties: {}
+    PipelineFolder:
+      type: object
+      description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+      properties:
+        name:
+          type: string
+          description: The name of the folder that this Pipeline is in.
+    ActivityState:
+      type: string
+      description: Activity state. This is an optional property and if not provided, the state will be Active by default.
+      enum:
+      - Active
+      - Inactive
+      x-ms-enum:
+        name: ActivityState
+        modelAsString: true
+        values:
+        - name: Active
+          value: Active
+          description: Active
+        - name: Inactive
+          value: Inactive
+          description: Inactive
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    VariableType:
+      type: string
+      description: Variable type.
+      enum:
+      - String
+      - Bool
+      - Array
+      x-ms-enum:
+        name: VariableType
+        modelAsString: true
+        values:
+        - name: String
+          value: String
+          description: String
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+    UserProperty:
+      type: object
+      description: User property.
+      properties:
+        name:
+          type: string
+          description: User property name.
+        value:
+          description: 'User property value. Type: string (or Expression with resultType string).'
+      required:
+      - name
+      - value
+    ActivityOnInactiveMarkAs:
+      type: string
+      description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+      enum:
+      - Succeeded
+      - Failed
+      - Skipped
+      x-ms-enum:
+        name: ActivityOnInactiveMarkAs
+        modelAsString: true
+        values:
+        - name: Succeeded
+          value: Succeeded
+          description: Succeeded
+        - name: Failed
+          value: Failed
+          description: Failed
+        - name: Skipped
+          value: Skipped
+          description: Skipped
+    CreateRunResponse:
+      type: object
+      description: Response body with a run identifier.
+      properties:
+        runId:
+          type: string
+          description: Identifier of a run.
+      required:
+      - runId
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.
+x-provenance:
+  method: harvested
+  publisher: Azure Data Factory
+  source: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

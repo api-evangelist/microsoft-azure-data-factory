@@ -2,6 +2,7 @@
 generated: '2026-10-28'
 method: searched
 source: https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/
+name: Azure Data Factory API Plans
 sources:
 - https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/
 provenance:
@@ -136,7 +137,7 @@ rate_limit_statements:
 - $1/hour (Up to 800 concurrent pipeline activities)
 - The minimum cluster size to run a Data Flow is 8 vCores
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid
