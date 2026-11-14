@@ -19,9 +19,9 @@ paths:
       - privateEndPointConnections
       description: Lists Private endpoint connections
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        privateEndPointConnections_ListByFactory:
-          $ref: ./examples/PrivateEndPointConnections_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
       summary: Private end point connections list by factory
@@ -58,9 +55,9 @@ paths:
       - privateEndPointConnections
       description: Gets a private endpoint connection
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -96,9 +93,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Get a private endpoint connection for a datafactory.:
-          $ref: ./examples/GetPrivateEndpointConnection.json
       summary: Private endpoint connection get
       x-summary-source: derived
     put:
@@ -107,9 +101,9 @@ paths:
       - privateEndPointConnections
       description: Approves or rejects a private endpoint connection
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -145,9 +139,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Approves or rejects a private endpoint connection for a factory.:
-          $ref: ./examples/ApproveRejectPrivateEndpointConnection.json
       requestBody:
         content:
           application/json:
@@ -162,9 +153,9 @@ paths:
       - privateEndPointConnections
       description: Deletes a private endpoint connection
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -191,13 +182,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Delete a private endpoint connection for a datafactory.:
-          $ref: ./examples/DeletePrivateEndpointConnection.json
       summary: Private endpoint connection delete
       x-summary-source: derived
 components:
   schemas:
+    PrivateEndpointConnectionResource:
+      type: object
+      description: Private Endpoint Connection ARM resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/RemotePrivateEndpointConnection'
+          description: Core resource properties
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      allOf:
+      - $ref: '#/components/schemas/ProxyResource'
+    RemotePrivateEndpointConnection:
+      type: object
+      description: A remote private endpoint connection
+      properties:
+        provisioningState:
+          type: string
+          readOnly: true
+        privateEndpoint:
+          $ref: '#/components/schemas/ArmIdWrapper'
+          description: PrivateEndpoint of a remote private endpoint connection
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkConnectionState'
+          description: The state of a private link connection
     PrivateLinkConnectionState:
       type: object
       description: The state of a private link connection
@@ -211,32 +225,6 @@ components:
         actionsRequired:
           type: string
           description: ActionsRequired for a private link connection
-    PrivateEndpointConnectionListResponse:
-      type: object
-      description: A list of linked service resources.
-      properties:
-        value:
-          type: array
-          description: The PrivateEndpointConnectionResource items on this page
-          items:
-            $ref: '#/components/schemas/PrivateEndpointConnectionResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -260,32 +248,38 @@ components:
       - code
       - message
       x-ms-external: true
-    PrivateEndpointConnectionResource:
+    PrivateEndpointConnectionListResponse:
       type: object
-      description: Private Endpoint Connection ARM resource.
+      description: A list of linked service resources.
       properties:
-        properties:
-          $ref: '#/components/schemas/RemotePrivateEndpointConnection'
-          description: Core resource properties
-        etag:
+        value:
+          type: array
+          description: The PrivateEndpointConnectionResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateEndpointConnectionResource'
+        nextLink:
           type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    ProxyResource:
+      type: object
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
       allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    RemotePrivateEndpointConnection:
+      - $ref: '#/components/schemas/Resource'
+    CloudError:
       type: object
-      description: A remote private endpoint connection
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        provisioningState:
-          type: string
-          readOnly: true
-        privateEndpoint:
-          $ref: '#/components/schemas/ArmIdWrapper'
-          description: PrivateEndpoint of a remote private endpoint connection
-        privateLinkServiceConnectionState:
-          $ref: '#/components/schemas/PrivateLinkConnectionState'
-          description: The state of a private link connection
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     ArmIdWrapper:
       type: object
       description: A wrapper for an ARM resource id
@@ -320,6 +314,15 @@ components:
           type: string
           description: Etag identifies change in the resource.
           readOnly: true
+    PrivateLinkConnectionApprovalRequestResource:
+      type: object
+      description: Private Endpoint Connection Approval ARM resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkConnectionApprovalRequest'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
     PrivateLinkConnectionApprovalRequest:
       type: object
       description: A request to approve or reject a private endpoint connection
@@ -330,15 +333,33 @@ components:
         privateEndpoint:
           $ref: '#/components/schemas/PrivateEndpoint'
           description: The resource of private endpoint.
-    PrivateLinkConnectionApprovalRequestResource:
-      type: object
-      description: Private Endpoint Connection Approval ARM resource.
-      properties:
-        properties:
-          $ref: '#/components/schemas/PrivateLinkConnectionApprovalRequest'
-          description: Core resource properties
-      allOf:
-      - $ref: '#/components/schemas/SubResource'
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

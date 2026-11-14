@@ -1,0 +1,781 @@
+openapi: 3.2.0
+info:
+  title: DataFactoryManagementClient Factories API
+  version: '2018-06-01'
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: factories
+paths:
+  /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories:
+    get:
+      operationId: Factories_List
+      tags:
+      - factories
+      description: Lists factories under the specified subscription.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactoryListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Factories list
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepo:
+    post:
+      operationId: Factories_ConfigureFactoryRepo
+      tags:
+      - factories
+      description: Updates a factory's repo information.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - name: locationId
+        in: path
+        description: The location identifier.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Factory'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactoryRepoUpdate'
+        description: The request body
+        required: true
+      summary: Factories configure factory repo
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories:
+    get:
+      operationId: Factories_ListByResourceGroup
+      tags:
+      - factories
+      description: Lists factories.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactoryListResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Factories list by resource group
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}:
+    get:
+      operationId: Factories_Get
+      tags:
+      - factories
+      description: Gets a factory.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: if-none-match
+        in: header
+        description: ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+        required: false
+        x-ms-client-name: If-None-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Factory'
+        '304':
+          description: The client has made a conditional request and the resource has not been modified.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      summary: Factories get
+      x-summary-source: derived
+    put:
+      operationId: Factories_CreateOrUpdate
+      tags:
+      - factories
+      description: Creates or updates a factory.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      - name: if-match
+        in: header
+        description: ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
+        required: false
+        x-ms-client-name: If-Match
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource 'Factory' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Factory'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Factory'
+        description: Factory resource definition.
+        required: true
+      summary: Factories create or update
+      x-summary-source: derived
+    patch:
+      operationId: Factories_Update
+      tags:
+      - factories
+      description: Updates a factory.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Factory'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactoryUpdateParameters'
+        description: The parameters for updating a factory.
+        required: true
+      summary: Factories update
+      x-summary-source: derived
+    delete:
+      operationId: Factories_Delete
+      tags:
+      - factories
+      description: Deletes a factory.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      summary: Factories delete
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getDataPlaneAccess
+  : post:
+      operationId: Factories_GetDataPlaneAccess
+      tags:
+      - factories
+      description: Get Data Plane access.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccessPolicy'
+        description: Data Plane user access policy definition.
+        required: true
+      summary: Factories get data plane access
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getGitHubAccessToken
+  : post:
+      operationId: Factories_GetGitHubAccessToken
+      tags:
+      - factories
+      description: Get GitHub Access Token.
+      parameters:
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
+      - name: factoryName
+        in: path
+        description: The factory name.
+        required: true
+        schema:
+          type: string
+          maxLength: 63
+          minLength: 3
+          pattern: ^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitHubAccessTokenResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitHubAccessTokenRequest'
+        description: Get GitHub access token request definition.
+        required: true
+      summary: Factories get git hub access token
+      x-summary-source: derived
+components:
+  schemas:
+    GitHubClientSecret:
+      type: object
+      description: Client secret information for factory's bring your own app repository configuration.
+      properties:
+        byoaSecretAkvUrl:
+          type: string
+          description: Bring your own app client secret AKV URL.
+        byoaSecretName:
+          type: string
+          description: Bring your own app client secret name in AKV.
+    AccessPolicyResponse:
+      type: object
+      description: Get Data Plane read only token response definition.
+      properties:
+        policy:
+          $ref: '#/components/schemas/UserAccessPolicy'
+          description: The user access policy.
+        accessToken:
+          type: string
+          description: Data Plane read only access token.
+        dataPlaneUrl:
+          type: string
+          description: Data Plane service base URL.
+    FactoryIdentityType:
+      type: string
+      description: The identity type.
+      enum:
+      - SystemAssigned
+      - UserAssigned
+      - SystemAssigned,UserAssigned
+      x-ms-enum:
+        name: FactoryIdentityType
+        modelAsString: true
+        values:
+        - name: SystemAssigned
+          value: SystemAssigned
+          description: SystemAssigned
+        - name: UserAssigned
+          value: UserAssigned
+          description: UserAssigned
+        - name: SystemAssigned,UserAssigned
+          value: SystemAssigned,UserAssigned
+          description: SystemAssigned,UserAssigned
+    Factory:
+      type: object
+      description: Factory resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/FactoryProperties'
+          description: Properties of the factory.
+          x-ms-client-flatten: true
+        identity:
+          $ref: '#/components/schemas/FactoryIdentity'
+          description: Managed service identity of the factory.
+        location:
+          type: string
+          description: The resource location.
+          x-ms-mutability:
+          - read
+          - create
+        tags:
+          type: object
+          description: The resource tags.
+          additionalProperties:
+            type: string
+        eTag:
+          type: string
+          description: If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.
+          readOnly: true
+      additionalProperties: {}
+      allOf:
+      - $ref: '#/components/schemas/ProxyResource'
+    FactoryUpdateParameters:
+      type: object
+      description: Parameters for updating a factory resource.
+      properties:
+        tags:
+          type: object
+          description: The resource tags.
+          additionalProperties:
+            type: string
+        identity:
+          $ref: '#/components/schemas/FactoryIdentity'
+          description: Managed service identity of the factory.
+        properties:
+          $ref: '#/components/schemas/FactoryUpdateProperties'
+          description: Properties of update the factory.
+          x-ms-client-flatten: true
+    FactoryIdentity:
+      type: object
+      description: Identity properties of the factory resource.
+      properties:
+        type:
+          $ref: '#/components/schemas/FactoryIdentityType'
+          description: The identity type.
+        principalId:
+          $ref: '#/components/schemas/Azure.Core.uuid'
+          description: The principal id of the identity.
+          readOnly: true
+        tenantId:
+          $ref: '#/components/schemas/Azure.Core.uuid'
+          description: The client tenant id of the identity.
+          readOnly: true
+        userAssignedIdentities:
+          type: object
+          description: List of user assigned identities for the factory.
+          additionalProperties: {}
+      required:
+      - type
+    Azure.Core.uuid:
+      type: string
+      format: uuid
+      description: Universally Unique Identifier
+    GitHubAccessTokenResponse:
+      type: object
+      description: Get GitHub access token response definition.
+      properties:
+        gitHubAccessToken:
+          type: string
+          description: GitHub access token.
+    PublicNetworkAccess:
+      type: string
+      description: Whether or not public network access is allowed for the data factory.
+      enum:
+      - Enabled
+      - Disabled
+      x-ms-enum:
+        name: PublicNetworkAccess
+        modelAsString: true
+        values:
+        - name: Enabled
+          value: Enabled
+          description: Enabled
+        - name: Disabled
+          value: Disabled
+          description: Disabled
+    GlobalParameterType:
+      type: string
+      description: Global Parameter type.
+      enum:
+      - Object
+      - String
+      - Int
+      - Float
+      - Bool
+      - Array
+      x-ms-enum:
+        name: GlobalParameterType
+        modelAsString: true
+        values:
+        - name: Object
+          value: Object
+          description: Object
+        - name: String
+          value: String
+          description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+    GitHubAccessTokenRequest:
+      type: object
+      description: Get GitHub access token request definition.
+      properties:
+        gitHubAccessCode:
+          type: string
+          description: GitHub access code.
+        gitHubClientId:
+          type: string
+          description: GitHub application client ID.
+        gitHubClientSecret:
+          $ref: '#/components/schemas/GitHubClientSecret'
+          description: GitHub bring your own app client secret information.
+        gitHubAccessTokenBaseUrl:
+          type: string
+          description: GitHub access token base URL.
+      required:
+      - gitHubAccessCode
+      - gitHubAccessTokenBaseUrl
+    EncryptionConfiguration:
+      type: object
+      description: Definition of CMK for the factory.
+      properties:
+        keyName:
+          type: string
+          description: The name of the key in Azure Key Vault to use as Customer Managed Key.
+        vaultBaseUrl:
+          type: string
+          description: The url of the Azure Key Vault used for CMK.
+        keyVersion:
+          type: string
+          description: The version of the key used for CMK. If not provided, latest version will be used.
+        identity:
+          $ref: '#/components/schemas/CMKIdentityDefinition'
+          description: User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used.
+      required:
+      - keyName
+      - vaultBaseUrl
+    CMKIdentityDefinition:
+      type: object
+      description: Managed Identity used for CMK.
+      properties:
+        userAssignedIdentity:
+          type: string
+          description: The resource id of the user assigned identity to authenticate to customer's key vault.
+    ProxyResource:
+      type: object
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+    UserAccessPolicy:
+      type: object
+      description: Get Data Plane read only token request definition.
+      properties:
+        permissions:
+          type: string
+          description: The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access.
+        accessResourcePath:
+          type: string
+          description: The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource.
+        profileName:
+          type: string
+          description: The name of the profile. Currently only the default is supported. The default value is DefaultProfile.
+        startTime:
+          type: string
+          description: Start time for the token. If not specified the current time will be used.
+        expireTime:
+          type: string
+          description: Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    FactoryListResponse:
+      type: object
+      description: A list of factory resources.
+      properties:
+        value:
+          type: array
+          description: The Factory items on this page
+          items:
+            $ref: '#/components/schemas/Factory'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    PurviewConfiguration:
+      type: object
+      description: Purview configuration.
+      properties:
+        purviewResourceId:
+          type: string
+          description: Purview resource id.
+    FactoryRepoUpdate:
+      type: object
+      description: Factory's git repo information.
+      properties:
+        factoryResourceId:
+          type: string
+          description: The factory resource id.
+        repoConfiguration:
+          $ref: '#/components/schemas/FactoryRepoConfiguration'
+          description: Git repo information of the factory.
+    FactoryUpdateProperties:
+      type: object
+      description: Factory update resource properties.
+      properties:
+        publicNetworkAccess:
+          $ref: '#/components/schemas/PublicNetworkAccess'
+          description: Whether or not public network access is allowed for the data factory.
+    FactoryProperties:
+      type: object
+      description: Factory resource properties.
+      properties:
+        provisioningState:
+          type: string
+          description: Factory provisioning state, example Succeeded.
+          readOnly: true
+        createTime:
+          type: string
+          format: date-time
+          description: Time the factory was created in ISO8601 format.
+          readOnly: true
+        version:
+          type: string
+          description: Version of the factory.
+          readOnly: true
+        purviewConfiguration:
+          $ref: '#/components/schemas/PurviewConfiguration'
+          description: Purview information of the factory.
+        repoConfiguration:
+          $ref: '#/components/schemas/FactoryRepoConfiguration'
+          description: Git repo information of the factory.
+        globalParameters:
+          type: object
+          description: List of parameters for factory.
+          additionalProperties:
+            $ref: '#/components/schemas/GlobalParameterSpecification'
+        encryption:
+          $ref: '#/components/schemas/EncryptionConfiguration'
+          description: Properties to enable Customer Managed Key for the factory.
+        publicNetworkAccess:
+          $ref: '#/components/schemas/PublicNetworkAccess'
+          description: Whether or not public network access is allowed for the data factory.
+    CloudErrorBody:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error.
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+        target:
+          type: string
+          description: Property name/path in request associated with error.
+        details:
+          type: array
+          description: Array with additional error details.
+          items:
+            $ref: '#/components/schemas/CloudError'
+          x-ms-identifiers: []
+      required:
+      - code
+      - message
+      x-ms-external: true
+    GlobalParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/GlobalParameterType'
+          description: Global Parameter type.
+        value:
+          description: Value of parameter.
+      required:
+      - type
+      - value
+    FactoryRepoConfiguration:
+      type: object
+      description: Factory's git repo information.
+      properties:
+        type:
+          type: string
+          description: Type of repo configuration.
+        accountName:
+          type: string
+          description: Account name.
+        repositoryName:
+          type: string
+          description: Repository name.
+        collaborationBranch:
+          type: string
+          description: Collaboration branch.
+        rootFolder:
+          type: string
+          description: Root folder.
+        lastCommitId:
+          type: string
+          description: Last commit id.
+        disablePublish:
+          type: boolean
+          description: Disable manual publish operation in ADF studio to favor automated publish.
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      - accountName
+      - repositoryName
+      - collaborationBranch
+      - rootFolder
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.
+x-provenance:
+  method: harvested
+  publisher: Azure Data Factory
+  source: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

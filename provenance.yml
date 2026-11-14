@@ -5,10 +5,19 @@ artifacts:
   agentic-access/microsoft-azure-data-factory-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/microsoft-azure-data-factory-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/microsoft-azure-data-factory-authentication.yml:
     method: searched
     evidence: declared in the artifact
   capabilities/microsoft-azure-data-factory-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
     method: unknown
     evidence: no authorship recorded
   changelog/microsoft-azure-data-factory-changelog.yml:
@@ -41,8 +50,14 @@ artifacts:
   conventions/microsoft-azure-data-factory-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/microsoft-azure-data-factory-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/microsoft-azure-data-factory-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/microsoft-azure-data-factory-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/microsoft-azure-data-factory-problem-types.yml:
     method: derived
@@ -599,7 +614,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -665,6 +680,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/microsoft-azure-data-factory-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -684,6 +702,13 @@ artifacts:
     method: harvested
     evidence: byte-identical to https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
       (sha256 4909c6f99d7b, fetched 2026-10-04)
+  ? openapi/_original/microsoft-azure-data-factory-datafactory-resource-manager-Microsoft.DataFactory-DataFactory-stable-2018-06-01-openapi.json
+  : method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
+  ? openapi/_original/microsoft-azure-data-factory-datafactory-resource-manager-Microsoft.DataFactory-DataFactory-stable-2018-06-01-openapi.json.provenance.txt
+  : method: searched
+    evidence: declared in the artifact
   openapi/microsoft-azure-data-factory-activityruns-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -706,8 +731,8 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-factories-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/microsoft-azure-data-factory-globalparameters-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -959,6 +984,9 @@ artifacts:
     evidence: no authorship recorded
   sla/microsoft-azure-data-factory-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/microsoft-azure-data-factory-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vendors/microsoft-azure-data-factory-vendors.yml:
     method: unknown

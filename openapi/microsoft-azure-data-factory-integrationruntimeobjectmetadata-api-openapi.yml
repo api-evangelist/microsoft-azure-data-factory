@@ -19,9 +19,9 @@ paths:
       - integrationRuntimeObjectMetadata
       description: Get a SSIS integration runtime object metadata by specified path. The return is pageable metadata list.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -53,9 +53,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimeObjectMetadata_Get:
-          $ref: ./examples/IntegrationRuntimeObjectMetadata_Get.json
       requestBody:
         content:
           application/json:
@@ -71,9 +68,9 @@ paths:
       - integrationRuntimeObjectMetadata
       description: Refresh a SSIS integration runtime object metadata.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -117,9 +114,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimeObjectMetadata_Refresh:
-          $ref: ./examples/IntegrationRuntimeObjectMetadata_Refresh.json
       x-ms-long-running-operation-options:
         final-state-via: location
         final-state-schema: '#/definitions/SsisObjectMetadataStatusResponse'
@@ -128,17 +122,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -162,43 +145,21 @@ components:
       - code
       - message
       x-ms-external: true
-    SsisObjectMetadata:
+    SsisObjectMetadataListResponse:
       type: object
-      description: SSIS object metadata.
+      description: A list of SSIS object metadata.
       properties:
-        type:
-          $ref: '#/components/schemas/SsisObjectMetadataType'
-          description: Type of metadata.
-        id:
-          type: integer
-          format: int64
-          description: Metadata id.
-        name:
+        value:
+          type: array
+          description: The SsisObjectMetadata items on this page
+          items:
+            $ref: '#/components/schemas/SsisObjectMetadata'
+        nextLink:
           type: string
-          description: Metadata name.
-        description:
-          type: string
-          description: Metadata description.
-      discriminator:
-        propertyName: type
+          format: uri
+          description: The link to the next page of items
       required:
-      - type
-    SsisObjectMetadataStatusResponse:
-      type: object
-      description: The status of the operation.
-      properties:
-        status:
-          type: string
-          description: The status of the operation.
-        name:
-          type: string
-          description: The operation name.
-        properties:
-          type: string
-          description: The operation properties.
-        error:
-          type: string
-          description: The operation error message.
+      - value
     SsisObjectMetadataType:
       type: string
       description: The type of SSIS object metadata.
@@ -223,6 +184,43 @@ components:
         - name: Environment
           value: Environment
           description: Environment
+    SsisObjectMetadataStatusResponse:
+      type: object
+      description: The status of the operation.
+      properties:
+        status:
+          type: string
+          description: The status of the operation.
+        name:
+          type: string
+          description: The operation name.
+        properties:
+          type: string
+          description: The operation properties.
+        error:
+          type: string
+          description: The operation error message.
+    SsisObjectMetadata:
+      type: object
+      description: SSIS object metadata.
+      properties:
+        type:
+          $ref: '#/components/schemas/SsisObjectMetadataType'
+          description: Type of metadata.
+        id:
+          type: integer
+          format: int64
+          description: Metadata id.
+        name:
+          type: string
+          description: Metadata name.
+        description:
+          type: string
+          description: Metadata description.
+      discriminator:
+        propertyName: type
+      required:
+      - type
     GetSsisObjectMetadataRequest:
       type: object
       description: The request payload of get SSIS object metadata.
@@ -230,21 +228,44 @@ components:
         metadataPath:
           type: string
           description: Metadata path.
-    SsisObjectMetadataListResponse:
+    CloudError:
       type: object
-      description: A list of SSIS object metadata.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        value:
-          type: array
-          description: The SsisObjectMetadata items on this page
-          items:
-            $ref: '#/components/schemas/SsisObjectMetadata'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - value
+      - error
+      x-ms-external: true
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

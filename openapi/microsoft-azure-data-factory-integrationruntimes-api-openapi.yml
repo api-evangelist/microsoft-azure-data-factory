@@ -19,9 +19,9 @@ paths:
       - integrationRuntimes
       description: Lists integration runtimes.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_ListByFactory:
-          $ref: ./examples/IntegrationRuntimes_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
       summary: Integration runtimes list by factory
@@ -58,9 +55,9 @@ paths:
       - integrationRuntimes
       description: Gets an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -101,9 +98,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Get:
-          $ref: ./examples/IntegrationRuntimes_Get.json
       summary: Integration runtimes get
       x-summary-source: derived
     put:
@@ -112,9 +106,9 @@ paths:
       - integrationRuntimes
       description: Creates or updates an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -153,9 +147,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Create:
-          $ref: ./examples/IntegrationRuntimes_Create.json
       requestBody:
         content:
           application/json:
@@ -171,9 +162,9 @@ paths:
       - integrationRuntimes
       description: Updates an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -205,9 +196,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Update:
-          $ref: ./examples/IntegrationRuntimes_Update.json
       requestBody:
         content:
           application/json:
@@ -223,9 +211,9 @@ paths:
       - integrationRuntimes
       description: Deletes an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -255,9 +243,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Delete:
-          $ref: ./examples/IntegrationRuntimes_Delete.json
       summary: Integration runtimes delete
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getConnectionInfo
@@ -267,9 +252,9 @@ paths:
       - integrationRuntimes
       description: Gets the on-premises integration runtime connection information for encrypting the on-premises data source credentials.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -301,9 +286,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_GetConnectionInfo:
-          $ref: ./examples/IntegrationRuntimes_GetConnectionInfo.json
       summary: Integration runtimes get connection info
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getStatus
@@ -313,9 +295,9 @@ paths:
       - integrationRuntimes
       description: Gets detailed status information for an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -347,9 +329,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_GetStatus:
-          $ref: ./examples/IntegrationRuntimes_GetStatus.json
       summary: Integration runtimes get status
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/linkedIntegrationRuntime
@@ -359,9 +338,9 @@ paths:
       - integrationRuntimes
       description: Create a linked integration runtime entry in a shared integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -393,9 +372,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_CreateLinkedIntegrationRuntime:
-          $ref: ./examples/IntegrationRuntimes_CreateLinkedIntegrationRuntime.json
       requestBody:
         content:
           application/json:
@@ -412,9 +388,9 @@ paths:
       - integrationRuntimes
       description: Retrieves the authentication keys for an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -446,9 +422,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_ListAuthKeys:
-          $ref: ./examples/IntegrationRuntimes_ListAuthKeys.json
       summary: Integration runtimes list auth keys
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/monitoringData
@@ -458,9 +431,9 @@ paths:
       - integrationRuntimes
       description: Get the integration runtime monitoring data, which includes the monitor data for all the nodes under this integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -492,9 +465,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_GetMonitoringData:
-          $ref: ./examples/IntegrationRuntimes_GetMonitoringData.json
       summary: Integration runtimes get monitoring data
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/outboundNetworkDependenciesEndpoints
@@ -504,9 +474,9 @@ paths:
       - integrationRuntimes
       description: Gets the list of outbound network dependencies for a given Azure-SSIS integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -538,9 +508,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_OutboundNetworkDependenciesEndpoints:
-          $ref: ./examples/IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints.json
       summary: Integration runtimes list outbound network dependencies endpoints
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/regenerateAuthKey
@@ -550,9 +517,9 @@ paths:
       - integrationRuntimes
       description: Regenerates the authentication key for an integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -584,9 +551,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_RegenerateAuthKey:
-          $ref: ./examples/IntegrationRuntimes_RegenerateAuthKey.json
       requestBody:
         content:
           application/json:
@@ -603,9 +567,9 @@ paths:
       - integrationRuntimes
       description: Remove all linked integration runtimes under specific data factory in a self-hosted integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -633,9 +597,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Upgrade:
-          $ref: ./examples/IntegrationRuntimes_RemoveLinks.json
       requestBody:
         content:
           application/json:
@@ -652,9 +613,9 @@ paths:
       - integrationRuntimes
       description: Starts a ManagedReserved type integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -698,9 +659,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Start:
-          $ref: ./examples/IntegrationRuntimes_Start.json
       x-ms-long-running-operation-options:
         final-state-via: location
         final-state-schema: '#/definitions/IntegrationRuntimeStatusResponse'
@@ -714,9 +672,9 @@ paths:
       - integrationRuntimes
       description: Stops a ManagedReserved type integration runtime.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -756,9 +714,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Stop:
-          $ref: ./examples/IntegrationRuntimes_Stop.json
       x-ms-long-running-operation-options:
         final-state-via: location
       x-ms-long-running-operation: true
@@ -771,9 +726,9 @@ paths:
       - integrationRuntimes
       description: Force the integration runtime to synchronize credentials across integration runtime nodes, and this will override the credentials across all worker nodes with those available on the dispatcher node. If you already have the latest credential backup file, you should manually import it (preferred) on any self-hosted integration runtime node than using this API directly.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -801,9 +756,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_SyncCredentials:
-          $ref: ./examples/IntegrationRuntimes_SyncCredentials.json
       summary: Integration runtimes sync credentials
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/upgrade
@@ -813,9 +765,9 @@ paths:
       - integrationRuntimes
       description: Upgrade self-hosted integration runtime to latest version if availability.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -843,27 +795,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        IntegrationRuntimes_Upgrade:
-          $ref: ./examples/IntegrationRuntimes_Upgrade.json
       summary: Integration runtimes upgrade
       x-summary-source: derived
 components:
   schemas:
-    IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint:
+    IntegrationRuntimeRegenerateKeyParameters:
       type: object
-      description: Azure-SSIS integration runtime outbound network dependency endpoints for one category.
+      description: Parameters to regenerate the authentication key.
       properties:
-        category:
-          type: string
-          description: The category of outbound network dependency.
-        endpoints:
-          type: array
-          description: The endpoints for outbound network dependency.
-          items:
-            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpoint'
-          x-ms-identifiers:
-          - domainName
+        keyName:
+          $ref: '#/components/schemas/IntegrationRuntimeAuthKeyName'
+          description: The name of the authentication key to regenerate.
     IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails:
       type: object
       description: The details of Azure-SSIS integration runtime outbound network dependency endpoint.
@@ -872,17 +814,142 @@ components:
           type: integer
           format: int32
           description: The port of endpoint.
-    CloudError:
+    IntegrationRuntimeMonitoringData:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Get monitoring data response.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        name:
+          type: string
+          description: Integration runtime name.
+        nodes:
+          type: array
+          description: Integration runtime node monitoring data.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeNodeMonitoringData'
+          x-ms-identifiers:
+          - nodeName
+    IntegrationRuntimeType:
+      type: string
+      description: The type of integration runtime.
+      enum:
+      - Managed
+      - SelfHosted
+      x-ms-enum:
+        name: IntegrationRuntimeType
+        modelAsString: true
+        values:
+        - name: Managed
+          value: Managed
+          description: Managed
+        - name: SelfHosted
+          value: SelfHosted
+          description: SelfHosted
+    IntegrationRuntime:
+      type: object
+      description: Azure Data Factory nested object which serves as a compute resource for activities.
+      properties:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        description:
+          type: string
+          description: Integration runtime description.
+      discriminator:
+        propertyName: type
       required:
-      - error
-      x-ms-external: true
+      - type
+      additionalProperties: {}
+    IntegrationRuntimeResource:
+      type: object
+      description: Integration runtime resource type.
+      properties:
+        properties:
+          $ref: '#/components/schemas/IntegrationRuntime'
+          description: Integration runtime properties.
+        etag:
+          type: string
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
+      required:
+      - properties
+      allOf:
+      - $ref: '#/components/schemas/ProxyResource'
+    CreateLinkedIntegrationRuntimeRequest:
+      type: object
+      description: The linked integration runtime information.
+      properties:
+        name:
+          type: string
+          description: The name of the linked integration runtime.
+        subscriptionId:
+          type: string
+          description: The ID of the subscription that the linked integration runtime belongs to.
+        dataFactoryName:
+          type: string
+          description: The name of the data factory that the linked integration runtime belongs to.
+        dataFactoryLocation:
+          type: string
+          description: The location of the data factory that the linked integration runtime belongs to.
+    IntegrationRuntimeAuthKeys:
+      type: object
+      description: The integration runtime authentication keys.
+      properties:
+        authKey1:
+          type: string
+          description: The primary integration runtime authentication key.
+        authKey2:
+          type: string
+          description: The secondary integration runtime authentication key.
+    IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse:
+      type: object
+      description: Azure-SSIS integration runtime outbound network dependency endpoints.
+      properties:
+        value:
+          type: array
+          description: The list of outbound network dependency endpoints.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint'
+          x-ms-identifiers:
+          - category
+    UpdateIntegrationRuntimeRequest:
+      type: object
+      description: Update integration runtime request.
+      properties:
+        autoUpdate:
+          $ref: '#/components/schemas/IntegrationRuntimeAutoUpdate'
+          description: Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
+        updateDelayOffset:
+          type: string
+          description: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
+    IntegrationRuntimeConnectionInfo:
+      type: object
+      description: Connection information for encrypting the on-premises data source credentials.
+      properties:
+        serviceToken:
+          type: string
+          description: The token generated in service. Callers use this token to authenticate to integration runtime.
+          readOnly: true
+        identityCertThumbprint:
+          type: string
+          description: The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
+          readOnly: true
+        hostServiceUri:
+          type: string
+          description: The on-premises integration runtime host URL.
+          readOnly: true
+        version:
+          type: string
+          description: The integration runtime version.
+          readOnly: true
+        publicKey:
+          type: string
+          description: The public key for encrypting a credential when transferring the credential to the integration runtime.
+          readOnly: true
+        isIdentityCertExprired:
+          type: boolean
+          description: Whether the identity certificate is expired.
+          readOnly: true
+      additionalProperties: {}
     IntegrationRuntimeState:
       type: string
       description: The state of integration runtime.
@@ -946,6 +1013,36 @@ components:
           description: The link to the next page of items
       required:
       - value
+    IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint:
+      type: object
+      description: Azure-SSIS integration runtime outbound network dependency endpoints for one category.
+      properties:
+        category:
+          type: string
+          description: The category of outbound network dependency.
+        endpoints:
+          type: array
+          description: The endpoints for outbound network dependency.
+          items:
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpoint'
+          x-ms-identifiers:
+          - domainName
+    IntegrationRuntimeAuthKeyName:
+      type: string
+      description: The name of the authentication key to regenerate.
+      enum:
+      - authKey1
+      - authKey2
+      x-ms-enum:
+        name: IntegrationRuntimeAuthKeyName
+        modelAsString: true
+        values:
+        - name: authKey1
+          value: authKey1
+          description: authKey1
+        - name: authKey2
+          value: authKey2
+          description: authKey2
     IntegrationRuntimeStatusResponse:
       type: object
       description: Integration runtime status response.
@@ -959,42 +1056,22 @@ components:
           description: Integration runtime properties.
       required:
       - properties
-    IntegrationRuntimeType:
-      type: string
-      description: The type of integration runtime.
-      enum:
-      - Managed
-      - SelfHosted
-      x-ms-enum:
-        name: IntegrationRuntimeType
-        modelAsString: true
-        values:
-        - name: Managed
-          value: Managed
-          description: Managed
-        - name: SelfHosted
-          value: SelfHosted
-          description: SelfHosted
-    IntegrationRuntimeStatus:
+    ProxyResource:
       type: object
-      description: Integration runtime status.
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+    LinkedIntegrationRuntimeRequest:
+      type: object
+      description: Data factory name for linked integration runtime request.
       properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        dataFactoryName:
+        factoryName:
           type: string
-          description: The data factory name which the integration runtime belong to.
-          readOnly: true
-        state:
-          $ref: '#/components/schemas/IntegrationRuntimeState'
-          description: The state of integration runtime.
-          readOnly: true
-      discriminator:
-        propertyName: type
+          description: The data factory name for linked integration runtime.
+          x-ms-client-name: linkedFactoryName
       required:
-      - type
-      additionalProperties: {}
+      - factoryName
     IntegrationRuntimeNodeMonitoringData:
       type: object
       description: Monitoring data for integration runtime node.
@@ -1039,141 +1116,31 @@ components:
           description: Received bytes on the integration runtime node.
           readOnly: true
       additionalProperties: {}
-    LinkedIntegrationRuntimeRequest:
+    CloudError:
       type: object
-      description: Data factory name for linked integration runtime request.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        factoryName:
-          type: string
-          description: The data factory name for linked integration runtime.
-          x-ms-client-name: linkedFactoryName
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
       required:
-      - factoryName
-    IntegrationRuntimeAuthKeyName:
-      type: string
-      description: The name of the authentication key to regenerate.
-      enum:
-      - authKey1
-      - authKey2
-      x-ms-enum:
-        name: IntegrationRuntimeAuthKeyName
-        modelAsString: true
-        values:
-        - name: authKey1
-          value: authKey1
-          description: authKey1
-        - name: authKey2
-          value: authKey2
-          description: authKey2
-    CreateLinkedIntegrationRuntimeRequest:
+      - error
+      x-ms-external: true
+    IntegrationRuntimeOutboundNetworkDependenciesEndpoint:
       type: object
-      description: The linked integration runtime information.
+      description: The endpoint for Azure-SSIS integration runtime outbound network dependency.
       properties:
-        name:
+        domainName:
           type: string
-          description: The name of the linked integration runtime.
-        subscriptionId:
-          type: string
-          description: The ID of the subscription that the linked integration runtime belongs to.
-        dataFactoryName:
-          type: string
-          description: The name of the data factory that the linked integration runtime belongs to.
-        dataFactoryLocation:
-          type: string
-          description: The location of the data factory that the linked integration runtime belongs to.
-    IntegrationRuntimeRegenerateKeyParameters:
-      type: object
-      description: Parameters to regenerate the authentication key.
-      properties:
-        keyName:
-          $ref: '#/components/schemas/IntegrationRuntimeAuthKeyName'
-          description: The name of the authentication key to regenerate.
-    IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse:
-      type: object
-      description: Azure-SSIS integration runtime outbound network dependency endpoints.
-      properties:
-        value:
+          description: The domain name of endpoint.
+        endpointDetails:
           type: array
-          description: The list of outbound network dependency endpoints.
+          description: The details of endpoint.
           items:
-            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint'
+            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails'
           x-ms-identifiers:
-          - category
-    IntegrationRuntimeResource:
-      type: object
-      description: Integration runtime resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/IntegrationRuntime'
-          description: Integration runtime properties.
-        etag:
-          type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
-      required:
-      - properties
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    IntegrationRuntimeConnectionInfo:
-      type: object
-      description: Connection information for encrypting the on-premises data source credentials.
-      properties:
-        serviceToken:
-          type: string
-          description: The token generated in service. Callers use this token to authenticate to integration runtime.
-          readOnly: true
-        identityCertThumbprint:
-          type: string
-          description: The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
-          readOnly: true
-        hostServiceUri:
-          type: string
-          description: The on-premises integration runtime host URL.
-          readOnly: true
-        version:
-          type: string
-          description: The integration runtime version.
-          readOnly: true
-        publicKey:
-          type: string
-          description: The public key for encrypting a credential when transferring the credential to the integration runtime.
-          readOnly: true
-        isIdentityCertExprired:
-          type: boolean
-          description: Whether the identity certificate is expired.
-          readOnly: true
-      additionalProperties: {}
-    IntegrationRuntime:
-      type: object
-      description: Azure Data Factory nested object which serves as a compute resource for activities.
-      properties:
-        type:
-          $ref: '#/components/schemas/IntegrationRuntimeType'
-          description: Type of integration runtime.
-        description:
-          type: string
-          description: Integration runtime description.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-      additionalProperties: {}
-    IntegrationRuntimeAutoUpdate:
-      type: string
-      description: The state of integration runtime auto update.
-      enum:
-      - 'On'
-      - 'Off'
-      x-ms-enum:
-        name: IntegrationRuntimeAutoUpdate
-        modelAsString: true
-        values:
-        - name: 'On'
-          value: 'On'
-          description: 'On'
-        - name: 'Off'
-          value: 'Off'
-          description: 'Off'
+          - port
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -1197,54 +1164,69 @@ components:
       - code
       - message
       x-ms-external: true
-    UpdateIntegrationRuntimeRequest:
+    IntegrationRuntimeAutoUpdate:
+      type: string
+      description: The state of integration runtime auto update.
+      enum:
+      - 'On'
+      - 'Off'
+      x-ms-enum:
+        name: IntegrationRuntimeAutoUpdate
+        modelAsString: true
+        values:
+        - name: 'On'
+          value: 'On'
+          description: 'On'
+        - name: 'Off'
+          value: 'Off'
+          description: 'Off'
+    IntegrationRuntimeStatus:
       type: object
-      description: Update integration runtime request.
+      description: Integration runtime status.
       properties:
-        autoUpdate:
-          $ref: '#/components/schemas/IntegrationRuntimeAutoUpdate'
-          description: Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        updateDelayOffset:
+        type:
+          $ref: '#/components/schemas/IntegrationRuntimeType'
+          description: Type of integration runtime.
+        dataFactoryName:
           type: string
-          description: The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
-    IntegrationRuntimeMonitoringData:
-      type: object
-      description: Get monitoring data response.
-      properties:
-        name:
-          type: string
-          description: Integration runtime name.
-        nodes:
-          type: array
-          description: Integration runtime node monitoring data.
-          items:
-            $ref: '#/components/schemas/IntegrationRuntimeNodeMonitoringData'
-          x-ms-identifiers:
-          - nodeName
-    IntegrationRuntimeAuthKeys:
-      type: object
-      description: The integration runtime authentication keys.
-      properties:
-        authKey1:
-          type: string
-          description: The primary integration runtime authentication key.
-        authKey2:
-          type: string
-          description: The secondary integration runtime authentication key.
-    IntegrationRuntimeOutboundNetworkDependenciesEndpoint:
-      type: object
-      description: The endpoint for Azure-SSIS integration runtime outbound network dependency.
-      properties:
-        domainName:
-          type: string
-          description: The domain name of endpoint.
-        endpointDetails:
-          type: array
-          description: The details of endpoint.
-          items:
-            $ref: '#/components/schemas/IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails'
-          x-ms-identifiers:
-          - port
+          description: The data factory name which the integration runtime belong to.
+          readOnly: true
+        state:
+          $ref: '#/components/schemas/IntegrationRuntimeState'
+          description: The state of integration runtime.
+          readOnly: true
+      discriminator:
+        propertyName: type
+      required:
+      - type
+      additionalProperties: {}
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

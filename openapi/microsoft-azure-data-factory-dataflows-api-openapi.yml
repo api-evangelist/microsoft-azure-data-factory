@@ -19,9 +19,9 @@ paths:
       - dataFlows
       description: Lists data flows.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        DataFlows_ListByFactory:
-          $ref: ./examples/DataFlows_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
       summary: Data flows list by factory
@@ -58,9 +55,9 @@ paths:
       - dataFlows
       description: Gets a data flow.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -99,9 +96,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        DataFlows_Get:
-          $ref: ./examples/DataFlows_Get.json
       summary: Data flows get
       x-summary-source: derived
     put:
@@ -110,9 +104,9 @@ paths:
       - dataFlows
       description: Creates or updates a data flow.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -151,11 +145,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        DataFlows_Create:
-          $ref: ./examples/DataFlows_Create.json
-        DataFlows_Update:
-          $ref: ./examples/DataFlows_Update.json
       requestBody:
         content:
           application/json:
@@ -171,9 +160,9 @@ paths:
       - dataFlows
       description: Deletes a data flow.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -203,60 +192,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        DataFlows_Delete:
-          $ref: ./examples/DataFlows_Delete.json
       summary: Data flows delete
       x-summary-source: derived
 components:
   schemas:
-    DataFlow:
-      type: object
-      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
-      properties:
-        type:
-          type: string
-          description: Type of data flow.
-        description:
-          type: string
-          description: The description of the data flow.
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the data flow.
-          items: {}
-        folder:
-          $ref: '#/components/schemas/DataFlowFolder'
-          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-      discriminator:
-        propertyName: type
-      required:
-      - type
-    CloudError:
-      type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    DataFlowListResponse:
-      type: object
-      description: A list of data flow resources.
-      properties:
-        value:
-          type: array
-          description: The DataFlowResource items on this page
-          items:
-            $ref: '#/components/schemas/DataFlowResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -280,6 +219,44 @@ components:
       - code
       - message
       x-ms-external: true
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    ProxyResource:
+      type: object
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+    DataFlow:
+      type: object
+      description: Azure Data Factory nested object which contains a flow with data movements and transformations.
+      properties:
+        type:
+          type: string
+          description: Type of data flow.
+        description:
+          type: string
+          description: The description of the data flow.
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the data flow.
+          items: {}
+        folder:
+          $ref: '#/components/schemas/DataFlowFolder'
+          description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+      discriminator:
+        propertyName: type
+      required:
+      - type
     DataFlowResource:
       type: object
       description: Data flow resource type.
@@ -294,7 +271,22 @@ components:
       required:
       - properties
       allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
+      - $ref: '#/components/schemas/ProxyResource'
+    DataFlowListResponse:
+      type: object
+      description: A list of data flow resources.
+      properties:
+        value:
+          type: array
+          description: The DataFlowResource items on this page
+          items:
+            $ref: '#/components/schemas/DataFlowResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     DataFlowFolder:
       type: object
       description: The folder that this data flow is in. If not specified, Data flow will appear at the root level.
@@ -302,6 +294,33 @@ components:
         name:
           type: string
           description: The name of the folder that this data flow is in.
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

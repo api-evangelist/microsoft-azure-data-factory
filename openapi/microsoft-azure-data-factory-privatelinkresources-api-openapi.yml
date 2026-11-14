@@ -19,9 +19,9 @@ paths:
       - privateLinkResources
       description: Gets the private link resources
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Get private link resources of a site:
-          $ref: ./examples/GetPrivateLinkResources.json
       summary: Private link resources get
       x-summary-source: derived
 components:
@@ -71,17 +68,26 @@ components:
           items:
             type: string
           readOnly: true
-    CloudError:
+    SubResource:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: Azure Data Factory nested resource, which belongs to a factory.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
+        id:
+          type: string
+          description: The resource identifier.
+          readOnly: true
+        name:
+          type: string
+          description: The resource name.
+          readOnly: true
+        type:
+          type: string
+          description: The resource type.
+          readOnly: true
+        etag:
+          type: string
+          description: Etag identifies change in the resource.
+          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -105,26 +111,15 @@ components:
       - code
       - message
       x-ms-external: true
-    SubResource:
+    PrivateLinkResource:
       type: object
-      description: Azure Data Factory nested resource, which belongs to a factory.
+      description: A private link resource
       properties:
-        id:
-          type: string
-          description: The resource identifier.
-          readOnly: true
-        name:
-          type: string
-          description: The resource name.
-          readOnly: true
-        type:
-          type: string
-          description: The resource type.
-          readOnly: true
-        etag:
-          type: string
-          description: Etag identifies change in the resource.
-          readOnly: true
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: Core resource properties
+      allOf:
+      - $ref: '#/components/schemas/SubResource'
     PrivateLinkResourcesWrapper:
       type: object
       description: Wrapper for a collection of private link resources
@@ -135,15 +130,44 @@ components:
             $ref: '#/components/schemas/PrivateLinkResource'
       required:
       - value
-    PrivateLinkResource:
+    CloudError:
       type: object
-      description: A private link resource
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        properties:
-          $ref: '#/components/schemas/PrivateLinkResourceProperties'
-          description: Core resource properties
-      allOf:
-      - $ref: '#/components/schemas/SubResource'
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

@@ -19,8 +19,8 @@ paths:
       - exposureControl
       description: Get exposure control feature for specific location.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
       - name: locationId
         in: path
         description: The location identifier.
@@ -40,9 +40,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ExposureControl_GetFeatureValue:
-          $ref: ./examples/ExposureControl_GetFeatureValue.json
       requestBody:
         content:
           application/json:
@@ -59,9 +56,9 @@ paths:
       - exposureControl
       description: Get exposure control feature for specific factory.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -84,9 +81,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ExposureControl_GetFeatureValueByFactory:
-          $ref: ./examples/ExposureControl_GetFeatureValueByFactory.json
       requestBody:
         content:
           application/json:
@@ -103,9 +97,9 @@ paths:
       - exposureControl
       description: Get list of exposure control features for specific factory.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -128,9 +122,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ExposureControl_QueryFeatureValuesByFactory:
-          $ref: ./examples/ExposureControl_QueryFeatureValuesByFactory.json
       requestBody:
         content:
           application/json:
@@ -142,17 +133,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
+    ExposureControlResponse:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: The exposure control response.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
+        featureName:
+          type: string
+          description: The feature name.
+          readOnly: true
+        value:
+          type: string
+          description: The feature value.
+          readOnly: true
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -176,28 +168,17 @@ components:
       - code
       - message
       x-ms-external: true
-    ExposureControlResponse:
+    CloudError:
       type: object
-      description: The exposure control response.
+      description: The object that defines the structure of an Azure Data Factory error response.
       properties:
-        featureName:
-          type: string
-          description: The feature name.
-          readOnly: true
-        value:
-          type: string
-          description: The feature value.
-          readOnly: true
-    ExposureControlRequest:
-      type: object
-      description: The exposure control request.
-      properties:
-        featureName:
-          type: string
-          description: The feature name.
-        featureType:
-          type: string
-          description: The feature type.
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
     ExposureControlBatchRequest:
       type: object
       description: A list of exposure control features.
@@ -224,6 +205,43 @@ components:
           - featureName
       required:
       - exposureControlResponses
+    ExposureControlRequest:
+      type: object
+      description: The exposure control request.
+      properties:
+        featureName:
+          type: string
+          description: The feature name.
+        featureType:
+          type: string
+          description: The feature type.
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

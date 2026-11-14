@@ -19,9 +19,9 @@ paths:
       - Pipelines
       description: Lists pipelines.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Pipelines_ListByFactory:
-          $ref: ./examples/Pipelines_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
       summary: Pipelines list by factory
@@ -58,9 +55,9 @@ paths:
       - Pipelines
       description: Gets a pipeline.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -101,9 +98,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Pipelines_Get:
-          $ref: ./examples/Pipelines_Get.json
       summary: Pipelines get
       x-summary-source: derived
     put:
@@ -112,9 +106,9 @@ paths:
       - Pipelines
       description: Creates or updates a pipeline.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -153,11 +147,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Pipelines_Create:
-          $ref: ./examples/Pipelines_Create.json
-        Pipelines_Update:
-          $ref: ./examples/Pipelines_Update.json
       requestBody:
         content:
           application/json:
@@ -173,9 +162,9 @@ paths:
       - Pipelines
       description: Deletes a pipeline.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -205,9 +194,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Pipelines_Delete:
-          $ref: ./examples/Pipelines_Delete.json
       summary: Pipelines delete
       x-summary-source: derived
   ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
@@ -217,9 +203,9 @@ paths:
       - Pipelines
       description: Creates a run of a pipeline.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -275,9 +261,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        Pipelines_CreateRun:
-          $ref: ./examples/Pipelines_CreateRun.json
       requestBody:
         content:
           application/json:
@@ -289,164 +272,27 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ParameterSpecification:
-      type: object
-      description: Definition of a single parameter for an entity.
-      properties:
-        type:
-          $ref: '#/components/schemas/ParameterType'
-          description: Parameter type.
-        defaultValue:
-          description: Default value of parameter.
-      required:
-      - type
-    DependencyCondition:
-      type: string
-      enum:
-      - Succeeded
-      - Failed
-      - Skipped
-      - Completed
-      x-ms-enum:
-        name: DependencyCondition
-        modelAsString: true
-        values:
-        - name: Succeeded
-          value: Succeeded
-          description: Succeeded
-        - name: Failed
-          value: Failed
-          description: Failed
-        - name: Skipped
-          value: Skipped
-          description: Skipped
-        - name: Completed
-          value: Completed
-          description: Completed
-    ParameterType:
-      type: string
-      description: Parameter type.
-      enum:
-      - Object
-      - String
-      - Int
-      - Float
-      - Bool
-      - Array
-      - SecureString
-      x-ms-enum:
-        name: ParameterType
-        modelAsString: true
-        values:
-        - name: Object
-          value: Object
-          description: Object
-        - name: String
-          value: String
-          description: String
-        - name: Int
-          value: Int
-          description: Int
-        - name: Float
-          value: Float
-          description: Float
-        - name: Bool
-          value: Bool
-          description: Bool
-        - name: Array
-          value: Array
-          description: Array
-        - name: SecureString
-          value: SecureString
-          description: SecureString
-    Pipeline:
-      type: object
-      description: A data factory pipeline.
-      properties:
-        description:
-          type: string
-          description: The description of the pipeline.
-        activities:
-          type: array
-          description: List of activities in pipeline.
-          items:
-            $ref: '#/components/schemas/Activity'
-          x-ms-identifiers:
-          - name
-        parameters:
-          type: object
-          description: List of parameters for pipeline.
-          additionalProperties:
-            $ref: '#/components/schemas/ParameterSpecification'
-        variables:
-          type: object
-          description: List of variables for pipeline.
-          additionalProperties:
-            $ref: '#/components/schemas/VariableSpecification'
-        concurrency:
-          type: integer
-          format: int32
-          description: The max number of concurrent runs for the pipeline.
-          minimum: 1
-        annotations:
-          type: array
-          description: List of tags that can be used for describing the Pipeline.
-          items: {}
-        runDimensions:
-          type: object
-          description: Dimensions emitted by Pipeline.
-          additionalProperties: {}
-        folder:
-          $ref: '#/components/schemas/PipelineFolder'
-          description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
-        policy:
-          $ref: '#/components/schemas/PipelinePolicy'
-          description: Pipeline Policy.
     PipelineElapsedTimeMetricPolicy:
       type: object
       description: Pipeline ElapsedTime Metric Policy.
       properties:
         duration:
           description: TimeSpan value, after which an Azure Monitoring Metric is fired.
-    CloudError:
+    PipelineListResponse:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: A list of pipeline resources.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
-      required:
-      - error
-      x-ms-external: true
-    PipelineResource:
-      type: object
-      description: Pipeline resource type.
-      properties:
-        properties:
-          $ref: '#/components/schemas/Pipeline'
-          description: Properties of the pipeline.
-          x-ms-client-flatten: true
-        etag:
+        value:
+          type: array
+          description: The PipelineResource items on this page
+          items:
+            $ref: '#/components/schemas/PipelineResource'
+        nextLink:
           type: string
-          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
-          readOnly: true
+          format: uri
+          description: The link to the next page of items
       required:
-      - properties
-      additionalProperties: {}
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    VariableSpecification:
-      type: object
-      description: Definition of a single variable for a Pipeline.
-      properties:
-        type:
-          $ref: '#/components/schemas/VariableType'
-          description: Variable type.
-        defaultValue:
-          description: Default value of variable.
-      required:
-      - type
+      - value
     PipelinePolicy:
       type: object
       description: Pipeline Policy.
@@ -492,20 +338,99 @@ components:
       - name
       - type
       additionalProperties: {}
-    PipelineListResponse:
+    PipelineResource:
       type: object
-      description: A list of pipeline resources.
+      description: Pipeline resource type.
       properties:
-        value:
-          type: array
-          description: The PipelineResource items on this page
-          items:
-            $ref: '#/components/schemas/PipelineResource'
-        nextLink:
+        properties:
+          $ref: '#/components/schemas/Pipeline'
+          description: Properties of the pipeline.
+          x-ms-client-flatten: true
+        etag:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: '"If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.")'
+          readOnly: true
       required:
+      - properties
+      additionalProperties: {}
+      allOf:
+      - $ref: '#/components/schemas/ProxyResource'
+    VariableType:
+      type: string
+      description: Variable type.
+      enum:
+      - String
+      - Bool
+      - Array
+      x-ms-enum:
+        name: VariableType
+        modelAsString: true
+        values:
+        - name: String
+          value: String
+          description: String
+        - name: Bool
+          value: Bool
+          description: Bool
+        - name: Array
+          value: Array
+          description: Array
+    ActivityState:
+      type: string
+      description: Activity state. This is an optional property and if not provided, the state will be Active by default.
+      enum:
+      - Active
+      - Inactive
+      x-ms-enum:
+        name: ActivityState
+        modelAsString: true
+        values:
+        - name: Active
+          value: Active
+          description: Active
+        - name: Inactive
+          value: Inactive
+          description: Inactive
+    CreateRunResponse:
+      type: object
+      description: Response body with a run identifier.
+      properties:
+        runId:
+          type: string
+          description: Identifier of a run.
+      required:
+      - runId
+    ActivityOnInactiveMarkAs:
+      type: string
+      description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
+      enum:
+      - Succeeded
+      - Failed
+      - Skipped
+      x-ms-enum:
+        name: ActivityOnInactiveMarkAs
+        modelAsString: true
+        values:
+        - name: Succeeded
+          value: Succeeded
+          description: Succeeded
+        - name: Failed
+          value: Failed
+          description: Failed
+        - name: Skipped
+          value: Skipped
+          description: Skipped
+    UserProperty:
+      type: object
+      description: User property.
+      properties:
+        name:
+          type: string
+          description: User property name.
+        value:
+          description: 'User property value. Type: string (or Expression with resultType string).'
+      required:
+      - name
       - value
     ActivityDependency:
       type: object
@@ -530,22 +455,77 @@ components:
         name:
           type: string
           description: The name of the folder that this Pipeline is in.
-    ActivityState:
-      type: string
-      description: Activity state. This is an optional property and if not provided, the state will be Active by default.
-      enum:
-      - Active
-      - Inactive
-      x-ms-enum:
-        name: ActivityState
-        modelAsString: true
-        values:
-        - name: Active
-          value: Active
-          description: Active
-        - name: Inactive
-          value: Inactive
-          description: Inactive
+    ProxyResource:
+      type: object
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+    ParameterSpecification:
+      type: object
+      description: Definition of a single parameter for an entity.
+      properties:
+        type:
+          $ref: '#/components/schemas/ParameterType'
+          description: Parameter type.
+        defaultValue:
+          description: Default value of parameter.
+      required:
+      - type
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
+      x-ms-external: true
+    Pipeline:
+      type: object
+      description: A data factory pipeline.
+      properties:
+        description:
+          type: string
+          description: The description of the pipeline.
+        activities:
+          type: array
+          description: List of activities in pipeline.
+          items:
+            $ref: '#/components/schemas/Activity'
+          x-ms-identifiers:
+          - name
+        parameters:
+          type: object
+          description: List of parameters for pipeline.
+          additionalProperties:
+            $ref: '#/components/schemas/ParameterSpecification'
+        variables:
+          type: object
+          description: List of variables for pipeline.
+          additionalProperties:
+            $ref: '#/components/schemas/VariableSpecification'
+        concurrency:
+          type: integer
+          format: int32
+          description: The max number of concurrent runs for the pipeline.
+          minimum: 1
+        annotations:
+          type: array
+          description: List of tags that can be used for describing the Pipeline.
+          items: {}
+        runDimensions:
+          type: object
+          description: Dimensions emitted by Pipeline.
+          additionalProperties: {}
+        folder:
+          $ref: '#/components/schemas/PipelineFolder'
+          description: The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+        policy:
+          $ref: '#/components/schemas/PipelinePolicy'
+          description: Pipeline Policy.
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -569,47 +549,62 @@ components:
       - code
       - message
       x-ms-external: true
-    VariableType:
+    VariableSpecification:
+      type: object
+      description: Definition of a single variable for a Pipeline.
+      properties:
+        type:
+          $ref: '#/components/schemas/VariableType'
+          description: Variable type.
+        defaultValue:
+          description: Default value of variable.
+      required:
+      - type
+    ParameterType:
       type: string
-      description: Variable type.
+      description: Parameter type.
       enum:
+      - Object
       - String
+      - Int
+      - Float
       - Bool
       - Array
+      - SecureString
       x-ms-enum:
-        name: VariableType
+        name: ParameterType
         modelAsString: true
         values:
+        - name: Object
+          value: Object
+          description: Object
         - name: String
           value: String
           description: String
+        - name: Int
+          value: Int
+          description: Int
+        - name: Float
+          value: Float
+          description: Float
         - name: Bool
           value: Bool
           description: Bool
         - name: Array
           value: Array
           description: Array
-    UserProperty:
-      type: object
-      description: User property.
-      properties:
-        name:
-          type: string
-          description: User property name.
-        value:
-          description: 'User property value. Type: string (or Expression with resultType string).'
-      required:
-      - name
-      - value
-    ActivityOnInactiveMarkAs:
+        - name: SecureString
+          value: SecureString
+          description: SecureString
+    DependencyCondition:
       type: string
-      description: Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default.
       enum:
       - Succeeded
       - Failed
       - Skipped
+      - Completed
       x-ms-enum:
-        name: ActivityOnInactiveMarkAs
+        name: DependencyCondition
         modelAsString: true
         values:
         - name: Succeeded
@@ -621,15 +616,36 @@ components:
         - name: Skipped
           value: Skipped
           description: Skipped
-    CreateRunResponse:
-      type: object
-      description: Response body with a run identifier.
-      properties:
-        runId:
-          type: string
-          description: Identifier of a run.
-      required:
-      - runId
+        - name: Completed
+          value: Completed
+          description: Completed
+  parameters:
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2

@@ -19,9 +19,9 @@ paths:
       - managedVirtualNetworks
       description: Lists managed Virtual Networks.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -44,9 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ManagedVirtualNetworks_ListByFactory:
-          $ref: ./examples/ManagedVirtualNetworks_ListByFactory.json
       x-ms-pageable:
         nextLinkName: nextLink
       summary: Managed virtual networks list by factory
@@ -58,9 +55,9 @@ paths:
       - managedVirtualNetworks
       description: Gets a managed Virtual Network.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -99,9 +96,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ManagedVirtualNetworks_Get:
-          $ref: ./examples/ManagedVirtualNetworks_Get.json
       summary: Managed virtual networks get
       x-summary-source: derived
     put:
@@ -110,9 +104,9 @@ paths:
       - managedVirtualNetworks
       description: Creates or updates a managed Virtual Network.
       parameters:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ApiVersionParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/SubscriptionIdParameter
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/parameters/ResourceGroupNameParameter
+      - $ref: '#/components/parameters/ApiVersionParameter'
+      - $ref: '#/components/parameters/SubscriptionIdParameter'
+      - $ref: '#/components/parameters/ResourceGroupNameParameter'
       - name: factoryName
         in: path
         description: The factory name.
@@ -151,9 +145,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloudError'
-      x-ms-examples:
-        ManagedVirtualNetworks_Create:
-          $ref: ./examples/ManagedVirtualNetworks_Create.json
       requestBody:
         content:
           application/json:
@@ -165,17 +156,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
+    ManagedVirtualNetworkListResponse:
       type: object
-      description: The object that defines the structure of an Azure Data Factory error response.
+      description: A list of managed Virtual Network resources.
       properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: Error data
-          x-ms-client-flatten: true
+        value:
+          type: array
+          description: The ManagedVirtualNetworkResource items on this page
+          items:
+            $ref: '#/components/schemas/ManagedVirtualNetworkResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
       required:
-      - error
-      x-ms-external: true
+      - value
     CloudErrorBody:
       type: object
       description: The object that defines the structure of an Azure Data Factory error.
@@ -198,6 +193,23 @@ components:
       required:
       - code
       - message
+      x-ms-external: true
+    ProxyResource:
+      type: object
+      title: Proxy Resource
+      description: The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
+      allOf:
+      - $ref: '#/components/schemas/Resource'
+    CloudError:
+      type: object
+      description: The object that defines the structure of an Azure Data Factory error response.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: Error data
+          x-ms-client-flatten: true
+      required:
+      - error
       x-ms-external: true
     ManagedVirtualNetwork:
       type: object
@@ -226,22 +238,34 @@ components:
       required:
       - properties
       allOf:
-      - $ref: ../../../../../../common-types/resource-management/v6/types.json#/definitions/ProxyResource
-    ManagedVirtualNetworkListResponse:
-      type: object
-      description: A list of managed Virtual Network resources.
-      properties:
-        value:
-          type: array
-          description: The ManagedVirtualNetworkResource items on this page
-          items:
-            $ref: '#/components/schemas/ManagedVirtualNetworkResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
+      - $ref: '#/components/schemas/ProxyResource'
+  parameters:
+    SubscriptionIdParameter:
+      name: subscriptionId
+      in: path
+      description: The ID of the target subscription. The value must be an UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ResourceGroupNameParameter:
+      name: resourceGroupName
+      in: path
+      description: The name of the resource group. The name is case insensitive.
+      required: true
+      x-ms-parameter-location: method
+      schema:
+        type: string
+        maxLength: 90
+        minLength: 1
+    ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      schema:
+        type: string
+        minLength: 1
   securitySchemes:
     azure_auth:
       type: oauth2
